@@ -1,0 +1,10 @@
+^C:\USERS\GSTRU\DESKTOP\MIN_SPAN_TREE_VISUALIZER\BUILD\CMAKEFILES\94BC243332AD411EF89316C2EFEE6CCA\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/gstru/Desktop/min_span_tree_visualizer -BC:/Users/gstru/Desktop/min_span_tree_visualizer/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/gstru/Desktop/min_span_tree_visualizer/build/min_span_tree_visualizer.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

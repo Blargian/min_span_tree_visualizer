@@ -1,0 +1,38 @@
+Package: vcpkg-cmake-config
+Version: 2022-02-06
+Port-Version: 1
+Architecture: x64-windows
+Multi-Arch: same
+Abi: a01ee771fec294f2860aa99dc1779f8fa32c72c2599d5a7d57e6106329984b4c
+Type: Port
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2022-12-22
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 8a9240d7fd8b5d456dc3f25de5e08558a2afa8092414350c06265d4c37e3713b
+Type: Port
+Status: install ok installed
+
+Package: glfw3
+Version: 3.3.8
+Port-Version: 2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: e66f9d3ade61f802d7249e9203d9356e75a796e93b93c5fcf038301b1ec4e9c2
+Description: GLFW is a free, Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan application development. It provides a simple, platform-independent API for creating windows, contexts and surfaces, reading input, handling events, etc.
+Type: Port
+Status: install ok installed
+
+Package: imgui
+Version: 1.89.2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 6654e3ea2299d153dfcac9eaa24c1f71b1f9aac792a49bbd2ea827b46aa03184
+Description: Bloat-free Immediate Mode Graphical User interface for C++ with minimal dependencies.
+Type: Port
+Status: install ok installed
+

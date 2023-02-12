@@ -1,0 +1,16 @@
+Detecting compiler hash for triplet x64-windows...
+All requested packages are currently installed.
+Restored 0 package(s) from C:\Users\gstru\AppData\Local\vcpkg\archives in 570.7 us. Use --debug to see more details.
+Total install time: 648.4 us
+glfw3 provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(glfw3 CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glfw)
+
+imgui provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(imgui CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE imgui::imgui)
+
