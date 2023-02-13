@@ -1,0 +1,133 @@
+Package: vcpkg-cmake-config
+Version: 2022-02-06
+Port-Version: 1
+Architecture: x64-windows
+Multi-Arch: same
+Abi: a01ee771fec294f2860aa99dc1779f8fa32c72c2599d5a7d57e6106329984b4c
+Type: Port
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2022-12-22
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 8a9240d7fd8b5d456dc3f25de5e08558a2afa8092414350c06265d4c37e3713b
+Type: Port
+Status: install ok installed
+
+Package: glfw3
+Version: 3.3.8
+Port-Version: 2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: e66f9d3ade61f802d7249e9203d9356e75a796e93b93c5fcf038301b1ec4e9c2
+Description: GLFW is a free, Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan application development. It provides a simple, platform-independent API for creating windows, contexts and surfaces, reading input, handling events, etc.
+Type: Port
+Status: install ok installed
+
+Package: imgui
+Version: 1.89.2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 3d59d56f8fed632a655d352c22e6ecdddc8a7e6c08713979d76a13ec64e229d2
+Description: Bloat-free Immediate Mode Graphical User interface for C++ with minimal dependencies.
+Type: Port
+Status: install ok installed
+
+Package: imgui
+Feature: glfw-binding
+Depends: glfw3
+Architecture: x64-windows
+Multi-Arch: same
+Description: Make available GLFW binding
+Type: Port
+Status: install ok installed
+
+Package: imgui
+Feature: opengl2-binding
+Architecture: x64-windows
+Multi-Arch: same
+Description: Make available OpenGL (legacy) binding
+Type: Port
+Status: purge ok not-installed
+
+Package: egl-registry
+Version: 2022-09-20
+Architecture: x64-windows
+Multi-Arch: same
+Abi: d010070018a7c9cd5e6deca0ca0a3dc8fc053013eb30e168b3858baaf7a179e1
+Description: the EGL API and Extension Registry
+Type: Port
+Status: install ok installed
+
+Package: opengl-registry
+Version: 2022-09-29
+Depends: egl-registry
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 7e489283f3834a8572b8915911488a2818ba826f1292814294bd5dce411f9e26
+Description: the API and Extension registries for the OpenGL family APIs
+Type: Port
+Status: install ok installed
+
+Package: opengl
+Version: 2022-12-04
+Port-Version: 1
+Depends: opengl-registry
+Architecture: x64-windows
+Multi-Arch: same
+Abi: a85c990bfd271a50bdeb96bcc2172558580a9a4d57861e159ba275df944c6b62
+Description: Open Graphics Library (OpenGL)[3][4][5] is a cross-language, cross-platform application programming interface (API) for rendering 2D and 3D vector graphics.
+Type: Port
+Status: install ok installed
+
+Package: glad
+Version: 0.1.36
+Depends: egl-registry, opengl-registry, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: cb04adc61fb03deb694452842b7904987cb2aea70006da863900495508752993
+Description: Multi-Language Vulkan/GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.
+Type: Port
+Default-Features: loader
+Status: install ok installed
+
+Package: glad
+Feature: loader
+Architecture: x64-windows
+Multi-Arch: same
+Description: Generate loader logic.
+Type: Port
+Status: install ok installed
+
+Package: imgui
+Feature: opengl3-binding
+Architecture: x64-windows
+Multi-Arch: same
+Description: Make available OpenGL3/ES/ES2 (modern) binding
+Type: Port
+Status: install ok installed
+
+Package: glm
+Version: 0.9.9.8
+Port-Version: 2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 8fb174db670c6b50b075d41ff4ef7a3c86a084a14c9ee730f82ea2bae76693be
+Description: OpenGL Mathematics (GLM)
+Type: Port
+Status: install ok installed
+
+Package: implot
+Version: 0.14
+Depends: imgui, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: a4d6cb5216c44a84a74d169a1b62ee2ddafbcb496e199ee6f6851b958e4a98ad
+Description: Advanced 2D Plotting for Dear ImGui
+Type: Port
+Status: install ok installed
+

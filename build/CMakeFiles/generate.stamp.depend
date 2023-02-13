@@ -1,0 +1,50 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeCXXInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeDependentOption.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeFindDependencyMacro.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeGenericSystem.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeRCInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CTest.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CTestTargets.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/CTestUseLaunchers.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/Compiler/MSVC-CXX.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/Compiler/MSVC.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/DartConfiguration.tcl.in
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/FindOpenGL.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/FindPackageMessage.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/Platform/Windows-MSVC-CXX.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/Platform/Windows.cmake
+C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.24/Modules/Platform/WindowsPaths.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/CMakeLists.txt
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/3.24.202208181-MSVC_2/CMakeCXXCompiler.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/3.24.202208181-MSVC_2/CMakeRCCompiler.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/3.24.202208181-MSVC_2/CMakeSystem.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glad/gladConfig.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glad/gladConfigVersion.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glad/gladTargets-debug.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glad/gladTargets-release.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glad/gladTargets.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glfw3/glfw3Config.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glfw3/glfw3ConfigVersion.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glfw3/glfw3Targets-debug.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glfw3/glfw3Targets-release.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glfw3/glfw3Targets.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/glm/glm-config.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/imgui/imgui-config.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/imgui/imgui-targets-debug.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/imgui/imgui-targets-release.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/imgui/imgui-targets.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/implot/implot-config-debug.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/implot/implot-config-release.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/vcpkg_installed/x64-windows/share/implot/implot-config.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/lib/Catch2/extras/Catch.cmake
+C:/Users/gstru/Desktop/min_span_tree_visualizer/vcpkg.json
+C:/Users/gstru/Desktop/min_span_tree_visualizer/vcpkg/scripts/buildsystems/vcpkg.cmake

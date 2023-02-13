@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6E7BB3B8-74E0-30B6-B646-9CC705F388EC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\gstru\Desktop\min_span_tree_visualizer\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/gstru/Desktop/min_span_tree_visualizer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/gstru/Desktop/min_span_tree_visualizer -BC:/Users/gstru/Desktop/min_span_tree_visualizer/build --check-stamp-file C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeDependentOption.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTest.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTestTargets.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTestUseLaunchers.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\DartConfiguration.tcl.in;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindOpenGL.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeRCCompiler.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeSystem.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladConfig.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladConfigVersion.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3ConfigVersion.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glm\glm-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\lib\Catch2\extras\Catch.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\vcpkg.json;C:\Users\gstru\Desktop\min_span_tree_visualizer\vcpkg\scripts\buildsystems\vcpkg.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/gstru/Desktop/min_span_tree_visualizer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/gstru/Desktop/min_span_tree_visualizer -BC:/Users/gstru/Desktop/min_span_tree_visualizer/build --check-stamp-file C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeDependentOption.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTest.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTestTargets.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTestUseLaunchers.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\DartConfiguration.tcl.in;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindOpenGL.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeRCCompiler.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeSystem.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladConfig.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladConfigVersion.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3ConfigVersion.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glm\glm-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\lib\Catch2\extras\Catch.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\vcpkg.json;C:\Users\gstru\Desktop\min_span_tree_visualizer\vcpkg\scripts\buildsystems\vcpkg.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/gstru/Desktop/min_span_tree_visualizer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/gstru/Desktop/min_span_tree_visualizer -BC:/Users/gstru/Desktop/min_span_tree_visualizer/build --check-stamp-file C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeDependentOption.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTest.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTestTargets.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTestUseLaunchers.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\DartConfiguration.tcl.in;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindOpenGL.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeRCCompiler.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeSystem.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladConfig.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladConfigVersion.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3ConfigVersion.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glm\glm-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\lib\Catch2\extras\Catch.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\vcpkg.json;C:\Users\gstru\Desktop\min_span_tree_visualizer\vcpkg\scripts\buildsystems\vcpkg.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/gstru/Desktop/min_span_tree_visualizer/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/gstru/Desktop/min_span_tree_visualizer -BC:/Users/gstru/Desktop/min_span_tree_visualizer/build --check-stamp-file C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeDependentOption.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTest.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTestTargets.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\CTestUseLaunchers.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\DartConfiguration.tcl.in;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindOpenGL.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\FindPackageMessage.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeRCCompiler.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\3.24.202208181-MSVC_2\CMakeSystem.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladConfig.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladConfigVersion.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glad\gladTargets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3ConfigVersion.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glfw3\glfw3Targets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\glm\glm-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\imgui\imgui-targets.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config-debug.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config-release.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\build\vcpkg_installed\x64-windows\share\implot\implot-config.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\lib\Catch2\extras\Catch.cmake;C:\Users\gstru\Desktop\min_span_tree_visualizer\vcpkg.json;C:\Users\gstru\Desktop\min_span_tree_visualizer\vcpkg\scripts\buildsystems\vcpkg.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\gstru\Desktop\min_span_tree_visualizer\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\gstru\Desktop\min_span_tree_visualizer\build\ZERO_CHECK.vcxproj">
+      <Project>{C60111C4-5F19-3D4B-BAA6-5C074392A74A}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\gstru\Desktop\min_span_tree_visualizer\build\lib\Catch2\src\Catch2.vcxproj">
+      <Project>{8d538cbe-01bf-4a2e-a98a-6c368fdf13d7}</Project>
+      <Name>Catch2</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\gstru\Desktop\min_span_tree_visualizer\build\lib\Catch2\src\Catch2WithMain.vcxproj">
+      <Project>{8bd3552a-2cfb-4a59-ab15-2031b97ada1e}</Project>
+      <Name>Catch2WithMain</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\gstru\Desktop\min_span_tree_visualizer\build\min_span_tree_visualizer.vcxproj">
+      <Project>{0152C9AF-1B38-34CF-B2F4-17ACB25C31C0}</Project>
+      <Name>min_span_tree_visualizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\gstru\Desktop\min_span_tree_visualizer\build\tests.vcxproj">
+      <Project>{2EDF41B0-FB05-37D9-B6ED-8F42AE9DD690}</Project>
+      <Name>tests</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

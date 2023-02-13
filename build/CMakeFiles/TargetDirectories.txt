@@ -1,0 +1,15 @@
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/tests.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/Experimental.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/Nightly.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/Continuous.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/NightlyMemoryCheck.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/min_span_tree_visualizer.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/RUN_TESTS.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/src/CMakeFiles/RUN_TESTS.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/lib/Catch2/CMakeFiles/RUN_TESTS.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/lib/Catch2/CMakeFiles/ALL_BUILD.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/lib/Catch2/src/CMakeFiles/Catch2.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/lib/Catch2/src/CMakeFiles/Catch2WithMain.dir
+C:/Users/gstru/Desktop/min_span_tree_visualizer/build/lib/Catch2/src/CMakeFiles/RUN_TESTS.dir
