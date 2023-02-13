@@ -23,8 +23,13 @@ include(CTest)
 include(Catch)
 catch_discover_tests(tests)
 
-find_package(glfw3 REQUIRED)
-find_package(imgui REQUIRED)
+find_package(glad CONFIG REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(OpenGL)
+find_package(glm CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(implot CONFIG REQUIRED)
+
 
 add_executable (min_span_tree_visualizer src/main.cpp)
 set_property(TARGET min_span_tree_visualizer PROPERTY WIN32_EXECUTABLE FALSE)
@@ -38,8 +43,11 @@ target_include_directories(min_span_tree_visualizer
 target_link_libraries(
   min_span_tree_visualizer
   PRIVATE
+    OpenGL::GL
     glfw
+    glad::glad
     imgui::imgui
+    implot::implot
 )
 
 

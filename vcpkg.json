@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "dependencies": [
     "glfw3",
+    "glad",
+    "glm",
+    "opengl",
+    "implot",
     {
-      "name": "imgui"
+      "name": "imgui",
+      "features": ["glfw-binding","opengl3-binding"]
     }
   ]
 }

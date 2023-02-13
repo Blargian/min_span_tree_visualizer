@@ -24,7 +24,7 @@ events:
       The output was:
       0
       MSBuild version 17.4.1+9a89d02ff for .NET Framework
-      Build started 2023/02/12 09:32:26.
+      Build started 2023/02/12 13:45:15.
       Project "C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\3.26.0-rc2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
         Creating directory "Debug\\".
@@ -50,7 +50,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.96
+      Time Elapsed 00:00:01.10
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -69,8 +69,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-e3lu0u"
-      binary: "C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-e3lu0u"
+      source: "C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-hrald4"
+      binary: "C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-hrald4"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -82,29 +82,29 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-e3lu0u
+        Change Dir: C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-hrald4
         
-        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_b2d1f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
-        Build started 2023/02/12 09:32:27.
-        Project "C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-e3lu0u\\cmTC_b2d1f.vcxproj" on node 1 (default targets).
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_111cd.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        Build started 2023/02/12 13:45:17.
+        Project "C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-hrald4\\cmTC_111cd.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_b2d1f.dir\\Debug\\".
-          Creating directory "C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-e3lu0u\\Debug\\".
-          Creating directory "cmTC_b2d1f.dir\\Debug\\cmTC_b2d1f.tlog\\".
+          Creating directory "cmTC_111cd.dir\\Debug\\".
+          Creating directory "C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-hrald4\\Debug\\".
+          Creating directory "cmTC_111cd.dir\\Debug\\cmTC_111cd.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_b2d1f.dir\\Debug\\cmTC_b2d1f.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Creating "cmTC_111cd.dir\\Debug\\cmTC_111cd.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b2d1f.dir\\Debug\\\\" /Fd"cmTC_b2d1f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_111cd.dir\\Debug\\\\" /Fd"cmTC_111cd.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31937 for x64
           CMakeCXXCompilerABI.cpp
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b2d1f.dir\\Debug\\\\" /Fd"cmTC_b2d1f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_111cd.dir\\Debug\\\\" /Fd"cmTC_111cd.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-e3lu0u\\Debug\\cmTC_b2d1f.exe" /INCREMENTAL /ILK:"cmTC_b2d1f.dir\\Debug\\cmTC_b2d1f.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-e3lu0u/Debug/cmTC_b2d1f.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-e3lu0u/Debug/cmTC_b2d1f.lib" /MACHINE:X64  /machine:x64 cmTC_b2d1f.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_b2d1f.vcxproj -> C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-e3lu0u\\Debug\\cmTC_b2d1f.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-hrald4\\Debug\\cmTC_111cd.exe" /INCREMENTAL /ILK:"cmTC_111cd.dir\\Debug\\cmTC_111cd.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-hrald4/Debug/cmTC_111cd.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-hrald4/Debug/cmTC_111cd.lib" /MACHINE:X64  /machine:x64 cmTC_111cd.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_111cd.vcxproj -> C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-hrald4\\Debug\\cmTC_111cd.exe
         PostBuildEvent:
           setlocal
-          C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/gstru/Desktop/min_span_tree_visualizer/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-e3lu0u/Debug/cmTC_b2d1f.exe -installedDir C:/Users/gstru/Desktop/min_span_tree_visualizer/vcpkg/installed/x64-windows/debug/bin -OutVariable out
+          C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/gstru/Desktop/min_span_tree_visualizer/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/gstru/Desktop/min_span_tree_visualizer/build/CMakeFiles/CMakeScratch/TryCompile-hrald4/Debug/cmTC_111cd.exe -installedDir C:/Users/gstru/Desktop/min_span_tree_visualizer/vcpkg/installed/x64-windows/debug/bin -OutVariable out
           if %errorlevel% neq 0 goto :cmEnd
           :cmEnd
           endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
@@ -114,15 +114,15 @@ events:
           if %errorlevel% neq 0 goto :VCEnd
           :VCEnd
         FinalizeBuildStatus:
-          Deleting file "cmTC_b2d1f.dir\\Debug\\cmTC_b2d1f.tlog\\unsuccessfulbuild".
-          Touching "cmTC_b2d1f.dir\\Debug\\cmTC_b2d1f.tlog\\cmTC_b2d1f.lastbuildstate".
-        Done Building Project "C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-e3lu0u\\cmTC_b2d1f.vcxproj" (default targets).
+          Deleting file "cmTC_111cd.dir\\Debug\\cmTC_111cd.tlog\\unsuccessfulbuild".
+          Touching "cmTC_111cd.dir\\Debug\\cmTC_111cd.tlog\\cmTC_111cd.lastbuildstate".
+        Done Building Project "C:\\Users\\gstru\\Desktop\\min_span_tree_visualizer\\build\\CMakeFiles\\CMakeScratch\\TryCompile-hrald4\\cmTC_111cd.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:01.06
+        Time Elapsed 00:00:01.90
         
       exitCode: 0
 ...
