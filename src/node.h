@@ -1,0 +1,23 @@
+#pragma once
+
+#include "edge.h"
+#include <string>
+#include <list>
+#include <utility> 
+
+using namespace std; 
+
+class Edge;
+
+class Node {
+private:
+	list<Edge> edgeList;
+	string nodeName; 
+	pair <int, int> coordinates;
+public:
+	Node();
+	void setXY(int x, int y);
+	void insertEdge(Edge edgeToAdd);
+	void removeEdge(Edge edgeToAdd);
+	list<Edge> getEdgeList();
+};
