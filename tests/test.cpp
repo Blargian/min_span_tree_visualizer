@@ -8,19 +8,19 @@ using namespace std;
 
 TEST_CASE("Graph edge", "[Edge]") {
 
-	Node* b = &Node();
-	Node* c = &Node();
-	Edge anEdge = Edge(b, 1);
+	Node b = Node();
+	Node c = Node();
+	Edge anEdge = Edge(&b, 1);
 
 	SECTION("Edge gets created properly") {
-		REQUIRE(anEdge.getDestinationNode() == b);
+		REQUIRE(anEdge.getDestinationNode() == &b);
 		REQUIRE(anEdge.getEdgeWeight() == 1);
 	}
 
 	SECTION("Destination node of Edge gets correctly updated using setter") {
-		REQUIRE(anEdge.getDestinationNode() == b);
-		anEdge.setDestinationNode(c);
-		REQUIRE(anEdge.getDestinationNode() == c);
+		REQUIRE(anEdge.getDestinationNode() == &b);
+		anEdge.setDestinationNode(&c);
+		REQUIRE(anEdge.getDestinationNode() == &c);
 	}
 
 	SECTION("Edge weight of Edge gets correctly updated using setter") {
@@ -34,26 +34,29 @@ TEST_CASE("Graph edge", "[Edge]") {
 
 TEST_CASE("Graph node", "[Node]") {
 
-	Node* a = &Node();
+	Node a = Node();
+
 	SECTION("error gets thrown if x coordinate is outside of limits 0-100") {
-		CHECK_THROWS_AS(a->setXY(200,5), std::logic_error);
+		CHECK_THROWS_AS(a.setXY(200,5), std::logic_error);
 	}
 
 	SECTION("error gets thrown if y coordinate is outside of limits 0-100") {
-		CHECK_THROWS_AS(a->setXY(67, 189), std::logic_error);
+		CHECK_THROWS_AS(a.setXY(67, 189), std::logic_error);
 	}
 
 	SECTION("no error is thrown if both coordinates are in the limit 0-100") {
-		CHECK_NOTHROW(a->setXY(67, 72));
+		CHECK_NOTHROW(a.setXY(67, 72));
 	}
 
 	SECTION("an edge gets inserted to the adjacency list") {
-		Node* b = &Node();
-		Edge e = Edge(b,1);
-		b->insertEdge(e);
-		list<Edge> edgelist = b->getEdgeList();
+		Node b = Node(); //this is illegal 
+		Edge e = Edge(&b,1);
+		list<Edge> edgelist = b.getEdgeList();
 		REQUIRE(edgelist.empty() == true);
-		//REQUIRE(b->getEdgeList().empty() != true);
+		edgelist = b.getEdgeList();
+		b.insertEdge(e);
+		edgelist = b.getEdgeList();
+		REQUIRE(edgelist.empty() != true);
 	}
 }
 
@@ -69,6 +72,7 @@ TEST_CASE("Graph","[Graph]"){
 		nodes = g.getNodes();
 		REQUIRE(nodes.size() == 1);
 	}
+
 }
 
 

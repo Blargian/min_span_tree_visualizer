@@ -1,4 +1,5 @@
 #include "node.h"
+#include <iostream>
 #include <stdexcept>
 
 /**
@@ -7,7 +8,6 @@
  * @param 
  */
 Node::Node() {
-
 }
 
 /**

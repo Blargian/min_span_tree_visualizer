@@ -19,7 +19,7 @@ Graph::Graph() {
  * @param n the node to insert of type Node
  */
 void Graph::insertNode(Node n) {
-
+	this->nodeArray.push_back(n);
 }
 
 /**
