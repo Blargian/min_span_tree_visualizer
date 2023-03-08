@@ -16,8 +16,10 @@ private:
 	pair <int, int> coordinates;
 public:
 	Node();
+	Node(string nodeName, int x, int y);
+	void setNodeName(string nodeName);
 	void setXY(int x, int y);
 	void insertEdge(Edge edgeToAdd);
-	void removeEdge(Edge edgeToAdd);
+	void removeEdge(Edge fromEdge, Edge toEdge);
 	list<Edge> getEdgeList();
 };

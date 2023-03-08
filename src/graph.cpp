@@ -29,3 +29,14 @@ void Graph::insertNode(Node n) {
 vector<Node> Graph::getNodes() {
 	return this->nodeArray;
 }
+
+/**
+ * @brief connects two nodes 
+ * @param a the first node
+ *        b the second node
+ *        edgeWeight the edge weight 
+ */
+void Graph::connectNodes(Node a, Node b, int edgeWeight) {
+
+	return;
+}

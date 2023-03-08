@@ -14,5 +14,6 @@ public:
 	Graph();
 	void insertNode(Node n);
 	vector<Node> getNodes(); 
+	void connectNodes(Node a, Node b, int edgeWeight);
 }; 
 
