@@ -18,8 +18,9 @@ Graph::Graph() {
  *
  * @param n the node to insert of type Node
  */
-void Graph::insertNode(Node n) {
+Node* Graph::insertNode(Node n) {
 	this->nodeArray.push_back(n);
+	return &this->nodeArray.back();
 }
 
 /**
@@ -36,7 +37,16 @@ vector<Node> Graph::getNodes() {
  *        b the second node
  *        edgeWeight the edge weight 
  */
-void Graph::connectNodes(Node a, Node b, int edgeWeight) {
+void Graph::connectNodes(Node* a, Node* b, int edgeWeight) {
 
-	return;
+	//check if the nodes are connected yet or not
+	//if not connected 
+		//make an edge a->b and add that edge to node a edgelist
+		//make an edge b->a and add that edge to node b edgelist 
+	    //update the nodes
+
+	Edge ab = Edge(a, b, edgeWeight);
+	Edge ba = Edge(b, a, edgeWeight);
+	a->insertEdge(ab);
+	b->insertEdge(ba);
 }

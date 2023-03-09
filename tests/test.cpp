@@ -103,12 +103,14 @@ TEST_CASE("Graph","[Graph]"){
 		Edge aToB = Edge(&a,&b, 1);
 		Edge bToA = Edge(&a,&b, 1);
 
-		g.insertNode(a);
-		g.insertNode(b);
-		g.connectNodes(a, b, 1);
+		Node* aptr = g.insertNode(a);
+		Node* bptr = g.insertNode(b);
+		g.connectNodes(aptr, bptr, 1);
 
-		list<Edge> nodeAEdges = a.getEdgeList();
-		list<Edge> nodeBEdges = b.getEdgeList();
+		vector<Node> nodes = g.getNodes();
+
+		list<Edge> nodeAEdges = nodes[0].getEdgeList();
+		list<Edge> nodeBEdges = nodes[1].getEdgeList();
 		REQUIRE(find(nodeAEdges.begin(), nodeAEdges.end(), aToB) != nodeAEdges.end());
 		REQUIRE(find(nodeBEdges.begin(), nodeBEdges.end(), bToA) != nodeAEdges.end());
 

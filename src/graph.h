@@ -12,8 +12,8 @@ private:
 public:
 	// Constructor
 	Graph();
-	void insertNode(Node n);
+	Node* insertNode(Node n);
 	vector<Node> getNodes(); 
-	void connectNodes(Node a, Node b, int edgeWeight);
+	void connectNodes(Node* a, Node* b, int edgeWeight);
 }; 
 
