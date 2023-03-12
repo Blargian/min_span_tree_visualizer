@@ -99,20 +99,22 @@ TEST_CASE("Graph","[Graph]"){
 		Node a = Node("Johannesburg", 5, 10);
 		Node b = Node("Cape Town", 26, 10);
 
+		size_t a_index = g.insertNode(a) -1;
+		size_t b_index = g.insertNode(b) -1;
+		vector<Node> nodes_on_graph = g.getNodes();
+		g.connectNodes(&nodes_on_graph[a_index], &nodes_on_graph[b_index], 1);
+
 		//expected edges if connectNodes(a,b,1) is run 
-		Edge aToB = Edge(&a,&b, 1);
-		Edge bToA = Edge(&a,&b, 1);
+		Edge aToB = Edge(&nodes_on_graph[a_index], &nodes_on_graph[b_index], 2);
+		Edge bToA = Edge(&nodes_on_graph[b_index], &nodes_on_graph[a_index], 2);
 
-		Node* aptr = g.insertNode(a);
-		Node* bptr = g.insertNode(b);
-		g.connectNodes(aptr, bptr, 1);
+		list<Edge> nodeAEdges = nodes_on_graph[0].getEdgeList();
+		list<Edge> nodeBEdges = nodes_on_graph[1].getEdgeList();
 
-		vector<Node> nodes = g.getNodes();
-
-		list<Edge> nodeAEdges = nodes[0].getEdgeList();
-		list<Edge> nodeBEdges = nodes[1].getEdgeList();
-		REQUIRE(find(nodeAEdges.begin(), nodeAEdges.end(), aToB) != nodeAEdges.end());
-		REQUIRE(find(nodeBEdges.begin(), nodeBEdges.end(), bToA) != nodeAEdges.end());
+		auto a_it = find(nodeAEdges.begin(), nodeAEdges.end(), aToB);
+		auto b_it = find(nodeBEdges.begin(), nodeBEdges.end(), bToA);
+		REQUIRE(a_it != nodeAEdges.end());
+		REQUIRE(b_it != nodeBEdges.end());
 
 	}
 }

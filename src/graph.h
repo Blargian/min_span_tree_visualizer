@@ -12,7 +12,7 @@ private:
 public:
 	// Constructor
 	Graph();
-	Node* insertNode(Node n);
+	size_t insertNode(Node n);
 	vector<Node> getNodes(); 
 	void connectNodes(Node* a, Node* b, int edgeWeight);
 }; 

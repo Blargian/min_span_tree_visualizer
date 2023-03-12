@@ -18,9 +18,9 @@ Graph::Graph() {
  *
  * @param n the node to insert of type Node
  */
-Node* Graph::insertNode(Node n) {
+size_t  Graph::insertNode(Node n) {
 	this->nodeArray.push_back(n);
-	return &this->nodeArray.back();
+	return size(this->nodeArray);
 }
 
 /**

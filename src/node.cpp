@@ -54,16 +54,17 @@ void Node::setXY(int x, int y) {
 /**
  * @brief inserts an edge to the edgelist
  *
- * @param edgeToAdd pointer to an Edge 
+ * @param edgeToAdd Edge 
  */
 void Node::insertEdge(Edge edgeToAdd) {
-	this->edgeList.push_back(edgeToAdd);
+	Edge e = edgeToAdd; 
+	this->edgeList.push_back(e);
 }
 
 /**
  * @brief removes an edge from the edgelist
  *
- * @param edgeToAdd pointer to an Edge
+ * @param edgeToAdd Edge
  */
 void Node::removeEdge(Edge fromNode, Edge toNode) {
 	
@@ -72,7 +73,7 @@ void Node::removeEdge(Edge fromNode, Edge toNode) {
 /**
  * @brief returns the edge list
  *
- * @param edgeToAdd pointer to an Edge
+ * 
  */
 list<Edge> Node::getEdgeList() {
 	return edgeList; 
