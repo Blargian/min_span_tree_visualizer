@@ -76,7 +76,11 @@ int Edge::getEdgeWeight()
 }
 
 bool operator==(Edge a, Edge b) {
-	if(a.getSourceNode() == b.getSourceNode() && a.getDestinationNode() == b.getDestinationNode())
+	if(
+		a.getSourceNode() == b.getSourceNode() 
+		&& a.getDestinationNode() == b.getDestinationNode()
+		&& a.getEdgeWeight() == b.getEdgeWeight()
+	)
 	{
 		return true;
 	}

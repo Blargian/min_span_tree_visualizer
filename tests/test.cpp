@@ -105,8 +105,8 @@ TEST_CASE("Graph","[Graph]"){
 		g.connectNodes(&nodes_on_graph[a_index], &nodes_on_graph[b_index], 1);
 
 		//expected edges if connectNodes(a,b,1) is run 
-		Edge aToB = Edge(&nodes_on_graph[a_index], &nodes_on_graph[b_index], 2);
-		Edge bToA = Edge(&nodes_on_graph[b_index], &nodes_on_graph[a_index], 2);
+		Edge aToB = Edge(&nodes_on_graph[a_index], &nodes_on_graph[b_index], 1);
+		Edge bToA = Edge(&nodes_on_graph[b_index], &nodes_on_graph[a_index], 1);
 
 		list<Edge> nodeAEdges = nodes_on_graph[0].getEdgeList();
 		list<Edge> nodeBEdges = nodes_on_graph[1].getEdgeList();
