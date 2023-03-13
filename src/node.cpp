@@ -64,10 +64,37 @@ void Node::insertEdge(Edge edgeToAdd) {
 /**
  * @brief removes an edge from the edgelist
  *
- * @param edgeToAdd Edge
+ * @param fromNode Node
+ *        toNode   Node
  */
-void Node::removeEdge(Edge fromNode, Edge toNode) {
+void Node::removeEdge(Node* fromNode, Node* toNode) {
+	Edge* edgeToRemove = this->getEdge(fromNode, toNode);
+	this->edgeList.remove(*edgeToRemove);
+}
+
+/**
+ * @brief returns a pointer to an edge
+ *
+ */
+void Node::clearEdgeList() {
+	this->edgeList = {};
+}
+
+/**
+ * @brief returns a pointer to an edge
+ * @param fromNode Node (start of the edge)
+ *        toNode (end of the edge)
+ *
+ */
+Edge* Node::getEdge(Node* fromNode, Node* toNode) {
 	
+	Edge* foundNode = nullptr;
+	for (auto it = this->edgeList.begin(); it != this->edgeList.end(); ++it) {
+		if (*(it->getSourceNode()) == *fromNode && *(it->getDestinationNode()) == *toNode) {
+			foundNode = &(*it);
+		}
+	}
+	return foundNode;
 }
 
 /**

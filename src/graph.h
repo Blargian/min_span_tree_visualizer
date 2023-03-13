@@ -13,7 +13,8 @@ public:
 	// Constructor
 	Graph();
 	size_t insertNode(Node n);
-	vector<Node> getNodes(); 
+	vector<Node*> getNodes(); 
 	void connectNodes(Node* a, Node* b, int edgeWeight);
+	void removeNode(Node* node_to_remove);
 }; 
 

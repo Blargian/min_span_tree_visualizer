@@ -20,6 +20,22 @@ public:
 	void setNodeName(string nodeName);
 	void setXY(int x, int y);
 	void insertEdge(Edge edgeToAdd);
-	void removeEdge(Edge fromEdge, Edge toEdge);
+	void removeEdge(Node* fromNode, Node* toEdge);
+	void clearEdgeList();
 	list<Edge> getEdgeList();
+	Edge* getEdge(Node* fromNode, Node* toNode);
+
+	friend bool operator==(Node a, Node b) {
+		if (
+			a.coordinates == b.coordinates
+			&& a.edgeList == b.edgeList
+			&& a.nodeName == b.nodeName
+			)
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
+	};
 };

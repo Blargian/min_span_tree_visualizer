@@ -1,6 +1,6 @@
 #include <iostream>
 #include "graph.h"
-
+#include <string>
 #include <Vector>
 
 using namespace std;
@@ -27,8 +27,12 @@ size_t  Graph::insertNode(Node n) {
  * @brief returns the vector of nodes 
  *
  */
-vector<Node> Graph::getNodes() {
-	return this->nodeArray;
+vector<Node*> Graph::getNodes() {
+	vector<Node*> nodes;
+	for (size_t i = 0; i < size(this->nodeArray); i++) {
+		nodes.push_back(&(this->nodeArray[i]));
+	}
+	return nodes;
 }
 
 /**
@@ -49,4 +53,32 @@ void Graph::connectNodes(Node* a, Node* b, int edgeWeight) {
 	Edge ba = Edge(b, a, edgeWeight);
 	a->insertEdge(ab);
 	b->insertEdge(ba);
+}
+
+/**
+ * @brief removes a node and associated edges
+ * @param node_to_remove a pointer to the node to be removed
+ */
+
+void Graph::removeNode(Node* node_to_remove) {
+	cout << "hello world" << endl;
+	//visit edges in node_to_remove and remove it from those other nodes' edgelists
+	list<Edge> connected_edges = node_to_remove->getEdgeList();
+	for (auto it = connected_edges.begin(); it!=connected_edges.end();++it) {
+		auto node_to_remove = it->getSourceNode();
+		auto node_to_remove_from = it->getDestinationNode();
+		node_to_remove_from->removeEdge(node_to_remove_from, node_to_remove);
+	}
+
+	//remove the edges from itself 
+	node_to_remove->clearEdgeList(); 
+	
+	//finally, remove the node
+	std::vector<Node>::iterator position = this->nodeArray.end();
+	for (auto it = this->nodeArray.begin(); it != this->nodeArray.end(); ++it) {
+		if (*it == *node_to_remove) {
+			position = it;
+		}
+	}
+	this->nodeArray.erase(position);
 }

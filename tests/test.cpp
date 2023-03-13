@@ -69,15 +69,27 @@ TEST_CASE("Graph node", "[Node]") {
 		REQUIRE(edgelist.empty() != true);
 	}
 
-	SECTION("an edge gets removed from adjacency list") {
-		Node a = Node("Johannesburg",5,10);
-		Node b = Node("Cape Town",26,10);
-		Node c = Node("Durban",72,100);
+	SECTION("gets a pointer to an edge given the source node and destination node")
+	{
 
 		Graph g = Graph();
-		g.insertNode(a);
-		g.insertNode(b);
-		g.insertNode(c);
+
+		std::vector<Node> nodes = {
+			Node("Johannesburg", 5, 10),
+			Node("Cape Town", 26, 10),
+		};
+
+		
+		for (Node node : nodes) {
+			g.insertNode(node);
+		}
+		g.connectNodes(g.getNodes()[0], g.getNodes()[1],1);
+
+		Edge e = Edge(g.getNodes()[0], g.getNodes()[1], 1);
+
+		Edge* edge_we_need = g.getNodes()[0]->getEdge(g.getNodes()[0], g.getNodes()[1]);
+		REQUIRE(*(edge_we_need) == e);
+
 	}
 }
 
@@ -87,7 +99,7 @@ TEST_CASE("Graph","[Graph]"){
 	Graph g = Graph();
 
 	SECTION("a new node gets added to the graph") {
-		vector<Node> nodes = g.getNodes();
+		vector<Node*> nodes = g.getNodes();
 		REQUIRE(nodes.size()==0);
 		g.insertNode(newNode);
 		nodes = g.getNodes();
@@ -101,21 +113,51 @@ TEST_CASE("Graph","[Graph]"){
 
 		size_t a_index = g.insertNode(a) -1;
 		size_t b_index = g.insertNode(b) -1;
-		vector<Node> nodes_on_graph = g.getNodes();
-		g.connectNodes(&nodes_on_graph[a_index], &nodes_on_graph[b_index], 1);
+		vector<Node*> nodes_on_graph = g.getNodes();
+		g.connectNodes(nodes_on_graph[a_index],nodes_on_graph[b_index], 1);
 
 		//expected edges if connectNodes(a,b,1) is run 
-		Edge aToB = Edge(&nodes_on_graph[a_index], &nodes_on_graph[b_index], 1);
-		Edge bToA = Edge(&nodes_on_graph[b_index], &nodes_on_graph[a_index], 1);
+		Edge aToB = Edge(nodes_on_graph[a_index], nodes_on_graph[b_index], 1);
+		Edge bToA = Edge(nodes_on_graph[b_index], nodes_on_graph[a_index], 1);
 
-		list<Edge> nodeAEdges = nodes_on_graph[0].getEdgeList();
-		list<Edge> nodeBEdges = nodes_on_graph[1].getEdgeList();
+		list<Edge> nodeAEdges = nodes_on_graph[0]->getEdgeList();
+		list<Edge> nodeBEdges = nodes_on_graph[1]->getEdgeList();
 
 		auto a_it = find(nodeAEdges.begin(), nodeAEdges.end(), aToB);
 		auto b_it = find(nodeBEdges.begin(), nodeBEdges.end(), bToA);
 		REQUIRE(a_it != nodeAEdges.end());
 		REQUIRE(b_it != nodeBEdges.end());
 
+	}
+
+	SECTION("Node and it's edges are removed from the graph") {
+		
+		Graph g = Graph();
+		
+		std::vector<Node> nodes = {
+			Node("Johannesburg", 5, 10),
+			Node("Cape Town", 26, 10),
+			Node("Durban", -24, 78)
+		};
+
+		for(Node node : nodes) {
+			g.insertNode(node);
+		}
+
+		vector<Node*> nodes_on_graph = g.getNodes();
+		g.connectNodes(nodes_on_graph[0], nodes_on_graph[1], 1);
+		g.connectNodes(nodes_on_graph[2], nodes_on_graph[1], 1);
+
+		REQUIRE(size(g.getNodes()[0]->getEdgeList()) == 1);
+		REQUIRE(size(g.getNodes()[1]->getEdgeList()) == 2);
+		REQUIRE(size(g.getNodes()[2]->getEdgeList()) == 1);
+
+		g.removeNode(g.getNodes()[1]);
+
+		//After removing there should only be two nodes
+		//Those nodes should have no edges
+		REQUIRE(size(g.getNodes()[0]->getEdgeList()) == 0);
+		REQUIRE(size(g.getNodes()[1]->getEdgeList()) == 0);
 	}
 }
 
