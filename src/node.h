@@ -24,6 +24,7 @@ public:
 	void clearEdgeList();
 	list<Edge> getEdgeList();
 	Edge* getEdge(Node* fromNode, Node* toNode);
+	pair <int, int> getXY();
 
 	friend bool operator==(Node a, Node b) {
 		if (
