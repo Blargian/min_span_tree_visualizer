@@ -15,7 +15,7 @@ add_subdirectory ("src")
 # Configuration for Catch2 
 
 add_subdirectory(lib/Catch2)
-add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp )
+add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp  "src/graph.h" "src/Graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp"  )
 
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain) #import not to use Catch2::Catch2 here but rather Catch2WithMain 
 
@@ -31,7 +31,7 @@ find_package(imgui CONFIG REQUIRED)
 find_package(implot CONFIG REQUIRED)
 
 
-add_executable (min_span_tree_visualizer src/main.cpp)
+add_executable (min_span_tree_visualizer src/main.cpp "src/graph.h" "src/Graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp" )
 set_property(TARGET min_span_tree_visualizer PROPERTY WIN32_EXECUTABLE FALSE)
 target_include_directories(min_span_tree_visualizer 
   PRIVATE 
