@@ -31,7 +31,7 @@ find_package(imgui CONFIG REQUIRED)
 find_package(implot CONFIG REQUIRED)
 
 
-add_executable (min_span_tree_visualizer src/main.cpp "src/graph.h" "src/Graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp" )
+add_executable (min_span_tree_visualizer src/main.cpp "src/graph.h" "src/Graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp" "src/app_design.h" "src/app.h")
 set_property(TARGET min_span_tree_visualizer PROPERTY WIN32_EXECUTABLE FALSE)
 target_include_directories(min_span_tree_visualizer 
   PRIVATE 
