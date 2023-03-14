@@ -2,6 +2,7 @@
 #include "../src/node.h"
 #include "../src/edge.h"
 #include "../src/graph.h"
+#include "../src/app.h"
 #include <algorithm>
 
 using namespace std; 
@@ -187,4 +188,28 @@ TEST_CASE("Graph","[Graph]"){
 	}
 }
 
+TEST_CASE("iSubject", "[Subject]") {
+
+	SECTION("hasObservers returns true if a subject does have observers") {
+		MyApp app;
+		Graph with_observers = Graph();
+		with_observers.AddObserver(Graph::DRAWEDGE, &app);
+		Graph without_observers = Graph();
+		REQUIRE(with_observers.hasObservers() == true);
+		REQUIRE(without_observers.hasObservers() == false);
+	}
+
+	SECTION("AddObserver adds and removes the observer to the ObserversMap mObservers correctly") {
+		MyApp app;
+		Graph subject = Graph();
+		subject.AddObserver(Graph::DRAWEDGE, &app);
+		auto om = subject.getObserverMap();
+		int number_of_observers = distance(om[0].begin(), om[0].end());
+		REQUIRE(number_of_observers == 1);
+		subject.RemoveObserver(Graph::DRAWEDGE, &app);
+		om = subject.getObserverMap();
+		number_of_observers = distance(om[0].begin(), om[0].end());
+		REQUIRE(number_of_observers == 0);
+	}
+}
 

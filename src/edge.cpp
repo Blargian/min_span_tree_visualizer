@@ -1,7 +1,6 @@
 #include <iostream>
 #include "edge.h"
 
-
 /**
  * @brief Edge constructor
  *
@@ -68,10 +67,10 @@ Node* Edge::getDestinationNode()
 /**
  * @brief getter method for the weight of the edge
  *
- * @param
  */
 int Edge::getEdgeWeight()
 {
 	return this->edgeWeight;
 }
+
 

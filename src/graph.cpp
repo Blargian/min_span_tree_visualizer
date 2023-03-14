@@ -13,6 +13,10 @@ Graph::Graph() {
 
 }
 
+Graph::~Graph() {
+
+}
+
 /**
  * @brief Inserts a node into vector<Node> nodeArray
  *
@@ -60,6 +64,8 @@ void Graph::connectNodes(Node* a, Node* b, int edgeWeight) {
 
 	Edge ab = Edge(a, b, edgeWeight);
 	Edge ba = Edge(b, a, edgeWeight);
+	this->drawEdge(&ab);
+	this->drawEdge(&ab);
 	a->insertEdge(ab);
 	b->insertEdge(ba);
 }
@@ -107,4 +113,23 @@ pair<float*, float*> Graph::getCoordsForPlot() {
 		node_points_y[index] = xy.second;
 	}
 	return pair<float*,float*>(node_points_x,node_points_y);
+}
+
+/**
+ * @brief gets formatted data for ImGui::PlotLine and notifies 
+ *        App which is an observer which uses the data to plot
+ *        a line with ImGui::PlotLine
+ */
+
+void Graph::drawEdge(Edge* e) {
+	pair<int, int> src = e->getSourceNode()->getXY();
+	pair<int, int> dest = e->getDestinationNode()->getXY();
+
+	float x[2], y[2];
+	x[0] = src.first;
+	x[1] = dest.first;
+	y[0] = src.second;
+	y[1] = dest.second;
+
+	this->Notify(Graph::DRAWEDGE);
 }

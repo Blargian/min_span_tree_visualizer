@@ -6,18 +6,23 @@ using namespace std;
 
 class Node; 
 
-class Graph {
+class Graph : public ISubject {
 private:
 	vector<Node> nodeArray; 
 	int nodeCount = 0;
 public:
+
+	enum MessageTypes { DRAWEDGE };
+
 	// Constructor
 	Graph();
+	~Graph();
 	size_t insertNode(Node n);
 	vector<Node*> getNodes(); 
 	int getNodeCount();
 	void connectNodes(Node* a, Node* b, int edgeWeight);
 	void removeNode(Node* node_to_remove);
 	pair<float*,float*> getCoordsForPlot();
+	void drawEdge(Edge* e);
 }; 
 
