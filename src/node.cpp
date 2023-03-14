@@ -99,10 +99,15 @@ Edge* Node::getEdge(Node* fromNode, Node* toNode) {
 
 /**
  * @brief returns the edge list
- *
- * 
  */
 list<Edge> Node::getEdgeList() {
 	return edgeList; 
+}
+
+/**
+ * @brief returns a nodes coordinates
+ */
+pair <int, int> Node::getXY() {
+	return this->coordinates;
 }
 

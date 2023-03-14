@@ -20,6 +20,7 @@ Graph::Graph() {
  */
 size_t  Graph::insertNode(Node n) {
 	this->nodeArray.push_back(n);
+	this->nodeCount++;
 	return size(this->nodeArray);
 }
 
@@ -33,6 +34,14 @@ vector<Node*> Graph::getNodes() {
 		nodes.push_back(&(this->nodeArray[i]));
 	}
 	return nodes;
+}
+
+/**
+ * @brief returns the number of nodes 
+ *
+ */
+int Graph::getNodeCount() {
+	return this->nodeCount;
 }
 
 /**
@@ -81,4 +90,21 @@ void Graph::removeNode(Node* node_to_remove) {
 		}
 	}
 	this->nodeArray.erase(position);
+	this->nodeCount--;
+}
+
+/**
+ * @brief returns formatted coordinate data of nodes for use in plotting
+ */
+pair<float*, float*> Graph::getCoordsForPlot() {
+	int size = this->getNodeCount();
+	float* node_points_x = new float[size];
+	float* node_points_y = new float[size];
+	for (auto it = this->nodeArray.begin(); it != this->nodeArray.end(); ++it) {
+		int index = it - this->nodeArray.begin();
+		auto xy = it->getXY();
+		node_points_x[index] = xy.first;
+		node_points_y[index] = xy.second;
+	}
+	return pair<float*,float*>(node_points_x,node_points_y);
 }

@@ -15,6 +15,7 @@
 #include <GLES2/gl2.h>
 #endif
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
+#include "graph.h"
 #include "node.h"
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
@@ -35,57 +36,6 @@ inline T RandomRange(T min, T max) {
     return min + scale * (max - min);
 }
 
-void Demo_FilledLinePlots() {
-    static double xs1[101], ys1[101], ys2[101], ys3[101];
-    srand(0);
-    for (int i = 0; i < 101; ++i) {
-        xs1[i] = (float)i;
-        ys1[i] = RandomRange(400.0, 450.0);
-        ys2[i] = RandomRange(275.0, 350.0);
-        ys3[i] = RandomRange(150.0, 225.0);
-    }
-    static bool show_lines = true;
-    static bool show_fills = true;
-    static float fill_ref = 0;
-    static int shade_mode = 0;
-    static ImPlotShadedFlags flags = 0;
-    ImGui::Checkbox("Lines", &show_lines); ImGui::SameLine();
-    ImGui::Checkbox("Fills", &show_fills);
-    if (show_fills) {
-        ImGui::SameLine();
-        if (ImGui::RadioButton("To -INF", shade_mode == 0))
-            shade_mode = 0;
-        ImGui::SameLine();
-        if (ImGui::RadioButton("To +INF", shade_mode == 1))
-            shade_mode = 1;
-        ImGui::SameLine();
-        if (ImGui::RadioButton("To Ref", shade_mode == 2))
-            shade_mode = 2;
-        if (shade_mode == 2) {
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(100);
-            ImGui::DragFloat("##Ref", &fill_ref, 1, -100, 500);
-        }
-    }
-
-    if (ImPlot::BeginPlot("Stock Prices")) {
-        ImPlot::SetupAxes("Days", "Price");
-        ImPlot::SetupAxesLimits(0, 100, 0, 500);
-        if (show_fills) {
-            ImPlot::PushStyleVar(ImPlotStyleVar_FillAlpha, 0.25f);
-            ImPlot::PlotShaded("Stock 1", xs1, ys1, 101, shade_mode == 0 ? -INFINITY : shade_mode == 1 ? INFINITY : fill_ref, flags);
-            ImPlot::PlotShaded("Stock 2", xs1, ys2, 101, shade_mode == 0 ? -INFINITY : shade_mode == 1 ? INFINITY : fill_ref, flags);
-            ImPlot::PlotShaded("Stock 3", xs1, ys3, 101, shade_mode == 0 ? -INFINITY : shade_mode == 1 ? INFINITY : fill_ref, flags);
-            ImPlot::PopStyleVar();
-        }
-        if (show_lines) {
-            ImPlot::PlotLine("Stock 1", xs1, ys1, 101);
-            ImPlot::PlotLine("Stock 2", xs1, ys2, 101);
-            ImPlot::PlotLine("Stock 3", xs1, ys3, 101);
-        }
-        ImPlot::EndPlot();
-    }
-}
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -138,8 +88,8 @@ int main(int, char**)
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
     // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
-    //ImGui::StyleColorsLight();
+    //ImGui::StyleColorsDark();
+    ImGui::StyleColorsLight();
 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -189,44 +139,27 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
-
         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
-            static float f = 0.0f;
-            static int counter = 0;
-
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-            ImGui::End();
-        }
-
-        // 3. Show another simple window.
-        if (show_another_window)
-        {
-            int bar_data[11] = {};
-            float x_data[1000];
-            float y_data[1000];
-
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImPlotContext* context = ImPlot::CreateContext();
-            ImPlot::SetCurrentContext(context);
-            Demo_FilledLinePlots();
+            Graph g = Graph();
+            std::vector<Node> nodes = {
+                Node("Johannesburg", 5, 10),
+                Node("Cape Town", 26, 10),
+                Node("Durban", -24, 78),
+                Node("Richards Bay", 60, 60)
+            };
+            for (Node node : nodes) {
+                g.insertNode(node);
+            }
+            pair<float*, float*> coordinates = g.getCoordsForPlot();
+            ImGuiWindowFlags flags = ImGuiWindowFlags_NoInputs;
+            ImGui::SetNextWindowPos(ImVec2(0, 0));
+            ImGui::Begin("Minimum Spanning Tree Visualizer", NULL, flags);
+            ImPlot::CreateContext();
+            ImPlot::BeginPlot("Spanning Tree");
+            ImPlot::SetupAxesLimits(-100, 100, -100, 100);
+            ImPlot::PlotScatter("Tree Node", coordinates.first, coordinates.second, g.getNodeCount());
+            ImPlot::EndPlot();
             ImGui::End();
         }
 

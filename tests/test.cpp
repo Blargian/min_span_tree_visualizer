@@ -106,6 +106,16 @@ TEST_CASE("Graph","[Graph]"){
 		REQUIRE(nodes.size() == 1);
 	}
 
+	SECTION("node count updates correctly") {
+		Node a = Node();
+		Graph g = Graph();
+		REQUIRE(g.getNodeCount() == 0);
+		g.insertNode(newNode);
+		REQUIRE(g.getNodeCount() == 1);
+		g.removeNode(g.getNodes()[0]);
+		REQUIRE(g.getNodeCount() == 0);
+	}
+
 	SECTION("connects two nodes with an edge") {
 
 		Node a = Node("Johannesburg", 5, 10);
@@ -158,6 +168,22 @@ TEST_CASE("Graph","[Graph]"){
 		//Those nodes should have no edges
 		REQUIRE(size(g.getNodes()[0]->getEdgeList()) == 0);
 		REQUIRE(size(g.getNodes()[1]->getEdgeList()) == 0);
+	}
+
+	SECTION("returns coordinates of nodes in an array of floats - to be used for plotting") {
+		Graph g = Graph();
+		std::vector<Node> nodes = {
+			Node("Johannesburg", 5, 10),
+			Node("Cape Town", 26, 10),
+			Node("Durban", -24, 78)
+		};
+		for (Node node : nodes) {
+			g.insertNode(node);
+		}
+		auto points = g.getCoordsForPlot();
+		REQUIRE((points.first[0] == 5 && points.second[0]==10));
+		REQUIRE((points.first[1] == 26 && points.second[1] == 10));
+		REQUIRE((points.first[2] == -24.0 && points.second[2] == 78));
 	}
 }
 
