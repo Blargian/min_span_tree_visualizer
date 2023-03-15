@@ -12,6 +12,11 @@ The project was inspired by the following two youtube videos, which I thought wo
 
 [![C++](https://skillicons.dev/icons?i=cpp,cmake)](https://skillicons.dev)
 
+## Design Patterns
+
+- The Observer Pattern 
+- Type Erasure
+
 ## Local development guide Windows
 
 `git clone` the repository to your local machine. 
