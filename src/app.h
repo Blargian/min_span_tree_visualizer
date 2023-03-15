@@ -1,4 +1,8 @@
+#pragma once
 #include "app_design.h"
+#include "line.h"
+
+class Line;
 
 class MyApp : public App, public IObserver
 {
@@ -26,7 +30,7 @@ public:
             g.insertNode(node);
         }
         g.connectNodes(g.getNodes()[0], g.getNodes()[1], 1); //connect JHB to CPT
-        g.connectNodes(g.getNodes()[2], g.getNodes()[1], 1); //connect DRB to CPT
+        //g.connectNodes(g.getNodes()[2], g.getNodes()[1], 1); //connect DRB to CPT
         pair<float*, float*> coordinates = g.getCoordsForPlot();
         ImGuiWindowFlags flags = ImGuiWindowFlags_NoInputs;
         ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_FirstUseEver);
@@ -40,8 +44,9 @@ public:
         ImGui::End();
     }
 
-    virtual void OnNotify() final {
+     void OnNotify(Line l) {
         //do something here when notified
-        std::cout << "an edge was drawn" << std::endl;
+        std::cout << "edge was drawn" << std::endl;
+        ImPlot::PlotLine("1", l.getPointA(), l.getPointB(), 2, ImPlotLineFlags_Segments);
     }
 };

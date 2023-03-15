@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class Node; 
+class Node;
 
 class Graph : public ISubject {
 private:

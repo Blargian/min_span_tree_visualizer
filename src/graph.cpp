@@ -125,11 +125,7 @@ void Graph::drawEdge(Edge* e) {
 	pair<int, int> src = e->getSourceNode()->getXY();
 	pair<int, int> dest = e->getDestinationNode()->getXY();
 
-	float x[2], y[2];
-	x[0] = src.first;
-	x[1] = dest.first;
-	y[0] = src.second;
-	y[1] = dest.second;
+	Line l = Line(src, dest);
 
-	this->Notify(Graph::DRAWEDGE);
+	this->Notify(Graph::DRAWEDGE, l);
 }

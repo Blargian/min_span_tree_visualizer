@@ -1,6 +1,8 @@
+#pragma once
 #include "iObserver.h"
 #include<forward_list>
 #include<map>
+#include "line.h"
 
 //Interface class for a subject of the observable pattern 
 class ISubject {
@@ -28,21 +30,14 @@ public:
 		}
 	}
 
-	virtual void NotifyAll() {
-		for (ObserversMap::iterator it = mObservers.begin(); it != mObservers.end(); ++it) {
-			for (auto& o : mObservers[it->first]) {
-				o->OnNotify();
-			}
-		}
-	}
-
-	virtual void Notify(int message) {
+	void Notify(int message, Line l) {
 		for (auto& o : mObservers[message]) {
-			o->OnNotify();
+			//should pass back data
+			o->OnNotify(l);
 		}
 	}
 
-	virtual bool hasObservers() {
+	bool hasObservers() {
 		int size = distance(this->mObservers.begin(),
 			this->mObservers.end());
 		if (size != 0) {
