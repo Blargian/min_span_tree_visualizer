@@ -15,9 +15,19 @@ add_subdirectory ("src")
 # Configuration for Catch2 
 
 add_subdirectory(lib/Catch2)
-add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp  "src/graph.h" "src/Graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp"  )
+add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp  "src/graph.h" "src/graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp" "src/iSubject.h" "src/iObserver.h" "src/app.h" "src/app_design.h" "src/line.h" "src/line.cpp" "src/app.cpp")
 
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain) #import not to use Catch2::Catch2 here but rather Catch2WithMain 
+target_link_libraries(
+    tests 
+    PRIVATE 
+     Catch2::Catch2WithMain
+     OpenGL::GL
+     glfw
+     glad::glad
+     imgui::imgui
+     implot::implot
+
+) #import not to use Catch2::Catch2 here but rather Catch2WithMain 
 
 include(CTest)
 include(Catch)
@@ -31,7 +41,7 @@ find_package(imgui CONFIG REQUIRED)
 find_package(implot CONFIG REQUIRED)
 
 
-add_executable (min_span_tree_visualizer src/main.cpp "src/graph.h" "src/Graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp" "src/app_design.h" "src/app.h")
+add_executable (min_span_tree_visualizer src/main.cpp "src/graph.h" "src/graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp" "src/app_design.h" "src/app.h" "src/iSubject.h" "src/iObserver.h" "src/line.h" "src/line.cpp" "src/app.cpp")
 set_property(TARGET min_span_tree_visualizer PROPERTY WIN32_EXECUTABLE FALSE)
 target_include_directories(min_span_tree_visualizer 
   PRIVATE 

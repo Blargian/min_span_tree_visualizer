@@ -13,6 +13,10 @@ Graph::Graph() {
 
 }
 
+Graph::~Graph() {
+
+}
+
 /**
  * @brief Inserts a node into vector<Node> nodeArray
  *
@@ -60,6 +64,8 @@ void Graph::connectNodes(Node* a, Node* b, int edgeWeight) {
 
 	Edge ab = Edge(a, b, edgeWeight);
 	Edge ba = Edge(b, a, edgeWeight);
+	this->drawEdge(&ab);
+	//this->drawEdge(&ab);
 	a->insertEdge(ab);
 	b->insertEdge(ba);
 }
@@ -70,7 +76,6 @@ void Graph::connectNodes(Node* a, Node* b, int edgeWeight) {
  */
 
 void Graph::removeNode(Node* node_to_remove) {
-	cout << "hello world" << endl;
 	//visit edges in node_to_remove and remove it from those other nodes' edgelists
 	list<Edge> connected_edges = node_to_remove->getEdgeList();
 	for (auto it = connected_edges.begin(); it!=connected_edges.end();++it) {
@@ -107,4 +112,19 @@ pair<float*, float*> Graph::getCoordsForPlot() {
 		node_points_y[index] = xy.second;
 	}
 	return pair<float*,float*>(node_points_x,node_points_y);
+}
+
+/**
+ * @brief gets formatted data for ImGui::PlotLine and notifies 
+ *        App which is an observer which uses the data to plot
+ *        a line with ImGui::PlotLine
+ */
+
+void Graph::drawEdge(Edge* e) {
+	pair<int, int> src = e->getSourceNode()->getXY();
+	pair<int, int> dest = e->getDestinationNode()->getXY();
+
+	Line l = Line(src, dest);
+
+	this->Notify(Graph::DRAWEDGE, l);
 }

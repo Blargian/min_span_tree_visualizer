@@ -1,6 +1,7 @@
 #pragma once
 #include "node.h"
 #include <iostream>
+#include "iSubject.h"
 
 class Node; 
 
@@ -19,7 +20,7 @@ public:
 	void setEdgeWeight(int weight);
 	Node* getSourceNode();
 	Node* getDestinationNode();
-	int getEdgeWeight();	
+	int getEdgeWeight();
 
 	friend bool operator==(Edge a, Edge b) {
 		if (

@@ -153,6 +153,7 @@ class App
 			}
 		}
 
-		virtual void Update() = 0;
+        //pure virtual functions to force derived class to implement these methods
+		virtual void Update() = 0; 
 		virtual void StartUp() = 0;
 };
