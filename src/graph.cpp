@@ -65,7 +65,7 @@ void Graph::connectNodes(Node* a, Node* b, int edgeWeight) {
 	Edge ab = Edge(a, b, edgeWeight);
 	Edge ba = Edge(b, a, edgeWeight);
 	this->drawEdge(&ab);
-	this->drawEdge(&ab);
+	//this->drawEdge(&ab);
 	a->insertEdge(ab);
 	b->insertEdge(ba);
 }
@@ -76,7 +76,6 @@ void Graph::connectNodes(Node* a, Node* b, int edgeWeight) {
  */
 
 void Graph::removeNode(Node* node_to_remove) {
-	cout << "hello world" << endl;
 	//visit edges in node_to_remove and remove it from those other nodes' edgelists
 	list<Edge> connected_edges = node_to_remove->getEdgeList();
 	for (auto it = connected_edges.begin(); it!=connected_edges.end();++it) {

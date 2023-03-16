@@ -211,5 +211,6 @@ TEST_CASE("iSubject", "[Subject]") {
 		number_of_observers = distance(om[0].begin(), om[0].end());
 		REQUIRE(number_of_observers == 0);
 	}
-}
+};
+
 
