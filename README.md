@@ -15,7 +15,6 @@ The project was inspired by the following two youtube videos, which I thought wo
 ## Design Patterns
 
 - The Observer Pattern 
-- Type Erasure
 
 ## Local development guide Windows
 
