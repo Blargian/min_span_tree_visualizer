@@ -111,3 +111,17 @@ pair <int, int> Node::getXY() {
 	return this->coordinates;
 }
 
+/**
+ * @brief marks the visited property on a node true 
+ */
+void Node::markVisited() {
+	this->visited = true;
+}
+
+/**
+ * @brief returns true or false for if the node has been visited 
+ */
+bool Node::wasVisited() {
+	return this->visited;
+}
+

@@ -14,6 +14,7 @@ private:
 	list<Edge> edgeList;
 	string nodeName; 
 	pair <int, int> coordinates;
+	bool visited = false;
 public:
 	Node();
 	Node(string nodeName, int x, int y);
@@ -25,6 +26,8 @@ public:
 	list<Edge> getEdgeList();
 	Edge* getEdge(Node* fromNode, Node* toNode);
 	pair <int, int> getXY();
+	void markVisited();
+	bool wasVisited();
 
 	friend bool operator==(Node a, Node b) {
 		if (

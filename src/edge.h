@@ -36,6 +36,18 @@ public:
 		}
 	};
 
+	friend bool operator>(Edge a, Edge b) {
+		if (
+			a.getEdgeWeight() > b.getEdgeWeight()
+			)
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
+	};
+
 	friend std::ostream& operator<<(std::ostream& stream, Edge const& e) {
 		stream << "Source node: " << e.sourceNode << std::endl
 			<< "Destination node: " << e.destinationNode << std::endl

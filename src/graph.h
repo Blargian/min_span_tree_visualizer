@@ -1,5 +1,6 @@
 #pragma once 
 #include <vector>
+#include <queue>
 #include "node.h"
 
 using namespace std;
@@ -24,5 +25,7 @@ public:
 	void removeNode(Node* node_to_remove);
 	pair<float*,float*> getCoordsForPlot();
 	void drawEdge(Edge* e);
+	void runPrimsAlgorithm(Node& startingNode);
+	void visitNode(Node &node, priority_queue<Edge, vector<Edge>, greater<Edge>> &pq);
 }; 
 
