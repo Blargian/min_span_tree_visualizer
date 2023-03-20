@@ -4,8 +4,46 @@
 #include "../src/graph.h"
 #include "../src/app.h"
 #include <algorithm>
+#include <vector>
+#include <string>
 
 using namespace std; 
+
+//mock data for edges of a small test graph here: 
+vector<vector<double>> tinyEWG =
+{
+	{4, 5, 0.35},
+	{4, 7, 0.37},
+	{5, 7, 0.28},
+	{0, 7, 0.16},
+	{1, 5, 0.32},
+	{0, 4, 0.38},
+	{2, 3, 0.17},
+	{1, 7, 0.19},
+	{0, 2, 0.26},
+	{1, 2, 0.36},
+	{1, 3, 0.29},
+	{2, 7, 0.34},
+	{6, 2, 0.40},
+	{3, 6, 0.52},
+	{6, 0, 0.58},
+	{6, 4, 0.93}
+};
+
+//mock data for nodes of a small test graph:
+
+vector<vector<int>> tinyEWGnodes =
+{
+	{0, 4, 2},
+	{1, 3, 7},
+	{2, 6, 4},
+	{3, 8, 7},
+	{4, 0, 0},
+	{5, 0, 4},
+	{6, 8, 0},
+	{7, 3, 4},
+
+};
 
 TEST_CASE("Graph edge", "[Edge]") {
 
@@ -217,6 +255,15 @@ TEST_CASE("iSubject", "[Subject]") {
 };
 
 TEST_CASE("Prim's Algorithm", "[Prims]") {
-
+	Graph tinyGraph; 
+	//create the nodes
+	for (vector<int> node : tinyEWGnodes) {
+			tinyGraph.insertNode(Node(to_string(node[0]), static_cast<int>(node[0]), static_cast<int>(node[0])));
+	}
+	//connect the nodes
+	for (vector<double> node_data : tinyEWG) {
+		tinyGraph.connectNodes()
+	}
+	
 }
 
