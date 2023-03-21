@@ -3,6 +3,7 @@
 #include <string>
 #include <Vector>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -39,6 +40,16 @@ vector<Node*> Graph::getNodes() {
 		nodes.push_back(&(this->nodeArray[i]));
 	}
 	return nodes;
+}
+
+/**
+ * @brief returns a pointer to a node 
+ * @param name String which is the nodeName member of Node
+ */
+Node* Graph::getNodeByName(string name) {
+	auto it = find_if(this->nodeArray.begin(), this->nodeArray.end(), [&name](Node& obj) {return obj.getNodeName() == name; });
+	auto index = std::distance(this->nodeArray.begin(), it);
+	return &(this->nodeArray[index]);
 }
 
 /**
@@ -134,20 +145,20 @@ void Graph::drawEdge(Edge* e) {
  * @brief runs Prims algorithm on a grapg
  * @param startingNode pointer to any node which is selected as the starting point
  */
-void Graph::runPrimsAlgorithm(Node& startingNode) {
+queue<Edge> Graph::runPrimsAlgorithm(Node& startingNode) {
 	priority_queue<Edge, vector<Edge>, greater<Edge>> minPQ; 
 	queue<Edge> MST; 
 
 	visitNode(startingNode, minPQ);
 	while (!minPQ.empty()) {
 		Edge edge_least_weight = minPQ.top(); //get the edge of lowest weight
+		minPQ.pop(); //remove that edge
 		Node* src = edge_least_weight.getSourceNode();
 		Node* dest = edge_least_weight.getDestinationNode();
 		if (src->wasVisited() && dest->wasVisited()) { //skip edges between nodes already explored
 			continue;
 		};
 		MST.push(edge_least_weight);
-		
 		if (!src->wasVisited()) {
 			runPrimsAlgorithm(*src);
 		};
@@ -155,13 +166,14 @@ void Graph::runPrimsAlgorithm(Node& startingNode) {
 			runPrimsAlgorithm(*dest);
 		};
 	}
+	return MST;
 }
 
 void  Graph::visitNode(Node& node, priority_queue<Edge, vector<Edge>, greater<Edge>>& pq) {
 	node.markVisited();
 	for (auto& e : node.getEdgeList())
 	{
-		if (e.getDestinationNode()->wasVisited()) {
+		if (!e.getDestinationNode()->wasVisited()) {
 			pq.push(e);
 		}
 	}

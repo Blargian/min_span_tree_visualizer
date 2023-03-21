@@ -19,6 +19,7 @@ public:
 	Node();
 	Node(string nodeName, int x, int y);
 	void setNodeName(string nodeName);
+	string getNodeName();
 	void setXY(int x, int y);
 	void insertEdge(Edge edgeToAdd);
 	void removeEdge(Node* fromNode, Node* toEdge);

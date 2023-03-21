@@ -226,6 +226,22 @@ TEST_CASE("Graph","[Graph]"){
 		REQUIRE((points.first[1] == 26 && points.second[1] == 10));
 		REQUIRE((points.first[2] == -24.0 && points.second[2] == 78));
 	}
+
+	SECTION("getNodeByName returns a pointer to a node given the name") {
+		Graph g = Graph();
+		std::vector<Node> nodes = {
+			Node("Johannesburg", 5, 10),
+			Node("Cape Town", 26, 10),
+			Node("Durban", -24, 78)
+		};
+		for (Node node : nodes) {
+			g.insertNode(node);
+		}
+		Node* node = g.getNodeByName("Johannesburg");
+		REQUIRE(node->getXY().first == 5);
+		REQUIRE(node->getXY().second == 10);
+		REQUIRE(node->getNodeName() == "Johannesburg");
+	}
 }
 
 TEST_CASE("iSubject", "[Subject]") {
@@ -258,12 +274,17 @@ TEST_CASE("Prim's Algorithm", "[Prims]") {
 	Graph tinyGraph; 
 	//create the nodes
 	for (vector<int> node : tinyEWGnodes) {
-			tinyGraph.insertNode(Node(to_string(node[0]), static_cast<int>(node[0]), static_cast<int>(node[0])));
-	}
+		tinyGraph.insertNode(Node(to_string(node[0]), static_cast<int>(node[0]), static_cast<int>(node[0])));
+	};
 	//connect the nodes
 	for (vector<double> node_data : tinyEWG) {
-		tinyGraph.connectNodes()
+		tinyGraph.connectNodes(tinyGraph.getNodeByName(to_string((int)node_data[0])), tinyGraph.getNodeByName(to_string((int)node_data[1])), node_data[2]);
+	};
+
+	auto MST = tinyGraph.runPrimsAlgorithm(*tinyGraph.getNodeByName("0"));
+	while (!MST.empty()) {
+		cout << MST.front() << endl; //add something to print edges
+		MST.pop();
 	}
-	
 }
 

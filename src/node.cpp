@@ -32,6 +32,15 @@ Node::Node(string nodeName, int x, int y) {
 void Node::setNodeName(string nodeName) {
 	this->nodeName = nodeName; 
 }
+
+/**
+ * @brief Getter method for the nodename
+ */
+string Node::getNodeName() {
+	return this->nodeName;
+}
+
+
 /**
  * @brief Setter method for the node co-ordinates on 100x100 grid 
  *
