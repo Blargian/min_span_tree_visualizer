@@ -75,11 +75,10 @@ void Graph::connectNodes(Node* a, Node* b, int edgeWeight) {
 	    //update the nodes
 
 	Edge ab = Edge(a, b, edgeWeight);
-	//Edge ba = Edge(b, a, edgeWeight); not needed as grap
+	Edge ba = Edge(b, a, edgeWeight);
 	this->drawEdge(&ab);
-	//this->drawEdge(&ab);
 	a->insertEdge(ab);
-	//b->insertEdge(ba);
+	b->insertEdge(ba);
 }
 
 /**
@@ -145,36 +144,36 @@ void Graph::drawEdge(Edge* e) {
  * @brief runs Prims algorithm on a grapg
  * @param startingNode pointer to any node which is selected as the starting point
  */
-queue<Edge> Graph::runPrimsAlgorithm(Node& startingNode) {
-	priority_queue<Edge, vector<Edge>, greater<Edge>> minPQ; 
-	queue<Edge> MST; 
-
-	visitNode(startingNode, minPQ);
-	while (!minPQ.empty()) {
-		Edge edge_least_weight = minPQ.top(); //get the edge of lowest weight
-		minPQ.pop(); //remove that edge
-		Node* src = edge_least_weight.getSourceNode();
-		Node* dest = edge_least_weight.getDestinationNode();
-		if (src->wasVisited() && dest->wasVisited()) { //skip edges between nodes already explored
-			continue;
-		};
-		MST.push(edge_least_weight);
-		if (!src->wasVisited()) {
-			runPrimsAlgorithm(*src);
-		};
-		if (!dest->wasVisited()) {
-			runPrimsAlgorithm(*dest);
-		};
-	}
-	return MST;
-}
-
-void  Graph::visitNode(Node& node, priority_queue<Edge, vector<Edge>, greater<Edge>>& pq) {
-	node.markVisited();
-	for (auto& e : node.getEdgeList())
-	{
-		if (!e.getDestinationNode()->wasVisited()) {
-			pq.push(e);
-		}
-	}
-}
+//queue<Edge> Graph::runPrimsAlgorithm(Node& startingNode) {
+//	priority_queue<Edge, vector<Edge>, greater<Edge>> minPQ; 
+//	queue<Edge> MST; 
+//
+//	visitNode(startingNode, minPQ);
+//	while (!minPQ.empty()) {
+//		Edge edge_least_weight = minPQ.top(); //get the edge of lowest weight
+//		minPQ.pop(); //remove that edge
+//		Node* src = edge_least_weight.getSourceNode();
+//		Node* dest = edge_least_weight.getDestinationNode();
+//		if (src->wasVisited() && dest->wasVisited()) { //skip edges between nodes already explored
+//			continue;
+//		};
+//		MST.push(edge_least_weight);
+//		if (!src->wasVisited()) {
+//			runPrimsAlgorithm(*src);
+//		};
+//		if (!dest->wasVisited()) {
+//			runPrimsAlgorithm(*dest);
+//		};
+//	}
+//	return MST;
+//}
+//
+//void  Graph::visitNode(Node& node, priority_queue<Edge, vector<Edge>, greater<Edge>>& pq) {
+//	node.markVisited();
+//	for (auto& e : node.getEdgeList())
+//	{
+//		if (!e.getDestinationNode()->wasVisited()) {
+//			pq.push(e);
+//		}
+//	}
+//}

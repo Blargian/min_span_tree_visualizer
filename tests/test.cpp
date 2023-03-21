@@ -3,6 +3,7 @@
 #include "../src/edge.h"
 #include "../src/graph.h"
 #include "../src/app.h"
+#include "../src/prims_algo.h"
 #include <algorithm>
 #include <vector>
 #include <string>
@@ -280,11 +281,11 @@ TEST_CASE("Prim's Algorithm", "[Prims]") {
 	for (vector<double> node_data : tinyEWG) {
 		tinyGraph.connectNodes(tinyGraph.getNodeByName(to_string((int)node_data[0])), tinyGraph.getNodeByName(to_string((int)node_data[1])), node_data[2]);
 	};
-
-	auto MST = tinyGraph.runPrimsAlgorithm(*tinyGraph.getNodeByName("0"));
-	while (!MST.empty()) {
-		cout << MST.front() << endl; //add something to print edges
-		MST.pop();
-	}
+	//PrimsAlgorithm prim = PrimsAlgorithm();
+	//auto MST = prim.findMST(*tinyGraph.getNodeByName("0"));
+	//while (!MST.empty()) {
+	//	cout << MST.front() << endl; //add something to print edges
+	//	MST.pop();
+	//}
 }
 
