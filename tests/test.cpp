@@ -200,7 +200,7 @@ TEST_CASE("Graph","[Graph]"){
 		g.connectNodes(nodes_on_graph[2], nodes_on_graph[1], 1);
 
 		REQUIRE(size(g.getNodes()[0]->getEdgeList()) == 1);
-		REQUIRE(size(g.getNodes()[1]->getEdgeList()) == 0);
+		REQUIRE(size(g.getNodes()[1]->getEdgeList()) == 2);
 		REQUIRE(size(g.getNodes()[2]->getEdgeList()) == 1);
 
 		g.removeNode(g.getNodes().back());
@@ -272,20 +272,45 @@ TEST_CASE("iSubject", "[Subject]") {
 };
 
 TEST_CASE("Prim's Algorithm", "[Prims]") {
-	Graph tinyGraph; 
-	//create the nodes
-	for (vector<int> node : tinyEWGnodes) {
-		tinyGraph.insertNode(Node(to_string(node[0]), static_cast<int>(node[0]), static_cast<int>(node[0])));
-	};
-	//connect the nodes
-	for (vector<double> node_data : tinyEWG) {
-		tinyGraph.connectNodes(tinyGraph.getNodeByName(to_string((int)node_data[0])), tinyGraph.getNodeByName(to_string((int)node_data[1])), node_data[2]);
-	};
-	//PrimsAlgorithm prim = PrimsAlgorithm();
-	//auto MST = prim.findMST(*tinyGraph.getNodeByName("0"));
-	//while (!MST.empty()) {
-	//	cout << MST.front() << endl; //add something to print edges
-	//	MST.pop();
-	//}
+
+	SECTION("check that Prims algorithm finds the correct MST") {
+		Graph tinyGraph;
+		//create the nodes
+		for (vector<int> node : tinyEWGnodes) {
+			tinyGraph.insertNode(Node(to_string(node[0]), static_cast<int>(node[0]), static_cast<int>(node[0])));
+		};
+		//connect the nodes
+		for (vector<double> node_data : tinyEWG) {
+			tinyGraph.connectNodes(tinyGraph.getNodeByName(to_string((int)node_data[0])), tinyGraph.getNodeByName(to_string((int)node_data[1])), node_data[2]);
+		};
+
+		vector<Edge> expected_edges{
+			Edge(tinyGraph.getNodeByName("0"),tinyGraph.getNodeByName("7"),0.16),
+			Edge(tinyGraph.getNodeByName("0"),tinyGraph.getNodeByName("2"),0.26),
+			Edge(tinyGraph.getNodeByName("6"),tinyGraph.getNodeByName("2"),0.40),
+			Edge(tinyGraph.getNodeByName("2"),tinyGraph.getNodeByName("3"),0.17),
+			Edge(tinyGraph.getNodeByName("6"),tinyGraph.getNodeByName("2"),0.40),
+			Edge(tinyGraph.getNodeByName("1"),tinyGraph.getNodeByName("7"),0.19),
+			Edge(tinyGraph.getNodeByName("5"),tinyGraph.getNodeByName("7"),0.28),
+			Edge(tinyGraph.getNodeByName("4"),tinyGraph.getNodeByName("5"),0.35),
+		};
+
+		PrimsAlgorithm prim = PrimsAlgorithm();
+		auto MST = prim.findMST(*tinyGraph.getNodeByName("0"));
+
+		cout << "========== Prims Algorithm ==========" << endl;
+		cout << "Found the following MST" << endl;
+		bool found;
+		while (!MST.empty()) {
+			Edge e = MST.front();
+			cout << e << endl; //add something to print edges
+			auto it = find(expected_edges.begin(), expected_edges.end(), e);
+			int index = distance(expected_edges.begin(), it);
+			REQUIRE(it != expected_edges.end()); //check that the edge does exist in expected_edges
+			CHECK((expected_edges[index] == e)); //check that the contents of the edge are correct
+			MST.pop();
+			expected_edges.erase(it);
+		}
+	}
 }
 

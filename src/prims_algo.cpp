@@ -1,5 +1,12 @@
 #include "prims_algo.h"
 
+
+PrimsAlgorithm::PrimsAlgorithm() {
+};
+
+PrimsAlgorithm::~PrimsAlgorithm() {
+};
+
 queue<Edge> PrimsAlgorithm::findMST(Node& startingNode) {
 	visitNode(startingNode, minPQ_);
 	while (!minPQ_.empty()) {

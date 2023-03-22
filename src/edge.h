@@ -9,52 +9,21 @@ class Edge {
 private:
 	Node* sourceNode;
 	Node* destinationNode;
-	int edgeWeight;
+	double edgeWeight;
 public:
 	//constructor
-	Edge(Node* srcNode,Node* destNode, int w);
+	Edge(Node* srcNode,Node* destNode, double w);
 
 	//Setters and Getters 
 	void setSourceNode(Node* srcNode);
 	void setDestinationNode(Node* destNode);
-	void setEdgeWeight(int weight);
+	void setEdgeWeight(double weight);
 	Node* getSourceNode();
 	Node* getDestinationNode();
-	int getEdgeWeight();
-
-	friend bool operator==(Edge a, Edge b) {
-		if (
-			a.getSourceNode() == b.getSourceNode()
-			&& a.getDestinationNode() == b.getDestinationNode()
-			&& a.getEdgeWeight() == b.getEdgeWeight()
-			)
-		{
-			return true;
-		}
-		else {
-			return false;
-		}
-	};
-
-	friend bool operator>(Edge a, Edge b) {
-		if (
-			a.getEdgeWeight() > b.getEdgeWeight()
-			)
-		{
-			return true;
-		}
-		else {
-			return false;
-		}
-	};
-
-	friend std::ostream& operator<<(std::ostream& stream, Edge const& e) {
-		stream << "Source node: " << e.sourceNode << std::endl
-			<< "Destination node: " << e.destinationNode << std::endl
-			<< "Edge weight: " << e.edgeWeight << std::endl;
-
-		return stream;
-	};
+	double getEdgeWeight();
+	friend bool operator==(Edge a, Edge b);
+	friend bool operator>(Edge a, Edge b);
+	friend std::ostream& operator<<(std::ostream& stream, Edge const& e);
 };
 
 

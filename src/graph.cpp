@@ -66,7 +66,7 @@ int Graph::getNodeCount() {
  *        b the second node
  *        edgeWeight the edge weight 
  */
-void Graph::connectNodes(Node* a, Node* b, int edgeWeight) {
+void Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
 
 	//check if the nodes are connected yet or not
 	//if not connected 

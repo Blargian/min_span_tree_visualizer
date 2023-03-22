@@ -4,6 +4,7 @@
 #include <string>
 #include <list>
 #include <utility> 
+#include <iostream>
 
 using namespace std; 
 
@@ -29,18 +30,6 @@ public:
 	pair <int, int> getXY();
 	void markVisited();
 	bool wasVisited();
-
-	friend bool operator==(Node a, Node b) {
-		if (
-			a.coordinates == b.coordinates
-			&& a.edgeList == b.edgeList
-			&& a.nodeName == b.nodeName
-			)
-		{
-			return true;
-		}
-		else {
-			return false;
-		}
-	};
+	friend bool operator==(Node a, Node b);
+	friend std::ostream& operator<<(std::ostream& stream, Node const& n);
 };
