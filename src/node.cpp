@@ -32,6 +32,15 @@ Node::Node(string nodeName, int x, int y) {
 void Node::setNodeName(string nodeName) {
 	this->nodeName = nodeName; 
 }
+
+/**
+ * @brief Getter method for the nodename
+ */
+string Node::getNodeName() {
+	return this->nodeName;
+}
+
+
 /**
  * @brief Setter method for the node co-ordinates on 100x100 grid 
  *
@@ -111,3 +120,36 @@ pair <int, int> Node::getXY() {
 	return this->coordinates;
 }
 
+/**
+ * @brief marks the visited property on a node true 
+ */
+void Node::markVisited() {
+	this->visited = true;
+}
+
+/**
+ * @brief returns true or false for if the node has been visited 
+ */
+bool Node::wasVisited() {
+	return this->visited;
+}
+
+
+bool operator==(Node a, Node b) {
+	if (
+		a.coordinates == b.coordinates
+		&& a.edgeList == b.edgeList
+		&& a.nodeName == b.nodeName
+		)
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+};
+
+std::ostream& operator<<(std::ostream& stream, Node const& n) {
+	stream << "Node name: " << n.nodeName << std::endl;
+	return stream;
+};

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "edge.h"
+#include <iomanip>
 
 /**
  * @brief Edge constructor
@@ -7,7 +8,7 @@
  * @param destNode pointer to the destination Node 
  * @param w weight of the edge 
  */
-Edge::Edge(Node* srcNode, Node* destNode, int w)
+Edge::Edge(Node* srcNode, Node* destNode, double w)
 {
 	sourceNode = srcNode; 
 	destinationNode = destNode;
@@ -39,7 +40,7 @@ void Edge::setDestinationNode(Node* destNode)
  *
  * @param w the weight of the edge
  */
-void Edge::setEdgeWeight(int weight)
+void Edge::setEdgeWeight(double weight)
 {
 	this->edgeWeight = weight;
 }
@@ -68,9 +69,51 @@ Node* Edge::getDestinationNode()
  * @brief getter method for the weight of the edge
  *
  */
-int Edge::getEdgeWeight()
+double Edge::getEdgeWeight()
 {
 	return this->edgeWeight;
 }
+
+bool operator==(Edge a, Edge b) {
+	if (
+		a.getSourceNode() == b.getSourceNode()
+		&& a.getDestinationNode() == b.getDestinationNode()
+		&& a.getEdgeWeight() == b.getEdgeWeight()
+		)
+	{
+		return true;
+	}
+	//because the graph is undirected
+	else if (
+		a.getSourceNode() == b.getDestinationNode()
+		&& a.getDestinationNode() == b.getSourceNode()
+		&& a.getEdgeWeight() == b.getEdgeWeight()
+		) {
+		return true;
+	}
+	else {
+		return false;
+	}
+};
+
+bool operator>(Edge a, Edge b) {
+	if (
+		a.getEdgeWeight() > b.getEdgeWeight()
+		)
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+};
+
+std::ostream& operator<<(std::ostream& stream, Edge const& e) {
+	stream << "Source node: " << e.sourceNode->getNodeName() << std::endl
+		<< "Destination node: " << e.destinationNode->getNodeName() << std::endl
+		<< "Edge weight: " << fixed << setprecision(2) << e.edgeWeight << std::endl;
+
+	return stream;
+};
 
 
