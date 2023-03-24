@@ -21,6 +21,7 @@ public:
 	Node* getSourceNode();
 	Node* getDestinationNode();
 	double getEdgeWeight();
+
 	friend bool operator==(Edge a, Edge b);
 	friend bool operator>(Edge a, Edge b);
 	friend std::ostream& operator<<(std::ostream& stream, Edge const& e);

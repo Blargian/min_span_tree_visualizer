@@ -26,7 +26,4 @@ public:
 	void removeNode(Node* node_to_remove);
 	pair<float*,float*> getCoordsForPlot();
 	void drawEdge(Edge* e);
-	//queue<Edge> runPrimsAlgorithm(Node& startingNode);
-	//void visitNode(Node &node, priority_queue<Edge, vector<Edge>, greater<Edge>> &pq);
 }; 
-

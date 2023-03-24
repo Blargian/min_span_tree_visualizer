@@ -4,6 +4,8 @@
 #include <Vector>
 #include <queue>
 #include <algorithm>
+#include "implot.h"
+#include "imgui.h"
 
 using namespace std;
 
@@ -131,49 +133,6 @@ pair<float*, float*> Graph::getCoordsForPlot() {
  *        a line with ImGui::PlotLine
  */
 
-void Graph::drawEdge(Edge* e) {
-	pair<int, int> src = e->getSourceNode()->getXY();
-	pair<int, int> dest = e->getDestinationNode()->getXY();
-
-	Line l = Line(src, dest);
-
-	this->Notify(Graph::DRAWEDGE, l);
+void Graph::drawEdge(Edge* e) { 
+	this->Notify(Graph::DRAWEDGE, Line(*e));
 }
-
-/**
- * @brief runs Prims algorithm on a grapg
- * @param startingNode pointer to any node which is selected as the starting point
- */
-//queue<Edge> Graph::runPrimsAlgorithm(Node& startingNode) {
-//	priority_queue<Edge, vector<Edge>, greater<Edge>> minPQ; 
-//	queue<Edge> MST; 
-//
-//	visitNode(startingNode, minPQ);
-//	while (!minPQ.empty()) {
-//		Edge edge_least_weight = minPQ.top(); //get the edge of lowest weight
-//		minPQ.pop(); //remove that edge
-//		Node* src = edge_least_weight.getSourceNode();
-//		Node* dest = edge_least_weight.getDestinationNode();
-//		if (src->wasVisited() && dest->wasVisited()) { //skip edges between nodes already explored
-//			continue;
-//		};
-//		MST.push(edge_least_weight);
-//		if (!src->wasVisited()) {
-//			runPrimsAlgorithm(*src);
-//		};
-//		if (!dest->wasVisited()) {
-//			runPrimsAlgorithm(*dest);
-//		};
-//	}
-//	return MST;
-//}
-//
-//void  Graph::visitNode(Node& node, priority_queue<Edge, vector<Edge>, greater<Edge>>& pq) {
-//	node.markVisited();
-//	for (auto& e : node.getEdgeList())
-//	{
-//		if (!e.getDestinationNode()->wasVisited()) {
-//			pq.push(e);
-//		}
-//	}
-//}
