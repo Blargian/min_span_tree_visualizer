@@ -1,7 +1,6 @@
 #include "draw.h"
 #include "marker.h"
 #include<utility>
-#include <functional>
 
 vector<Line>& Draw::lines() {
     return lines_;
@@ -11,18 +10,21 @@ vector<Marker>& Draw::markers() {
     return markers_;
 }
 
-std::optional<Marker> Draw::findMarker(ImPlotPoint p) {
+Marker* Draw::findMarker(ImPlotPoint p, bool& found) {
 
-    bool found = false;
-    auto it = find(markers_.begin(), markers_.end(), p);
+    auto predicate = [p](Marker& marker) {
+        return ((marker.coordinates().x == p.x) && (marker.coordinates().y == p.y));
+    };
+
+    auto it = find_if(markers_.begin(), markers_.end(), predicate);
     if (it != markers_.end()) {
         found = true;
     };
 
     if (found) {
-        return std::reference_wrapper<Marker>{markers_[std::distance(markers_.begin(), it)]};
+        return &markers_[std::distance(markers_.begin(), it)];
     } else {
-        return std::nullopt;
+        return NULL;
     };
 };
 
@@ -76,11 +78,16 @@ void checkPlotClicked(Draw &d) {
     if (ImPlot::IsPlotHovered() && ImGui::IsMouseClicked(0)) {
         ImPlotPoint pt = ImPlot::GetPlotMousePos();
         ImPlotPoint nearest = ImPlotPoint(round(pt.x), round(pt.y));
-        if (d.findMarker(nearest).has_value()) {
+        bool found = false;
+        Marker* found_marker = d.findMarker(nearest, found);
+        if(found) {
             // select the marker 
+            cout << "found a marker" << endl;
+            return;
         }
         else {
             //do nothing
+            return;
         }
     }
 }

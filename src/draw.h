@@ -3,7 +3,6 @@
 #include "graph.h"
 #include "ImPlot.h"
 #include "marker.h"
-#include <optional>
 
 class Marker; 
 
@@ -14,7 +13,7 @@ private:
 public:
 	vector<Line>& lines();
 	vector<Marker>& markers();
-	std::optional<Marker> findMarker(ImPlotPoint p);
+	Marker* findMarker(ImPlotPoint p, bool& found);
 };
 
 void createPlot(Draw &d, int window_width, int window_height);

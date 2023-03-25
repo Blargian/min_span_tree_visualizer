@@ -7,6 +7,10 @@ Marker::Marker(Node n) {
     markerColour_ = MarkerColours::GREY;
 }
 
+Marker::~Marker() {
+
+}
+
 const ImPlotPoint Marker::coordinates() {
     return coordinates_;
 }
@@ -65,10 +69,10 @@ const char* generateSimpleUuid() {
     return ss.str().c_str();
 }
 
-bool operator==(Marker a, const Marker b) {
+bool operator==(Marker lhs, Marker rhs) {
     if (
-        a.coordinates().x == b.coordinates().x
-        && a.coordinates().y == b.coordinates().y
+        (lhs.coordinates_.x == rhs.coordinates_.x)
+        && (lhs.coordinates_.y == rhs.coordinates_.y)
     ){
         return true;
     } else {

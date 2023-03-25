@@ -19,7 +19,7 @@ public:
 	char* id();
 	ImVec4 markerColour();
 	const ImPlotPoint coordinates();
-	friend bool operator==(Marker a, const Marker b);
+	friend bool operator==(Marker a, Marker b);
 };
 
 
