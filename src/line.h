@@ -5,7 +5,7 @@
 
 class Edge;
 
-enum Colours {RED,BLACK};
+enum class LineColours {RED,BLACK, GREY};
 
 class Line {
 
@@ -18,6 +18,6 @@ class Line {
 	private:
 		float point_a[2] = {};
 		float point_b[2] = {};
-		float thickness = 2.0;
-		Colours colour;
+		float thickness_ = 2.0;
+		LineColours colour_;
 };

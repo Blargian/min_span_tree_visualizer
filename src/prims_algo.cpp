@@ -8,6 +8,7 @@ PrimsAlgorithm::~PrimsAlgorithm() {
 };
 
 queue<Edge> PrimsAlgorithm::findMST(Node& startingNode) {
+	increaseIteration(); 
 	visitNode(startingNode, minPQ_);
 	while (!minPQ_.empty()) {
 		Edge edge_least_weight = minPQ_.top(); //get the edge of lowest weight

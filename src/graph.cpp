@@ -68,7 +68,7 @@ int Graph::getNodeCount() {
  *        b the second node
  *        edgeWeight the edge weight 
  */
-void Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
+Edge Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
 
 	//check if the nodes are connected yet or not
 	//if not connected 
@@ -78,9 +78,9 @@ void Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
 
 	Edge ab = Edge(a, b, edgeWeight);
 	Edge ba = Edge(b, a, edgeWeight);
-	this->drawEdge(&ab);
 	a->insertEdge(ab);
 	b->insertEdge(ba);
+	return ab; 
 }
 
 /**

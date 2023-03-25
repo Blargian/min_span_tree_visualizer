@@ -22,7 +22,7 @@ public:
 	vector<Node*> getNodes(); 
 	Node* getNodeByName(string name);
 	int getNodeCount();
-	void connectNodes(Node* a, Node* b, double edgeWeight);
+	Edge connectNodes(Node* a, Node* b, double edgeWeight);
 	void removeNode(Node* node_to_remove);
 	pair<float*,float*> getCoordsForPlot();
 	void drawEdge(Edge* e);

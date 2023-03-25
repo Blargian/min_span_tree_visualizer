@@ -10,27 +10,34 @@ Line::Line(Edge e)
 	point_a[1] = dest.first;
 	point_b[0] = src.second;
 	point_b[1] = dest.second;
+	colour_ = LineColours::GREY;
 };
 
 
 float* Line::getPointA() {
-	return this->point_a;
+	return point_a;
 };
 
 float* Line::getPointB() {
-	return this->point_b;
+	return point_b;
 };
 
 float Line::lineThickness() {
-	return thickness;
+	return thickness_;
 }
 
 ImVec4 Line::lineColour() {
 	ImVec4 line_colour; 
-	switch (colour) {
-	case RED : line_colour = ImVec4(214, 15, 15, 1);
-	case BLACK : line_colour = ImVec4(0, 0, 0, 1);
-	default: line_colour = ImVec4(207, 206, 204, 1);
+	switch (colour_) {
+	case LineColours::RED : 
+		line_colour = ImColor(250, 103, 90);
+		break;
+	case LineColours::BLACK :
+		line_colour = ImColor(15, 15, 15);
+		break;
+	default: 
+		line_colour = ImColor(125, 124, 124);
+		break;
 	}
 	return line_colour;
 }

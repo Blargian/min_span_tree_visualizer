@@ -1,8 +1,11 @@
 #include "app.h"
 #include "draw.h"
+#include <memory>
 
 void MyApp::StartUp()
 {
+    g = Graph();
+    d = Draw();
 
     vector<vector<double>> tinyEWG =
     {
@@ -39,15 +42,17 @@ void MyApp::StartUp()
 
     };
 
-    g = Graph();
     g.AddObserver(Graph::DRAWEDGE, this);
     //create the nodes
-    for (vector<int> node : tinyEWGnodes) {
-        g.insertNode(Node(to_string(node[0]), static_cast<int>(node[1]), static_cast<int>(node[2])));
+    for (vector<int> node_properties : tinyEWGnodes) {
+        Node n = Node(to_string(node_properties[0]), static_cast<int>(node_properties[1]), static_cast<int>(node_properties[2]));
+        g.insertNode(n);
+        addMarkerToDraw(Marker(n),d.markers());
     };
     //connect the nodes
     for (vector<double> node_data : tinyEWG) {
-        g.connectNodes(g.getNodeByName(to_string((int)node_data[0])), g.getNodeByName(to_string((int)node_data[1])), node_data[2]);
+        Edge e = g.connectNodes(g.getNodeByName(to_string((int)node_data[0])), g.getNodeByName(to_string((int)node_data[1])), node_data[2]);
+        addLineToDraw(Line(e),d.lines());
     };
 }
 
@@ -58,15 +63,11 @@ void MyApp::Update()
     ImGui::SetNextWindowSize(ImVec2(window_width, window_height));
     ImGui::Begin("Minimum Spanning Tree Visualizer", NULL, flags);
     ImPlot::CreateContext();
-    ImPlot::BeginPlot("Spanning Tree", ImVec2(window_width * 0.8, window_height * 0.95), ImPlotFlags_NoLegend);
-    ImPlot::SetupAxesLimits(-100, 100, -100, 100);
-    Draw::drawNodes(g);
-    Draw::drawLines(lines);
-    ImPlot::EndPlot();
+    createPlot(d, window_width, window_height);
     ImGui::End();
 }
 
 void MyApp::OnNotify(Line l)
 {
-    this->lines.push_back(l);
+    //
 }

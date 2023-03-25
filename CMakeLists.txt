@@ -8,6 +8,7 @@ project ("min_span_tree_visualizer" VERSION 1.0
 									LANGUAGES CXX
 
 )
+set(CMAKE_CXX_STANDARD 17)
 
 # Include sub-projects.
 add_subdirectory ("src")
@@ -35,6 +36,8 @@ add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp
 "src/prims_algo.h" 
 "src/draw.h" 
 "src/draw.cpp"
+ "src/marker.h"
+"src/marker.cpp"
 )
 
 target_link_libraries(
@@ -81,6 +84,8 @@ add_executable (min_span_tree_visualizer src/main.cpp
 "src/prims_algo.h" 
 "src/draw.h" 
 "src/draw.cpp" 
+ "src/marker.h"
+ "src/marker.cpp"
 )
 set_property(TARGET min_span_tree_visualizer PROPERTY WIN32_EXECUTABLE FALSE)
 target_include_directories(min_span_tree_visualizer 

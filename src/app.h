@@ -1,14 +1,16 @@
 #pragma once
 #include "app_design.h"
 #include "line.h"
+#include "graph.h"
+#include "draw.h"
 
 class Line;
 
 class MyApp : public App, public IObserver
 {
-private:
-    std::vector<Line> lines;
-    Graph g; 
+protected:
+    Graph g;
+    Draw d;
 public:
     MyApp() = default;
     ~MyApp() = default;
