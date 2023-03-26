@@ -28,6 +28,22 @@ Marker* Draw::findMarker(ImPlotPoint p, bool& found) {
     };
 };
 
+void Draw::setSelectedMarker(Marker& m) {
+    selectedMarker_ = &m;
+}
+
+void Draw::changeMarkerColour(Marker* m, MarkerColours c) {
+    bool foundMarker = false;
+    Marker* marker = findMarker(m->coordinates(), foundMarker);
+    if (foundMarker) {
+        marker->setMarkerColour(c);
+    }
+}
+
+Marker* Draw::selectedMarker() {
+    return selectedMarker_;
+}
+
 void addMarkerToDraw(Marker m, vector<Marker>& markers) {
     markers.push_back(m);
 }
@@ -53,36 +69,42 @@ void drawLines(vector<Line> lines) {
 }
 
 void drawNodes(vector<Marker> markers) {
-    vector<string> label_ids;
-    vector<double> xs_vector, ys_vector;
-    vector<ImVec4> colours_vector;
+    
     for (Marker marker : markers) {
-        xs_vector.push_back(marker.coordinates().x);
-        ys_vector.push_back(marker.coordinates().y);
-        colours_vector.push_back(marker.markerColour());
+ 
+        double xs[1] = {marker.coordinates().x};
+        double ys[1] = {marker.coordinates().y};
+        ImVec4 cs[1] = {marker.markerColour()};
+       
+        ImPlot::SetNextMarkerStyle(ImPlotMarker_Circle, 8, *cs, IMPLOT_AUTO, *cs);
+        ImPlot::PlotScatter("1", xs, ys, markers.size(), ImPlotScatterFlags_None);
     };
-    //char* labels = &label_ids[0];
 
-    //convert vector to array 
-    if (xs_vector.size() != 0 && ys_vector.size() != 0) {
-       double* xs = &xs_vector[0];
-       double* ys = &ys_vector[0];
-       ImVec4* cs = &colours_vector[0];
-       ImPlot::SetNextMarkerStyle(ImPlotMarker_Circle, 8, *cs, IMPLOT_AUTO, *cs);
-       ImPlot::PlotScatter("1", xs, ys, markers.size(), ImPlotScatterFlags_None);
-    }
-   
 }
 
 void checkPlotClicked(Draw &d) {
+
+    Marker* previously_selected = d.selectedMarker();
     if (ImPlot::IsPlotHovered() && ImGui::IsMouseClicked(0)) {
         ImPlotPoint pt = ImPlot::GetPlotMousePos();
         ImPlotPoint nearest = ImPlotPoint(round(pt.x), round(pt.y));
         bool found = false;
         Marker* found_marker = d.findMarker(nearest, found);
         if(found) {
-            // select the marker 
             cout << "found a marker" << endl;
+            // select the marker if none is selected 
+            if (previously_selected == NULL) {
+                d.setSelectedMarker(*found_marker);
+                d.changeMarkerColour(found_marker, MarkerColours::WHITE);
+            }
+            else if (previously_selected != NULL && previously_selected != found_marker) {
+                d.changeMarkerColour(previously_selected, MarkerColours::GREY);
+                d.setSelectedMarker(*found_marker);
+                d.changeMarkerColour(found_marker, MarkerColours::WHITE);
+            }
+            
+            
+            //else deselect the currently selected marker and select a new one
             return;
         }
         else {

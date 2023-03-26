@@ -10,10 +10,14 @@ class Draw {
 private:
 	vector<Line> lines_;
 	vector<Marker> markers_;
+	Marker* selectedMarker_ = NULL;
 public:
 	vector<Line>& lines();
 	vector<Marker>& markers();
 	Marker* findMarker(ImPlotPoint p, bool& found);
+	void setSelectedMarker(Marker& m);
+	Marker* selectedMarker();
+	void changeMarkerColour(Marker* m, MarkerColours c);
 };
 
 void createPlot(Draw &d, int window_width, int window_height);

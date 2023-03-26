@@ -1,14 +1,19 @@
 #include "marker.h"
 
-Marker::Marker(Node n) {
+Marker::Marker(Node& n) {
 	auto coordinate_pair = n.getXY();
     coordinates_ = ImPlotPoint(coordinate_pair.first, coordinate_pair.second);
 	id_ = generateSimpleUuid();
     markerColour_ = MarkerColours::GREY;
+    corresponding_node_ = &n; 
 }
 
 Marker::~Marker() {
 
+}
+
+const char* Marker::id() {
+    return id_; 
 }
 
 const ImPlotPoint Marker::coordinates() {
@@ -31,6 +36,10 @@ ImVec4 Marker::markerColour() {
     return line_colour;
 }
 
+void Marker::setMarkerColour(MarkerColours colour) {
+    markerColour_ = colour; 
+}
+
 /* This code is not mine, credit to happy_sisyphus on stackoverflow.com
    I'd use a uuid function from boost library ordinary, just don't feel
    like including it in this project.
@@ -48,25 +57,9 @@ const char* generateSimpleUuid() {
     for (i = 0; i < 8; i++) {
         ss << dis(gen);
     }
-    ss << "-";
-    for (i = 0; i < 4; i++) {
-        ss << dis(gen);
-    }
-    ss << "-4";
-    for (i = 0; i < 3; i++) {
-        ss << dis(gen);
-    }
-    ss << "-";
-    ss << dis2(gen);
-    for (i = 0; i < 3; i++) {
-        ss << dis(gen);
-    }
-    ss << "-";
-    for (i = 0; i < 12; i++) {
-        ss << dis(gen);
-    };
 
-    return ss.str().c_str();
+    const std::string tmp = std::string{ ss.str() };
+    return tmp.c_str();
 }
 
 bool operator==(Marker lhs, Marker rhs) {

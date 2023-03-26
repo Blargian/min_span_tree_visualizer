@@ -13,13 +13,15 @@ private:
 	ImPlotPoint coordinates_;
 	const char* id_;
 	MarkerColours markerColour_;
+	Node* corresponding_node_; 
 public:
-	Marker(Node n);
+	Marker(Node& n);
 	~Marker();
-	char* id();
+	const char* id();
 	ImVec4 markerColour();
 	const ImPlotPoint coordinates();
 	friend bool operator==(Marker a, Marker b);
+	void setMarkerColour(MarkerColours color);
 };
 
 
