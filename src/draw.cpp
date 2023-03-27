@@ -28,8 +28,8 @@ Marker* Draw::findMarker(ImPlotPoint p, bool& found) {
     };
 };
 
-void Draw::setSelectedMarker(Marker& m) {
-    selectedMarker_ = &m;
+void Draw::setSelectedMarker(Marker* m) {
+    selectedMarker_ = m;
 }
 
 void Draw::changeMarkerColour(Marker* m, MarkerColours c) {
@@ -52,11 +52,29 @@ void addLineToDraw(Line l, vector<Line>& lines) {
     lines.push_back(l);
 }
 
+bool Draw::hasMarkersToDraw() {
+    if(markers_.size()>0){
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+
+bool Draw::hasLinesToDraw() {
+    if (lines_.size() > 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 void createPlot(Draw &d,int window_width, int window_height) {
     ImPlot::BeginPlot("Spanning Tree", ImVec2(window_width * 0.8, window_height * 0.95), ImPlotFlags_NoLegend);
     ImPlot::SetupAxesLimits(-100, 100, -100, 100);
-    drawNodes(d.markers());
-    drawLines(d.lines());
+    if (d.hasMarkersToDraw()) { drawNodes(d.markers()); };
+    if (d.hasLinesToDraw()) { drawLines(d.lines()); };
     checkPlotClicked(d);
     ImPlot::EndPlot();
 }
@@ -69,38 +87,38 @@ void drawLines(vector<Line> lines) {
 }
 
 void drawNodes(vector<Marker> markers) {
-    
     for (Marker marker : markers) {
- 
         double xs[1] = {marker.coordinates().x};
         double ys[1] = {marker.coordinates().y};
-        ImVec4 cs[1] = {marker.markerColour()};
-       
-        ImPlot::SetNextMarkerStyle(ImPlotMarker_Circle, 8, *cs, IMPLOT_AUTO, *cs);
-        ImPlot::PlotScatter("1", xs, ys, markers.size(), ImPlotScatterFlags_None);
+        ImPlot::SetNextMarkerStyle(ImPlotMarker_Circle, 8, marker.markerColour(), IMPLOT_AUTO, marker.markerColour());
+        ImPlot::PlotScatter(marker.id(), xs, ys, 2, ImPlotScatterFlags_None);
     };
-
 }
 
 void checkPlotClicked(Draw &d) {
 
-    Marker* previously_selected = d.selectedMarker();
+   
     if (ImPlot::IsPlotHovered() && ImGui::IsMouseClicked(0)) {
+        Marker* previously_selected = d.selectedMarker();
         ImPlotPoint pt = ImPlot::GetPlotMousePos();
         ImPlotPoint nearest = ImPlotPoint(round(pt.x), round(pt.y));
         bool found = false;
         Marker* found_marker = d.findMarker(nearest, found);
         if(found) {
-            cout << "found a marker" << endl;
             // select the marker if none is selected 
             if (previously_selected == NULL) {
-                d.setSelectedMarker(*found_marker);
+                d.setSelectedMarker(found_marker);
                 d.changeMarkerColour(found_marker, MarkerColours::WHITE);
             }
             else if (previously_selected != NULL && previously_selected != found_marker) {
                 d.changeMarkerColour(previously_selected, MarkerColours::GREY);
-                d.setSelectedMarker(*found_marker);
+                d.setSelectedMarker(found_marker);
                 d.changeMarkerColour(found_marker, MarkerColours::WHITE);
+            }
+            else {
+                //deselect the currently selected marker
+                d.changeMarkerColour(previously_selected, MarkerColours::GREY);
+                d.setSelectedMarker(nullptr);
             }
             
             

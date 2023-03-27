@@ -39,7 +39,6 @@ void MyApp::StartUp()
         {5, 0, 4},
         {6, 8, 0},
         {7, 3, 4},
-
     };
 
     g.AddObserver(Graph::DRAWEDGE, this);
