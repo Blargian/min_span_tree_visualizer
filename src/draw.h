@@ -15,9 +15,11 @@ public:
 	vector<Line>& lines();
 	vector<Marker>& markers();
 	Marker* findMarker(ImPlotPoint p, bool& found);
+	Line* findLine(Line l, bool& found);
 	void setSelectedMarker(Marker* m);
 	Marker* selectedMarker();
 	void changeMarkerColour(Marker* m, MarkerColours c);
+	void changeLineColour(Line* m, LineColours c);
 	bool hasMarkersToDraw();
 	bool hasLinesToDraw();
 };

@@ -38,7 +38,7 @@ add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp
 "src/draw.cpp"
  "src/marker.h"
 "src/marker.cpp"
-)
+ "src/snapshot.h" "src/snapshot.cpp")
 
 target_link_libraries(
     tests 
@@ -86,7 +86,7 @@ add_executable (min_span_tree_visualizer src/main.cpp
 "src/draw.cpp" 
  "src/marker.h"
  "src/marker.cpp"
-)
+ "src/snapshot.h" "src/snapshot.cpp")
 set_property(TARGET min_span_tree_visualizer PROPERTY WIN32_EXECUTABLE FALSE)
 target_include_directories(min_span_tree_visualizer 
   PRIVATE 

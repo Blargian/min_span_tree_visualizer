@@ -4,8 +4,8 @@
 
 void MyApp::StartUp()
 {
-    g = Graph();
     d = Draw();
+    g = Graph();
 
     vector<vector<double>> tinyEWG =
     {

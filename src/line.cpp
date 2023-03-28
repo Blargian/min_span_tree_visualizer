@@ -41,3 +41,7 @@ ImVec4 Line::lineColour() {
 	}
 	return line_colour;
 }
+
+void Line::setLineColour(LineColours colour) {
+	colour_ = colour;
+}

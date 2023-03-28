@@ -28,6 +28,25 @@ Marker* Draw::findMarker(ImPlotPoint p, bool& found) {
     };
 };
 
+Line* Draw::findLine(Line l, bool& found) {
+
+    auto predicate = [&l](Line& line) {
+        return ((line.getPointA() == l.getPointA()) && (line.getPointB() == l.getPointB()));
+    };
+
+    auto it = find_if(lines_.begin(), lines_.end(), predicate);
+    if (it != lines_.end()) {
+        found = true;
+    };
+
+    if (found) {
+        return &lines_[std::distance(lines_.begin(), it)];
+    }
+    else {
+        return NULL;
+    };
+};
+
 void Draw::setSelectedMarker(Marker* m) {
     selectedMarker_ = m;
 }
@@ -37,6 +56,14 @@ void Draw::changeMarkerColour(Marker* m, MarkerColours c) {
     Marker* marker = findMarker(m->coordinates(), foundMarker);
     if (foundMarker) {
         marker->setMarkerColour(c);
+    }
+}
+
+void Draw::changeLineColour(Line* l, LineColours c) {
+    bool foundLine = false;
+    Line* line = findLine(*l,foundLine);
+    if (foundLine) {
+        line->setLineColour(c);
     }
 }
 
@@ -97,7 +124,6 @@ void drawNodes(vector<Marker> markers) {
 
 void checkPlotClicked(Draw &d) {
 
-   
     if (ImPlot::IsPlotHovered() && ImGui::IsMouseClicked(0)) {
         Marker* previously_selected = d.selectedMarker();
         ImPlotPoint pt = ImPlot::GetPlotMousePos();

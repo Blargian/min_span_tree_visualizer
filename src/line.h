@@ -15,6 +15,7 @@ class Line {
 		float* getPointB();
 		float lineThickness();
 		ImVec4 lineColour();
+		void setLineColour(LineColours color);
 	private:
 		float point_a[2] = {};
 		float point_b[2] = {};
