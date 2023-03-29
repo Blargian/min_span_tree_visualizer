@@ -35,3 +35,4 @@ queue<Edge> PrimsAlgorithm::findMST(Node& startingNode) {
 	AddSnapshot(current_iteration);
 	return MST_;
 }
+

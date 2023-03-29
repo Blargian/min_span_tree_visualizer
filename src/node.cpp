@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <cmath>
+#include <memory>
 
 using namespace std; 
 /**
@@ -58,6 +59,15 @@ void Node::setXY(int x, int y) {
 		this->coordinates.first = x;
 		this->coordinates.second = y;
 	}
+}
+
+/**
+ * @brief sets a shared pointer to the corresponding marker for a node
+ *
+ * @param Marker m
+ */
+void Node::setMarker(shared_ptr<Marker> m) {
+	marker_ = m;
 }
 
 /**

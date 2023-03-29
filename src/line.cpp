@@ -1,8 +1,9 @@
 #include "line.h"
+#include <memory>
 
 class Edge;
 
-Line::Line(Edge e)
+Line::Line(Edge& e)
 {
 	pair<int, int> src = e.getSourceNode()->getXY();
 	pair<int, int> dest = e.getDestinationNode()->getXY();
@@ -11,6 +12,7 @@ Line::Line(Edge e)
 	point_b[0] = src.second;
 	point_b[1] = dest.second;
 	colour_ = LineColours::GREY;
+	e.setLine(make_shared<Line>(*this));
 };
 
 

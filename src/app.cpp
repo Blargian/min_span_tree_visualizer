@@ -6,6 +6,7 @@ void MyApp::StartUp()
 {
     d = Draw();
     g = Graph();
+    prims = PrimsAlgorithm();
 
     vector<vector<double>> tinyEWG =
     {
@@ -45,13 +46,15 @@ void MyApp::StartUp()
     //create the nodes
     for (vector<int> node_properties : tinyEWGnodes) {
         Node n = Node(to_string(node_properties[0]), static_cast<int>(node_properties[1]), static_cast<int>(node_properties[2]));
+        Marker m = Marker(n);
         g.insertNode(n);
-        addMarkerToDraw(Marker(n),d.markers());
+        addMarkerToDraw(m,d.markers());
     };
     //connect the nodes
     for (vector<double> node_data : tinyEWG) {
         Edge e = g.connectNodes(g.getNodeByName(to_string((int)node_data[0])), g.getNodeByName(to_string((int)node_data[1])), node_data[2]);
-        addLineToDraw(Line(e),d.lines());
+        Line l = Line(e);
+        addLineToDraw(l,d.lines());
     };
 }
 
@@ -63,6 +66,7 @@ void MyApp::Update()
     ImGui::Begin("Minimum Spanning Tree Visualizer", NULL, flags);
     ImPlot::CreateContext();
     createPlot(d, window_width, window_height);
+
     ImGui::End();
 }
 

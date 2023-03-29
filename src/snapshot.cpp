@@ -1,12 +1,10 @@
 #include "snapshot.h"
-#include "edge.h"
 #include <vector>
 #include <queue>
 
 using namespace std; 
 
 Snapshot::Snapshot(){
-
 };
 
 Snapshot::~Snapshot() {

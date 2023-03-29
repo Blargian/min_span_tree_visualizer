@@ -15,6 +15,11 @@ Edge::Edge(Node* srcNode, Node* destNode, double w)
 	edgeWeight = w;
 };
 
+Edge::Edge()
+{
+
+};
+
 /**
  * @brief Destination node setter
  *
@@ -43,6 +48,15 @@ void Edge::setDestinationNode(Node* destNode)
 void Edge::setEdgeWeight(double weight)
 {
 	this->edgeWeight = weight;
+}
+
+/**
+ * @brief line setter
+ *
+ * @param Line l the line corresponding to this edge
+ */
+void Edge::setLine(shared_ptr<Line> l) {
+	line_ = l;
 }
 
 /**

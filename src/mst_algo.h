@@ -20,7 +20,11 @@ public:
 	virtual queue<Edge> findMST(Node& startingNode) = 0;
 	void AddSnapshot(Snapshot s) {
 		solving_snapshots.emplace_back(s);
-	}
+	};
+	vector<Snapshot> Snapshots()
+	{
+		return solving_snapshots;
+	};
 };
 
 void  inline visitNode(Node& node, priority_queue<Edge, vector<Edge>, greater<Edge>>& pq) {

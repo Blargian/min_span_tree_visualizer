@@ -10,7 +10,7 @@ enum class LineColours {RED,BLACK, GREY};
 class Line {
 
 	public:
-		Line(Edge e);
+		Line(Edge& e);
 		float* getPointA();
 		float* getPointB();
 		float lineThickness();

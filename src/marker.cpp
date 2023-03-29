@@ -6,6 +6,7 @@ Marker::Marker(Node& n) {
 	id_ = generateSimpleUuid();
     markerColour_ = MarkerColours::GREY;
     corresponding_node_ = &n; 
+    n.setMarker(make_shared<Marker>(*this));
 }
 
 Marker::~Marker() {

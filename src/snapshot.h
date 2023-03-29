@@ -2,7 +2,6 @@
 #include "edge.h"
 #include <vector>
 #include <queue>
-class Edge; 
 
 class Snapshot {
 public:
@@ -18,5 +17,5 @@ public:
 private:
 	queue<Edge> MST_;
 	priority_queue<Edge, vector<Edge>, greater<Edge>> pq_;
-	Edge least_weight_;
+	Edge least_weight_ = Edge();
 };

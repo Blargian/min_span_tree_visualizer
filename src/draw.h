@@ -3,6 +3,7 @@
 #include "graph.h"
 #include "ImPlot.h"
 #include "marker.h"
+#include "prims_algo.h"
 
 class Marker; 
 
@@ -32,3 +33,4 @@ void drawLine(Line);
 void drawMarker(Marker);
 void addMarkerToDraw(Marker m, vector<Marker>& markers);
 void addLineToDraw(Line m,vector<Line>& lines);
+void drawFromSnapshots(PrimsAlgorithm& p, Draw& d);

@@ -5,10 +5,13 @@
 #include <list>
 #include <utility> 
 #include <iostream>
+#include "Marker.h"
+#include <memory>
 
 using namespace std; 
 
 class Edge;
+class Marker;
 
 class Node {
 private:
@@ -16,12 +19,14 @@ private:
 	string nodeName; 
 	pair <int, int> coordinates;
 	bool visited = false;
+	std::shared_ptr<Marker> marker_; 
 public:
 	Node();
 	Node(string nodeName, int x, int y);
 	void setNodeName(string nodeName);
 	string getNodeName();
 	void setXY(int x, int y);
+	void setMarker(shared_ptr<Marker> marker);
 	void insertEdge(Edge edgeToAdd);
 	void removeEdge(Node* fromNode, Node* toEdge);
 	void clearEdgeList();
