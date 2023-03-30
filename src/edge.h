@@ -1,8 +1,9 @@
 #pragma once
+
 #include "node.h"
 #include <iostream>
 #include "iSubject.h"
-#include "Line.h"
+#include "line.h"
 #include <memory>
 
 using namespace std; 
@@ -15,7 +16,7 @@ private:
 	Node* sourceNode;
 	Node* destinationNode;
 	double edgeWeight;
-	std::shared_ptr<Line> line_; 
+	shared_ptr<Line> line_; 
 public:
 	//constructor
 	Edge();
@@ -25,7 +26,8 @@ public:
 	void setSourceNode(Node* srcNode);
 	void setDestinationNode(Node* destNode);
 	void setEdgeWeight(double weight);
-	void setLine(shared_ptr<Line> l);
+	void setLine(shared_ptr<Line> line_ptr);
+	shared_ptr<Line> Line();
 	Node* getSourceNode();
 	Node* getDestinationNode();
 	double getEdgeWeight();

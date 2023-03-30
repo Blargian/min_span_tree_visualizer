@@ -1,8 +1,6 @@
 #include "line.h"
 #include <memory>
 
-class Edge;
-
 Line::Line(Edge& e)
 {
 	pair<int, int> src = e.getSourceNode()->getXY();

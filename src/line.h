@@ -1,7 +1,7 @@
 #pragma once 
 #include <utility>
 #include "ImGui.h"
-#include "Edge.h"
+#include "edge.h"
 
 class Edge;
 
@@ -11,6 +11,7 @@ class Line {
 
 	public:
 		Line(Edge& e);
+		~Line();
 		float* getPointA();
 		float* getPointB();
 		float lineThickness();

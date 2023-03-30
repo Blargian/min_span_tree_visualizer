@@ -5,7 +5,7 @@
 #include <list>
 #include <utility> 
 #include <iostream>
-#include "Marker.h"
+#include "marker.h"
 #include <memory>
 
 using namespace std; 
@@ -19,7 +19,7 @@ private:
 	string nodeName; 
 	pair <int, int> coordinates;
 	bool visited = false;
-	std::shared_ptr<Marker> marker_; 
+	shared_ptr<Marker> marker_; 
 public:
 	Node();
 	Node(string nodeName, int x, int y);

@@ -2,6 +2,9 @@
 #include "edge.h"
 #include <iomanip>
 
+using namespace std;
+
+
 /**
  * @brief Edge constructor
  *
@@ -38,7 +41,7 @@ void Edge::setSourceNode(Node* srcNode)
 void Edge::setDestinationNode(Node* destNode)
 {
 	this->destinationNode = destNode;
-}
+};
 
 /**
  * @brief weight setter
@@ -48,16 +51,20 @@ void Edge::setDestinationNode(Node* destNode)
 void Edge::setEdgeWeight(double weight)
 {
 	this->edgeWeight = weight;
-}
+};
 
 /**
- * @brief line setter
+ * @brief Setter for the line_ member of Edge
  *
- * @param Line l the line corresponding to this edge
+ * @param Line l - shared pointer to the line corresponding to this edge
  */
 void Edge::setLine(shared_ptr<Line> l) {
 	line_ = l;
-}
+};
+
+shared_ptr<Line> Edge::Line() {
+	return line_;
+};
 
 /**
  * @brief getter method for source node
@@ -67,7 +74,7 @@ void Edge::setLine(shared_ptr<Line> l) {
 Node* Edge::getSourceNode()
 {
 	return this->sourceNode;
-}
+};
 
 /**
  * @brief getter method for destination node
@@ -77,7 +84,7 @@ Node* Edge::getSourceNode()
 Node* Edge::getDestinationNode()
 {
 	return this->destinationNode;
-}
+};
 
 /**
  * @brief getter method for the weight of the edge
@@ -86,7 +93,7 @@ Node* Edge::getDestinationNode()
 double Edge::getEdgeWeight()
 {
 	return this->edgeWeight;
-}
+};
 
 
 bool operator==(Edge a, Edge b) {
