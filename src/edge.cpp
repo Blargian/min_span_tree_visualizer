@@ -1,10 +1,9 @@
 #include <iostream>
 #include "edge.h"
 #include <iomanip>
+#include <memory>
 
-using namespace std;
-
-
+using namespace std; 
 /**
  * @brief Edge constructor
  *
@@ -16,12 +15,17 @@ Edge::Edge(Node* srcNode, Node* destNode, double w)
 	sourceNode = srcNode; 
 	destinationNode = destNode;
 	edgeWeight = w;
+	associated_line_;
 };
 
 Edge::Edge()
 {
 
 };
+
+Edge::~Edge() {
+
+}
 
 /**
  * @brief Destination node setter
@@ -50,20 +54,16 @@ void Edge::setDestinationNode(Node* destNode)
  */
 void Edge::setEdgeWeight(double weight)
 {
-	this->edgeWeight = weight;
+	edgeWeight = weight;
 };
 
-/**
- * @brief Setter for the line_ member of Edge
- *
- * @param Line l - shared pointer to the line corresponding to this edge
- */
+
 void Edge::setLine(shared_ptr<Line> l) {
-	line_ = l;
-};
+	associated_line_ = l;
+}
 
-shared_ptr<Line> Edge::Line() {
-	return line_;
+weak_ptr<Line> Edge::getLine() {
+	return associated_line_;
 };
 
 /**

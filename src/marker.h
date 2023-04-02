@@ -1,8 +1,8 @@
 #pragma once 
 #include "ImPlot.h"
-#include "node.h"
 #include <random>
 #include <sstream>
+#include "node.h"
 
 class Node;
 
@@ -13,7 +13,7 @@ private:
 	ImPlotPoint coordinates_;
 	const char* id_;
 	MarkerColours markerColour_;
-	Node* corresponding_node_; 
+	std::weak_ptr<Node> corresponding_node_; 
 public:
 	Marker(Node& n);
 	~Marker();

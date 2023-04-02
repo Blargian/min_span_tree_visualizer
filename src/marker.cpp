@@ -1,12 +1,13 @@
 #include "marker.h"
+#include <memory>
 
 Marker::Marker(Node& n) {
 	auto coordinate_pair = n.getXY();
     coordinates_ = ImPlotPoint(coordinate_pair.first, coordinate_pair.second);
 	id_ = generateSimpleUuid();
     markerColour_ = MarkerColours::GREY;
-    corresponding_node_ = &n; 
-    n.setMarker(make_shared<Marker>(*this));
+    corresponding_node_ = std::make_shared<Node>(n); 
+    n.setMarker(std::make_shared<Marker>(*this));
 }
 
 Marker::~Marker() {

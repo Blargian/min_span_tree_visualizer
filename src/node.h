@@ -5,34 +5,34 @@
 #include <list>
 #include <utility> 
 #include <iostream>
-#include "marker.h"
 #include <memory>
-
-using namespace std; 
+#include "marker.h"
 
 class Edge;
 class Marker;
 
 class Node {
 private:
-	list<Edge> edgeList;
-	string nodeName; 
-	pair <int, int> coordinates;
+	std::list<Edge> edgeList;
+	std::string nodeName; 
+	std::pair <int, int> coordinates;
 	bool visited = false;
-	shared_ptr<Marker> marker_; 
+	std::weak_ptr<Marker> marker_;
 public:
 	Node();
-	Node(string nodeName, int x, int y);
-	void setNodeName(string nodeName);
-	string getNodeName();
+	Node(std::string nodeName, int x, int y);
+	~Node();
+	void setNodeName(std::string nodeName);
+	std::string getNodeName();
 	void setXY(int x, int y);
-	void setMarker(shared_ptr<Marker> marker);
+	void setMarker(std::shared_ptr<Marker> marker);
+	std::weak_ptr<Marker> getMarker();
 	void insertEdge(Edge edgeToAdd);
 	void removeEdge(Node* fromNode, Node* toEdge);
 	void clearEdgeList();
-	list<Edge> getEdgeList();
+	std::list<Edge> getEdgeList();
 	Edge* getEdge(Node* fromNode, Node* toNode);
-	pair <int, int> getXY();
+	std:: pair <int, int> getXY();
 	void markVisited();
 	bool wasVisited();
 	friend bool operator==(Node a, Node b);

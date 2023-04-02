@@ -7,15 +7,15 @@ class Snapshot {
 public:
 	Snapshot();
 	~Snapshot();
-	queue<Edge> MST();
-	priority_queue<Edge, vector<Edge>, greater<Edge>> PQ();
-	Edge EdgeLeastWeight();
-	void AddMST(queue<Edge> mst);
-	void AddPQ(priority_queue<Edge, vector<Edge>, greater<Edge>> pq);
+	std::queue<Edge> MST();
+	std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>> PQ();
+	Edge getEdgeLeastWeight();
+	void AddMST(std::queue<Edge> mst);
+	void AddPQ(std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>> pq);
 	void SetEdgeLeastWeight(Edge e);
 
 private:
-	queue<Edge> MST_;
-	priority_queue<Edge, vector<Edge>, greater<Edge>> pq_;
+	std::queue<Edge> MST_;
+	std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>> pq_;
 	Edge least_weight_ = Edge();
 };

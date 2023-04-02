@@ -25,6 +25,10 @@ Node::Node(string nodeName, int x, int y) {
 	this->setXY(x, y);
 }
 
+Node::~Node() {
+
+};
+
 /**
  * @brief Setter method for the nodename
  *
@@ -39,7 +43,7 @@ void Node::setNodeName(string nodeName) {
  */
 string Node::getNodeName() {
 	return this->nodeName;
-}
+};
 
 
 /**
@@ -59,16 +63,20 @@ void Node::setXY(int x, int y) {
 		this->coordinates.first = x;
 		this->coordinates.second = y;
 	}
-}
+};
 
 /**
  * @brief sets a shared pointer to the corresponding marker for a node
  *
  * @param Marker m
  */
-void Node::setMarker(shared_ptr<Marker> m) {
+void Node::setMarker(std::shared_ptr<Marker> m) {
 	marker_ = m;
-}
+};
+
+std::weak_ptr<Marker> Node::getMarker() {
+	return marker_;
+};
 
 /**
  * @brief inserts an edge to the edgelist

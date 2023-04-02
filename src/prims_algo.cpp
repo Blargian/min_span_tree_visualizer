@@ -1,6 +1,8 @@
 #include "prims_algo.h"
 #include "snapshot.h"
 
+using namespace std;
+
 PrimsAlgorithm::PrimsAlgorithm() {
 };
 

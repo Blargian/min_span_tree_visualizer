@@ -19,7 +19,7 @@ priority_queue<Edge, vector<Edge>, greater<Edge>> Snapshot::PQ() {
 	return pq_;
 }
 
-Edge Snapshot::EdgeLeastWeight() {
+Edge Snapshot::getEdgeLeastWeight() {
 	return least_weight_;
 }
 

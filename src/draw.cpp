@@ -163,6 +163,6 @@ void drawFromSnapshots(PrimsAlgorithm p, Draw& d, Node& starting_node) {
     p.findMST(starting_node);
     vector<Snapshot> snapshots = p.Snapshots();
     for (auto& snapshot : snapshots) {
-        snapshot.EdgeLeastWeight().Line()->setLineColour(LineColours::RED);
+        snapshot.getEdgeLeastWeight().getLine().lock()->setLineColour(LineColours::RED);
     };
 }
