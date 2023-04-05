@@ -10,9 +10,9 @@ class Line;
 class MyApp : public App, public IObserver
 {
 protected:
-    Graph g;
-    Draw d;
-    PrimsAlgorithm prims; 
+    std::unique_ptr<Graph> g = std::make_unique<Graph>();
+    std::unique_ptr<Draw> d = std::make_unique<Draw>();
+    std::unique_ptr<PrimsAlgorithm> prims = std::make_unique<PrimsAlgorithm>();
 public:
     MyApp() = default;
     ~MyApp() = default;

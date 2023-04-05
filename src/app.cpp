@@ -4,10 +4,6 @@
 
 void MyApp::StartUp()
 {
-    d = Draw();
-    g = Graph();
-    prims = PrimsAlgorithm();
-
     vector<vector<double>> tinyEWG =
     {
         {4, 5, 0.35},
@@ -42,19 +38,23 @@ void MyApp::StartUp()
         {7, 3, 4},
     };
 
-    g.AddObserver(Graph::DRAWEDGE, this);
+    g->AddObserver(Graph::DRAWEDGE, this);
     //create the nodes
+    //I should be using smart pointers here... I know. 
     for (vector<int> node_properties : tinyEWGnodes) {
-        Node n = Node(to_string(node_properties[0]), static_cast<int>(node_properties[1]), static_cast<int>(node_properties[2]));
-        Marker m = Marker(n);
-        g.insertNode(n);
-        addMarkerToDraw(m,d.markers());
+        auto nodePtr = g->insertNode(std::make_shared<Node>(to_string(node_properties[0]), static_cast<int>(node_properties[1]), static_cast<int>(node_properties[2])));
+        auto markerPtrr = std::make_shared<Marker>(*nodePtr);
+        auto markerPtr = addMarkerToDraw(markerPtrr, d->getMarkers());
+        nodePtr->setMarkerPtr(markerPtr);
+        markerPtr->setNodePtr(nodePtr);
     };
     //connect the nodes
     for (vector<double> node_data : tinyEWG) {
-        Edge e = g.connectNodes(g.getNodeByName(to_string((int)node_data[0])), g.getNodeByName(to_string((int)node_data[1])), node_data[2]);
-        Line l = Line(e);
-        addLineToDraw(l,d.lines());
+        auto edgePtr = g->connectNodes(g->getNodeByName(to_string((int)node_data[0])).get(), g->getNodeByName(to_string((int)node_data[1])).get(), node_data[2]);
+        auto l = std::make_shared<Line>(Line(*edgePtr));
+        auto linePtr = addLineToDraw(l,d->getLines());
+        linePtr->setEdgePtr(edgePtr);
+        edgePtr->setLinePtr(linePtr);
     };
 }
 
@@ -62,11 +62,20 @@ void MyApp::Update()
 {
     ImGuiWindowFlags flags = ImGuiWindowFlags_NoInputs;
     ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(window_width, window_height));
+    ImGui::SetNextWindowSize(ImVec2(window_width*0.8, window_height));
     ImGui::Begin("Minimum Spanning Tree Visualizer", NULL, flags);
     ImPlot::CreateContext();
-    createPlot(d, window_width, window_height);
+    createPlot(*d, window_width, window_height);
+    ImGui::End();
 
+    ImGui::SetNextWindowSize(ImVec2(window_width*0.2, window_height));
+    ImGui::SetNextWindowPos(ImVec2(1000, 0), ImGuiCond_FirstUseEver);
+    ImGui::Begin("Controls", NULL);
+    ImPlot::CreateContext();
+    if (ImGui::Button("Controls")) {
+        auto selectedNode = d->selectedMarker()->getNodePtr();
+        prims->findMST(*selectedNode);
+    }
     ImGui::End();
 }
 

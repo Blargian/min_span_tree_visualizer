@@ -26,32 +26,27 @@ Graph::~Graph() {
  *
  * @param n the node to insert of type Node
  */
-size_t  Graph::insertNode(Node n) {
-	this->nodeArray.push_back(n);
-	this->nodeCount++;
-	return size(this->nodeArray);
+SharedNodePtr Graph::insertNode(SharedNodePtr n) {
+	nodeCount++;
+	return SharedNodePtr(nodeArray.emplace_back(n));
 }
 
 /**
- * @brief returns the vector of nodes 
+ * @brief returns a vector of pointers to the nodes in nodeArray 
  *
  */
-vector<Node*> Graph::getNodes() {
-	vector<Node*> nodes;
-	for (size_t i = 0; i < size(this->nodeArray); i++) {
-		nodes.push_back(&(this->nodeArray[i]));
-	}
-	return nodes;
+vector<SharedNodePtr>& Graph::getNodes() {
+	return nodeArray;
 }
 
 /**
  * @brief returns a pointer to a node 
  * @param name String which is the nodeName member of Node
  */
-Node* Graph::getNodeByName(string name) {
-	auto it = find_if(this->nodeArray.begin(), this->nodeArray.end(), [&name](Node& obj) {return obj.getNodeName() == name; });
-	auto index = std::distance(this->nodeArray.begin(), it);
-	return &(this->nodeArray[index]);
+SharedNodePtr Graph::getNodeByName(string name) {
+	auto it = find_if(nodeArray.begin(), nodeArray.end(), [&name](auto& obj) {return obj->getNodeName() == name; });
+	auto index = std::distance(nodeArray.begin(), it);
+	return SharedNodePtr((nodeArray[index]));
 }
 
 /**
@@ -68,7 +63,7 @@ int Graph::getNodeCount() {
  *        b the second node
  *        edgeWeight the edge weight 
  */
-Edge Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
+Edge* Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
 
 	//check if the nodes are connected yet or not
 	//if not connected 
@@ -76,11 +71,11 @@ Edge Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
 		//make an edge b->a and add that edge to node b edgelist 
 	    //update the nodes
 
-	Edge ab = Edge(a, b, edgeWeight);
-	Edge ba = Edge(b, a, edgeWeight);
-	a->insertEdge(ab);
-	b->insertEdge(ba);
-	return ab; 
+	Edge* ab = new Edge(a, b, edgeWeight);
+	Edge* ba = new Edge(b, a, edgeWeight);
+	auto aPtr = a->insertEdge(*ab);
+	auto bPtr = b->insertEdge(*ba);
+	return aPtr;
 }
 
 /**
@@ -101,14 +96,14 @@ void Graph::removeNode(Node* node_to_remove) {
 	node_to_remove->clearEdgeList(); 
 	
 	//finally, remove the node
-	std::vector<Node>::iterator position = this->nodeArray.end();
-	for (auto it = this->nodeArray.begin(); it != this->nodeArray.end(); ++it) {
-		if (*it == *node_to_remove) {
+	auto position = nodeArray.end();
+	for (auto it = nodeArray.begin(); it != nodeArray.end(); ++it) {
+		if (*(*it) == *node_to_remove) {
 			position = it;
 		}
 	}
-	this->nodeArray.erase(position);
-	this->nodeCount--;
+	nodeArray.erase(position);
+	nodeCount--;
 }
 
 /**
@@ -118,9 +113,9 @@ pair<float*, float*> Graph::getCoordsForPlot() {
 	int size = this->getNodeCount();
 	float* node_points_x = new float[size];
 	float* node_points_y = new float[size];
-	for (auto it = this->nodeArray.begin(); it != this->nodeArray.end(); ++it) {
-		int index = it - this->nodeArray.begin();
-		auto xy = it->getXY();
+	for (auto it = nodeArray.begin(); it != nodeArray.end(); ++it) {
+		int index = it - nodeArray.begin();
+		auto xy = (*it)->getXY();
 		node_points_x[index] = xy.first;
 		node_points_y[index] = xy.second;
 	}

@@ -8,20 +8,25 @@ class Node;
 
 enum class MarkerColours { WHITE, GREY };
 
+using SharedNodePtr = std::shared_ptr<class Node>;
+
 class Marker {
 private:
 	ImPlotPoint coordinates_;
 	const char* id_;
 	MarkerColours markerColour_;
-	std::weak_ptr<Node> corresponding_node_; 
+	SharedNodePtr nodePtr_; 
 public:
 	Marker(Node& n);
+	Marker(Marker& m);
 	~Marker();
 	const char* id();
 	ImVec4 markerColour();
 	const ImPlotPoint coordinates();
 	friend bool operator==(Marker a, Marker b);
 	void setMarkerColour(MarkerColours color);
+	void setNodePtr(SharedNodePtr nodePtr);
+	SharedNodePtr getNodePtr();
 };
 
 

@@ -8,12 +8,15 @@
 class Node;
 class Line;
 
+using SharedMarkerPtr = std::shared_ptr<class Marker>;
+using SharedLinePtr = std::shared_ptr<class Line>;
+
 class Edge {
 private:
 	Node* sourceNode;
 	Node* destinationNode;
 	double edgeWeight;
-	std::weak_ptr<Line> associated_line_;
+	SharedLinePtr linePtr_;
 public:
 	//constructor
 	Edge();
@@ -24,11 +27,12 @@ public:
 	void setSourceNode(Node* srcNode);
 	void setDestinationNode(Node* destNode);
 	void setEdgeWeight(double weight);
-	void setLine(std::shared_ptr<Line> l);
-	std:: weak_ptr<Line> getLine();
+	void setLine(SharedLinePtr l);
 	Node* getSourceNode();
 	Node* getDestinationNode();
 	double getEdgeWeight();
+	void setLinePtr(SharedLinePtr linePtr);
+	SharedLinePtr getLinePtr();
 
 	friend bool operator==(Edge a, Edge b);
 	friend bool operator>(Edge a, Edge b);

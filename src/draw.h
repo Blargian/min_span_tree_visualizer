@@ -4,22 +4,28 @@
 #include "ImPlot.h"
 #include "marker.h"
 #include "prims_algo.h"
+#include <memory>
 
 class Marker; 
+class Line; 
+
+using SharedMarkerPtr = std::shared_ptr<class Marker>;
+using SharedLinePtr = std::shared_ptr<class Line>;
 
 class Draw {
+
 private:
-	vector<Line> lines_;
-	vector<Marker> markers_;
-	Marker* selectedMarker_ = NULL;
+	vector<SharedLinePtr> lines_;
+	vector<SharedMarkerPtr> markers_;
+	SharedMarkerPtr selectedMarker_ = NULL;
 public:
-	vector<Line>& lines();
-	vector<Marker>& markers();
-	Marker* findMarker(ImPlotPoint p, bool& found);
-	Line* findLine(Line l, bool& found);
-	void setSelectedMarker(Marker* m);
-	Marker* selectedMarker();
-	void changeMarkerColour(Marker* m, MarkerColours c);
+	vector<SharedLinePtr>& getLines();
+	vector<SharedMarkerPtr>& getMarkers();
+	SharedMarkerPtr findMarker(ImPlotPoint p, bool& found);
+	SharedLinePtr findLine(Line l, bool& found);
+	void setSelectedMarker(SharedMarkerPtr m);
+	SharedMarkerPtr selectedMarker();
+	void changeMarkerColour(SharedMarkerPtr m, MarkerColours c);
 	void changeLineColour(Line* m, LineColours c);
 	bool hasMarkersToDraw();
 	bool hasLinesToDraw();
@@ -27,10 +33,10 @@ public:
 
 void createPlot(Draw &d, int window_width, int window_height);
 void checkPlotClicked(Draw& d);
-void drawNodes(vector<Marker>);
-void drawLines(vector<Line>);
+void drawNodes(vector<SharedMarkerPtr>);
+void drawLines(vector<SharedLinePtr>);
 void drawLine(Line);
 void drawMarker(Marker);
-void addMarkerToDraw(Marker m, vector<Marker>& markers);
-void addLineToDraw(Line m,vector<Line>& lines);
+SharedMarkerPtr addMarkerToDraw(SharedMarkerPtr m, vector<SharedMarkerPtr>& markers);
+SharedLinePtr addLineToDraw(SharedLinePtr l,vector<SharedLinePtr>& lines);
 void drawFromSnapshots(PrimsAlgorithm& p, Draw& d);

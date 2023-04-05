@@ -3,18 +3,18 @@
 #include "marker.h"
 #include<utility>
 
-vector<Line>& Draw::lines() {
+vector<SharedLinePtr>& Draw::getLines() {
     return lines_;
 }
 
-vector<Marker>& Draw::markers() {
+vector<SharedMarkerPtr>& Draw::getMarkers() {
     return markers_;
 }
 
-Marker* Draw::findMarker(ImPlotPoint p, bool& found) {
+SharedMarkerPtr Draw::findMarker(ImPlotPoint p, bool& found) {
 
-    auto predicate = [p](Marker& marker) {
-        return ((marker.coordinates().x == p.x) && (marker.coordinates().y == p.y));
+    auto predicate = [p](SharedMarkerPtr& marker) {
+        return ((marker->coordinates().x == p.x) && (marker->coordinates().y == p.y));
     };
 
     auto it = find_if(markers_.begin(), markers_.end(), predicate);
@@ -23,16 +23,16 @@ Marker* Draw::findMarker(ImPlotPoint p, bool& found) {
     };
 
     if (found) {
-        return &markers_[std::distance(markers_.begin(), it)];
+        return SharedMarkerPtr(markers_[std::distance(markers_.begin(), it)]);
     } else {
         return NULL;
     };
 };
 
-Line* Draw::findLine(Line l, bool& found) {
+SharedLinePtr Draw::findLine(Line l, bool& found) {
 
-    auto predicate = [&l](Line& line) {
-        return ((line.getPointA() == l.getPointA()) && (line.getPointB() == l.getPointB()));
+    auto predicate = [&l](SharedLinePtr& line) {
+        return ((line->getPointA() == l.getPointA()) && (line->getPointB() == l.getPointB()));
     };
 
     auto it = find_if(lines_.begin(), lines_.end(), predicate);
@@ -41,20 +41,20 @@ Line* Draw::findLine(Line l, bool& found) {
     };
 
     if (found) {
-        return &lines_[std::distance(lines_.begin(), it)];
+        return SharedLinePtr(lines_[std::distance(lines_.begin(), it)]);
     }
     else {
         return NULL;
     };
 };
 
-void Draw::setSelectedMarker(Marker* m) {
+void Draw::setSelectedMarker(SharedMarkerPtr m) {
     selectedMarker_ = m;
 }
 
-void Draw::changeMarkerColour(Marker* m, MarkerColours c) {
+void Draw::changeMarkerColour(SharedMarkerPtr m, MarkerColours c) {
     bool foundMarker = false;
-    Marker* marker = findMarker(m->coordinates(), foundMarker);
+    auto marker = findMarker(m->coordinates(), foundMarker);
     if (foundMarker) {
         marker->setMarkerColour(c);
     }
@@ -62,22 +62,22 @@ void Draw::changeMarkerColour(Marker* m, MarkerColours c) {
 
 void Draw::changeLineColour(Line* l, LineColours c) {
     bool foundLine = false;
-    Line* line = findLine(*l,foundLine);
+    auto line = findLine(*l,foundLine);
     if (foundLine) {
         line->setLineColour(c);
     }
 }
 
-Marker* Draw::selectedMarker() {
+SharedMarkerPtr Draw::selectedMarker() {
     return selectedMarker_;
 }
 
-void addMarkerToDraw(Marker m, vector<Marker>& markers) {
-    markers.push_back(m);
+SharedMarkerPtr addMarkerToDraw(SharedMarkerPtr m, vector<SharedMarkerPtr>& markers) {
+    return SharedMarkerPtr(markers.emplace_back(m));
 }
 
-void addLineToDraw(Line l, vector<Line>& lines) {
-    lines.push_back(l);
+SharedLinePtr addLineToDraw(SharedLinePtr l, vector<SharedLinePtr>& lines) {
+    return SharedLinePtr(lines.emplace_back(l));
 }
 
 bool Draw::hasMarkersToDraw() {
@@ -101,36 +101,36 @@ bool Draw::hasLinesToDraw() {
 void createPlot(Draw &d,int window_width, int window_height) {
     ImPlot::BeginPlot("Spanning Tree", ImVec2(window_width * 0.8, window_height * 0.95), ImPlotFlags_NoLegend);
     ImPlot::SetupAxesLimits(-100, 100, -100, 100);
-    if (d.hasMarkersToDraw()) { drawNodes(d.markers()); };
-    if (d.hasLinesToDraw()) { drawLines(d.lines()); };
+    if (d.hasMarkersToDraw()) { drawNodes(d.getMarkers()); };
+    if (d.hasLinesToDraw()) { drawLines(d.getLines()); };
     checkPlotClicked(d);
     ImPlot::EndPlot();
 }
 
-void drawLines(vector<Line> lines) {
-    for (auto& l : lines) {
-        ImPlot::SetNextLineStyle(l.lineColour(), l.lineThickness());
-        ImPlot::PlotLine("1", l.getPointA(), l.getPointB(), 2, ImPlotLineFlags_Segments);
+void drawLines(vector<SharedLinePtr> lines) {
+    for (auto const& l : lines) {
+        ImPlot::SetNextLineStyle(l->lineColour(), l->lineThickness());
+        ImPlot::PlotLine("1", l->getPointA(), l->getPointB(), 2, ImPlotLineFlags_Segments);
     }
 }
 
-void drawNodes(vector<Marker> markers) {
-    for (Marker marker : markers) {
-        double xs[1] = {marker.coordinates().x};
-        double ys[1] = {marker.coordinates().y};
-        ImPlot::SetNextMarkerStyle(ImPlotMarker_Circle, 8, marker.markerColour(), IMPLOT_AUTO, marker.markerColour());
-        ImPlot::PlotScatter(marker.id(), xs, ys, 2, ImPlotScatterFlags_None);
+void drawNodes(vector<SharedMarkerPtr> markers) {
+    for (auto const& marker : markers) {
+        double xs[1] = {marker->coordinates().x};
+        double ys[1] = {marker->coordinates().y};
+        ImPlot::SetNextMarkerStyle(ImPlotMarker_Circle, 8, marker->markerColour(), IMPLOT_AUTO, marker->markerColour());
+        ImPlot::PlotScatter(marker->id(), xs, ys, 2, ImPlotScatterFlags_None);
     };
 }
 
 void checkPlotClicked(Draw &d) {
 
     if (ImPlot::IsPlotHovered() && ImGui::IsMouseClicked(0)) {
-        Marker* previously_selected = d.selectedMarker();
+        auto previously_selected = d.selectedMarker();
         ImPlotPoint pt = ImPlot::GetPlotMousePos();
         ImPlotPoint nearest = ImPlotPoint(round(pt.x), round(pt.y));
         bool found = false;
-        Marker* found_marker = d.findMarker(nearest, found);
+        auto found_marker = d.findMarker(nearest, found);
         if(found) {
             // select the marker if none is selected 
             if (previously_selected == NULL) {
@@ -159,10 +159,10 @@ void checkPlotClicked(Draw &d) {
     }
 }
 
-void drawFromSnapshots(PrimsAlgorithm p, Draw& d, Node& starting_node) {
-    p.findMST(starting_node);
-    vector<Snapshot> snapshots = p.Snapshots();
-    for (auto& snapshot : snapshots) {
-        snapshot.getEdgeLeastWeight().getLine().lock()->setLineColour(LineColours::RED);
-    };
-}
+//void drawFromSnapshots(PrimsAlgorithm p, Draw& d, Node& starting_node) {
+//    p.findMST(starting_node);
+//    vector<Snapshot> snapshots = p.Snapshots();
+//    for (auto& snapshot : snapshots) {
+//   
+//    };
+//}

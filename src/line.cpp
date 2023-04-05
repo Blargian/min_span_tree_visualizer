@@ -13,8 +13,6 @@ Line::Line(Edge& e)
 	point_b[0] = src.second;
 	point_b[1] = dest.second;
 	colour_ = LineColours::GREY;
-	corresponding_edge_ = make_shared<Edge>(e);
-	e.setLine(make_shared<Line>(*this));
 };
 
 Line::~Line() {
@@ -52,4 +50,11 @@ ImVec4 Line::lineColour() {
 
 void Line::setLineColour(LineColours colour) {
 	colour_ = colour;
+}
+
+void Line::setEdgePtr(Edge* edgePtr) {
+	edgePtr_ = edgePtr; 
+}
+Edge* Line::getEdgePtr() {
+	return edgePtr_;
 }

@@ -15,7 +15,6 @@ Edge::Edge(Node* srcNode, Node* destNode, double w)
 	sourceNode = srcNode; 
 	destinationNode = destNode;
 	edgeWeight = w;
-	associated_line_;
 };
 
 Edge::Edge()
@@ -58,13 +57,13 @@ void Edge::setEdgeWeight(double weight)
 };
 
 
-void Edge::setLine(shared_ptr<Line> l) {
-	associated_line_ = l;
+void Edge::setLinePtr(SharedLinePtr linePtr) {
+	linePtr_ = linePtr; 
 }
 
-weak_ptr<Line> Edge::getLine() {
-	return associated_line_;
-};
+SharedLinePtr Edge::getLinePtr() {
+	return linePtr_;
+}
 
 /**
  * @brief getter method for source node

@@ -11,23 +11,25 @@
 class Edge;
 class Marker;
 
+using SharedMarkerPtr = std::shared_ptr<class Marker>;
+using SharedLinePtr = std::shared_ptr<class Line>;
+
 class Node {
 private:
 	std::list<Edge> edgeList;
 	std::string nodeName; 
 	std::pair <int, int> coordinates;
 	bool visited = false;
-	std::weak_ptr<Marker> marker_;
+	SharedMarkerPtr markerPtr_;
 public:
-	Node();
 	Node(std::string nodeName, int x, int y);
 	~Node();
 	void setNodeName(std::string nodeName);
 	std::string getNodeName();
 	void setXY(int x, int y);
-	void setMarker(std::shared_ptr<Marker> marker);
-	std::weak_ptr<Marker> getMarker();
-	void insertEdge(Edge edgeToAdd);
+	void setMarkerPtr(SharedMarkerPtr marker);
+	SharedMarkerPtr getMarkerPtr();
+	Edge* insertEdge(Edge& edgeToAdd);
 	void removeEdge(Node* fromNode, Node* toEdge);
 	void clearEdgeList();
 	std::list<Edge> getEdgeList();

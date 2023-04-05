@@ -6,12 +6,17 @@ Marker::Marker(Node& n) {
     coordinates_ = ImPlotPoint(coordinate_pair.first, coordinate_pair.second);
 	id_ = generateSimpleUuid();
     markerColour_ = MarkerColours::GREY;
-    corresponding_node_ = std::make_shared<Node>(n); 
-    n.setMarker(std::make_shared<Marker>(*this));
 }
 
 Marker::~Marker() {
 
+}
+
+Marker::Marker(Marker& m) {
+    coordinates_ = m.coordinates_;
+    id_ = m.id_;
+    markerColour_ = m.markerColour_;
+    nodePtr_ = m.nodePtr_;
 }
 
 const char* Marker::id() {
@@ -40,6 +45,14 @@ ImVec4 Marker::markerColour() {
 
 void Marker::setMarkerColour(MarkerColours colour) {
     markerColour_ = colour; 
+}
+
+void Marker::setNodePtr(SharedNodePtr nodePtr) {
+    nodePtr_ = nodePtr; 
+}
+
+SharedNodePtr Marker::getNodePtr() {
+    return nodePtr_;
 }
 
 /* This code is not mine, credit to happy_sisyphus on stackoverflow.com

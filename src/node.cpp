@@ -5,13 +5,6 @@
 #include <memory>
 
 using namespace std; 
-/**
- * @brief Default Node constructor
- *
- * @param 
- */
-Node::Node() {
-}
 
 /**
  * @brief Overloaded Node constructor
@@ -70,12 +63,12 @@ void Node::setXY(int x, int y) {
  *
  * @param Marker m
  */
-void Node::setMarker(std::shared_ptr<Marker> m) {
-	marker_ = m;
+void Node::setMarkerPtr(SharedMarkerPtr m) {
+	markerPtr_ = m;
 };
 
-std::weak_ptr<Marker> Node::getMarker() {
-	return marker_;
+SharedMarkerPtr Node::getMarkerPtr() {
+	return markerPtr_;
 };
 
 /**
@@ -83,9 +76,8 @@ std::weak_ptr<Marker> Node::getMarker() {
  *
  * @param edgeToAdd Edge 
  */
-void Node::insertEdge(Edge edgeToAdd) {
-	Edge e = edgeToAdd; 
-	this->edgeList.push_back(e);
+Edge* Node::insertEdge(Edge& edgeToAdd) {
+	return &edgeList.emplace_back(edgeToAdd);
 }
 
 /**

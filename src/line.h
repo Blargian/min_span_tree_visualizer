@@ -14,7 +14,7 @@ class Line {
 		float point_b[2] = {};
 		float thickness_ = 2.0;
 		LineColours colour_;
-		std::weak_ptr<Edge> corresponding_edge_;
+		Edge* edgePtr_;
 	public:
 		Line(Edge& e);
 		~Line();
@@ -23,4 +23,6 @@ class Line {
 		float lineThickness();
 		ImVec4 lineColour();
 		void setLineColour(LineColours color);
+		void setEdgePtr(Edge* edgePtr);
+		Edge* getEdgePtr();
 };
