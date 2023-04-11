@@ -22,6 +22,7 @@ private:
 	bool visited = false;
 	SharedMarkerPtr markerPtr_;
 public:
+	Node();
 	Node(std::string nodeName, int x, int y);
 	~Node();
 	void setNodeName(std::string nodeName);

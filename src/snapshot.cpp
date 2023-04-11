@@ -11,11 +11,11 @@ Snapshot::~Snapshot() {
 
 };
 
-queue<Edge> Snapshot::MST() {
+queue<Edge> Snapshot::getMST() {
 	return MST_;
 }
 
-priority_queue<Edge, vector<Edge>, greater<Edge>> Snapshot::PQ() {
+priority_queue<Edge, vector<Edge>, greater<Edge>> Snapshot::getPQ() {
 	return pq_;
 }
 

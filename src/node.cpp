@@ -18,6 +18,10 @@ Node::Node(string nodeName, int x, int y) {
 	this->setXY(x, y);
 }
 
+Node::Node() {
+
+};
+
 Node::~Node() {
 
 };

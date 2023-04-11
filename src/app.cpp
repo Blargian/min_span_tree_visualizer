@@ -75,6 +75,8 @@ void MyApp::Update()
     if (ImGui::Button("Controls")) {
         auto selectedNode = d->selectedMarker()->getNodePtr();
         prims->findMST(*selectedNode);
+        std::cout << "found an MST" << std::endl;
+        drawFromSnapshots(prims->getSnapshots(), *d);
     }
     ImGui::End();
 }

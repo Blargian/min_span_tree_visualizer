@@ -21,7 +21,7 @@ public:
 	void AddSnapshot(Snapshot s) {
 		solving_snapshots.emplace_back(s);
 	};
-	std::vector<Snapshot> Snapshots()
+	std::vector<Snapshot> getSnapshots()
 	{
 		return solving_snapshots;
 	};

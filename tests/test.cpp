@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <memory>
 
 using namespace std; 
 
@@ -114,20 +115,20 @@ TEST_CASE("Graph node", "[Node]") {
 
 		Graph g = Graph();
 
-		std::vector<Node> nodes = {
-			Node("Johannesburg", 5, 10),
-			Node("Cape Town", 26, 10),
+		std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("Johannesburg", 5, 10),
+			std::make_shared<Node>("Cape Town", 26, 10),
 		};
 
 		
-		for (Node node : nodes) {
+		for (auto node : nodes) {
 			g.insertNode(node);
 		}
-		g.connectNodes(g.getNodes()[0], g.getNodes()[1],1);
+		g.connectNodes(g.getNodes()[0].get(), g.getNodes()[1].get(), 1);
 
-		Edge e = Edge(g.getNodes()[0], g.getNodes()[1], 1);
+		Edge e = Edge(g.getNodes()[0].get(), g.getNodes()[1].get(), 1);
 
-		Edge* edge_we_need = g.getNodes()[0]->getEdge(g.getNodes()[0], g.getNodes()[1]);
+		Edge* edge_we_need = g.getNodes()[0]->getEdge(g.getNodes()[0].get(), g.getNodes()[1].get());
 		REQUIRE(*(edge_we_need) == e);
 
 	}
@@ -135,13 +136,12 @@ TEST_CASE("Graph node", "[Node]") {
 
 TEST_CASE("Graph","[Graph]"){
 
-	Node newNode = Node();
 	Graph g = Graph();
 
 	SECTION("a new node gets added to the graph") {
-		vector<Node*> nodes = g.getNodes();
+		auto nodes = g.getNodes();
 		REQUIRE(nodes.size()==0);
-		g.insertNode(newNode);
+		auto newNode = g.insertNode(std::make_shared<Node>());
 		nodes = g.getNodes();
 		REQUIRE(nodes.size() == 1);
 	}
@@ -150,25 +150,25 @@ TEST_CASE("Graph","[Graph]"){
 		Node a = Node();
 		Graph g = Graph();
 		REQUIRE(g.getNodeCount() == 0);
-		g.insertNode(newNode);
+		g.insertNode(std::make_shared<Node>());
 		REQUIRE(g.getNodeCount() == 1);
-		g.removeNode(g.getNodes()[0]);
+		g.removeNode(g.getNodes()[0].get());
 		REQUIRE(g.getNodeCount() == 0);
 	}
 
 	//lines commented out are due to graph being undirected 
 	SECTION("connects two nodes with an edge") {
 
-		Node a = Node("Johannesburg", 5, 10);
-		Node b = Node("Cape Town", 26, 10);
+		Node a = Node();
+		Node b = Node();
 
-		size_t a_index = g.insertNode(a) -1;
-		size_t b_index = g.insertNode(b) -1;
-		vector<Node*> nodes_on_graph = g.getNodes();
-		g.connectNodes(nodes_on_graph[a_index],nodes_on_graph[b_index], 1);
+		auto nodeA = g.insertNode(std::make_shared<Node>("Johannesburg", 5, 10));
+		auto nodeB = g.insertNode(std::make_shared<Node>("Cape Town", 26, 10));
+		auto nodes_on_graph = g.getNodes();
+		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 1);
 
 		//expected edges if connectNodes(a,b,1) is run 
-		Edge aToB = Edge(nodes_on_graph[a_index], nodes_on_graph[b_index], 1);
+		Edge aToB = Edge(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 1);
 		//Edge bToA = Edge(nodes_on_graph[b_index], nodes_on_graph[a_index], 1);
 
 		list<Edge> nodeAEdges = nodes_on_graph[0]->getEdgeList();
@@ -185,27 +185,27 @@ TEST_CASE("Graph","[Graph]"){
 		
 		Graph g = Graph();
 		
-		std::vector<Node> nodes = {
-			Node("Johannesburg", 5, 10),
-			Node("Cape Town", 26, 10),
-			Node("Durban", -24, 78)
+		std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("Johannesburg", 5, 10),
+			std::make_shared<Node>("Cape Town", 26, 10),
+			std::make_shared<Node>("Durban", -24, 78)
 		};
 
-		for(Node node : nodes) {
+		for(auto node : nodes) {
 			g.insertNode(node);
 		}
 
-		vector<Node*> nodes_on_graph = g.getNodes();
-		g.connectNodes(nodes_on_graph[0], nodes_on_graph[1], 1);
-		g.connectNodes(nodes_on_graph[2], nodes_on_graph[1], 1);
+		auto nodes_on_graph = g.getNodes();
+		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 1);
+		g.connectNodes(nodes_on_graph[2].get(), nodes_on_graph[1].get(), 1);
 
-		REQUIRE(size(g.getNodes()[0]->getEdgeList()) == 1);
-		REQUIRE(size(g.getNodes()[1]->getEdgeList()) == 2);
-		REQUIRE(size(g.getNodes()[2]->getEdgeList()) == 1);
+		REQUIRE(size(g.getNodes()[0].get()->getEdgeList()) == 1);
+		REQUIRE(size(g.getNodes()[1].get()->getEdgeList()) == 2);
+		REQUIRE(size(g.getNodes()[2].get()->getEdgeList()) == 1);
 
-		g.removeNode(g.getNodes().back());
-		g.removeNode(g.getNodes().back());
-		g.removeNode(g.getNodes().back());
+		g.removeNode(g.getNodes().back().get());
+		g.removeNode(g.getNodes().back().get());
+		g.removeNode(g.getNodes().back().get());
 
 		//After removing there should only be two nodes
 		//Those nodes should have no edges
@@ -214,12 +214,12 @@ TEST_CASE("Graph","[Graph]"){
 
 	SECTION("returns coordinates of nodes in an array of floats - to be used for plotting") {
 		Graph g = Graph();
-		std::vector<Node> nodes = {
-			Node("Johannesburg", 5, 10),
-			Node("Cape Town", 26, 10),
-			Node("Durban", -24, 78)
+		std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("Johannesburg", 5, 10),
+			std::make_shared<Node>("Cape Town", 26, 10),
+			std::make_shared<Node>("Durban", -24, 78)
 		};
-		for (Node node : nodes) {
+		for (auto node : nodes) {
 			g.insertNode(node);
 		}
 		auto points = g.getCoordsForPlot();
@@ -230,15 +230,15 @@ TEST_CASE("Graph","[Graph]"){
 
 	SECTION("getNodeByName returns a pointer to a node given the name") {
 		Graph g = Graph();
-		std::vector<Node> nodes = {
-			Node("Johannesburg", 5, 10),
-			Node("Cape Town", 26, 10),
-			Node("Durban", -24, 78)
+		std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("Johannesburg", 5, 10),
+			std::make_shared<Node>("Cape Town", 26, 10),
+			std::make_shared<Node>("Durban", -24, 78)
 		};
-		for (Node node : nodes) {
+		for (auto node : nodes) {
 			g.insertNode(node);
 		}
-		Node* node = g.getNodeByName("Johannesburg");
+		auto node = g.getNodeByName("Johannesburg");
 		REQUIRE(node->getXY().first == 5);
 		REQUIRE(node->getXY().second == 10);
 		REQUIRE(node->getNodeName() == "Johannesburg");
@@ -277,22 +277,22 @@ TEST_CASE("Prim's Algorithm", "[Prims]") {
 		Graph tinyGraph;
 		//create the nodes
 		for (vector<int> node : tinyEWGnodes) {
-			tinyGraph.insertNode(Node(to_string(node[0]), static_cast<int>(node[0]), static_cast<int>(node[0])));
+			tinyGraph.insertNode(std::make_shared<Node>(to_string(node[0]), static_cast<int>(node[0]), static_cast<int>(node[0])));
 		};
 		//connect the nodes
 		for (vector<double> node_data : tinyEWG) {
-			tinyGraph.connectNodes(tinyGraph.getNodeByName(to_string((int)node_data[0])), tinyGraph.getNodeByName(to_string((int)node_data[1])), node_data[2]);
+			tinyGraph.connectNodes(tinyGraph.getNodeByName(to_string((int)node_data[0])).get(), tinyGraph.getNodeByName(to_string((int)node_data[1])).get(), node_data[2]);
 		};
 
 		vector<Edge> expected_edges{
-			Edge(tinyGraph.getNodeByName("0"),tinyGraph.getNodeByName("7"),0.16),
-			Edge(tinyGraph.getNodeByName("0"),tinyGraph.getNodeByName("2"),0.26),
-			Edge(tinyGraph.getNodeByName("6"),tinyGraph.getNodeByName("2"),0.40),
-			Edge(tinyGraph.getNodeByName("2"),tinyGraph.getNodeByName("3"),0.17),
-			Edge(tinyGraph.getNodeByName("6"),tinyGraph.getNodeByName("2"),0.40),
-			Edge(tinyGraph.getNodeByName("1"),tinyGraph.getNodeByName("7"),0.19),
-			Edge(tinyGraph.getNodeByName("5"),tinyGraph.getNodeByName("7"),0.28),
-			Edge(tinyGraph.getNodeByName("4"),tinyGraph.getNodeByName("5"),0.35),
+			Edge(tinyGraph.getNodeByName("0").get(),tinyGraph.getNodeByName("7").get(),0.16),
+			Edge(tinyGraph.getNodeByName("0").get(),tinyGraph.getNodeByName("2").get(),0.26),
+			Edge(tinyGraph.getNodeByName("6").get(),tinyGraph.getNodeByName("2").get(),0.40),
+			Edge(tinyGraph.getNodeByName("2").get(),tinyGraph.getNodeByName("3").get(),0.17),
+			Edge(tinyGraph.getNodeByName("6").get(),tinyGraph.getNodeByName("2").get(),0.40),
+			Edge(tinyGraph.getNodeByName("1").get(),tinyGraph.getNodeByName("7").get(),0.19),
+			Edge(tinyGraph.getNodeByName("5").get(),tinyGraph.getNodeByName("7").get(),0.28),
+			Edge(tinyGraph.getNodeByName("4").get(),tinyGraph.getNodeByName("5").get(),0.35),
 		};
 
 		PrimsAlgorithm prim = PrimsAlgorithm();

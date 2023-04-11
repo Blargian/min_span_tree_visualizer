@@ -39,4 +39,4 @@ void drawLine(Line);
 void drawMarker(Marker);
 SharedMarkerPtr addMarkerToDraw(SharedMarkerPtr m, vector<SharedMarkerPtr>& markers);
 SharedLinePtr addLineToDraw(SharedLinePtr l,vector<SharedLinePtr>& lines);
-void drawFromSnapshots(PrimsAlgorithm& p, Draw& d);
+void drawFromSnapshots(vector<Snapshot> s, Draw& d);

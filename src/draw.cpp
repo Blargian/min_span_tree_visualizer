@@ -159,10 +159,13 @@ void checkPlotClicked(Draw &d) {
     }
 }
 
-//void drawFromSnapshots(PrimsAlgorithm p, Draw& d, Node& starting_node) {
-//    p.findMST(starting_node);
-//    vector<Snapshot> snapshots = p.Snapshots();
-//    for (auto& snapshot : snapshots) {
-//   
-//    };
-//}
+void drawFromSnapshots(vector<Snapshot> snapshots, Draw& d) {
+    for (auto& snapshot : snapshots) {
+        auto pq = snapshot.getPQ();
+        while (!pq.empty()) {
+            auto edge = pq.top();
+            d.changeLineColour(edge.getLinePtr().get(), LineColours::RED);
+            //bug here in that 0-4 has a pointer to a line but 4-0 is empty, so maybe those ones should not be added to the edge list? 
+        }
+    };
+}
