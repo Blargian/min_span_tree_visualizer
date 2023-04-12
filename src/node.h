@@ -33,7 +33,7 @@ public:
 	Edge* insertEdge(Edge& edgeToAdd);
 	void removeEdge(Node* fromNode, Node* toEdge);
 	void clearEdgeList();
-	std::list<Edge> getEdgeList();
+	std::list<Edge>& getEdgeList();
 	Edge* getEdge(Node* fromNode, Node* toNode);
 	std:: pair <int, int> getXY();
 	void markVisited();

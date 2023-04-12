@@ -15,12 +15,17 @@ Edge::Edge(Node* srcNode, Node* destNode, double w)
 	sourceNode = srcNode; 
 	destinationNode = destNode;
 	edgeWeight = w;
+	linePtr_ = SharedLinePtr();
 };
 
 Edge::Edge()
 {
-
+	sourceNode = nullptr;
+	destinationNode = nullptr;
+	edgeWeight = 0.0;
+	linePtr_ = SharedLinePtr();
 };
+
 
 Edge::~Edge() {
 

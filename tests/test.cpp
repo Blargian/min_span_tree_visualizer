@@ -121,7 +121,7 @@ TEST_CASE("Graph node", "[Node]") {
 		};
 
 		
-		for (auto node : nodes) {
+		for (auto& node : nodes) {
 			g.insertNode(node);
 		}
 		g.connectNodes(g.getNodes()[0].get(), g.getNodes()[1].get(), 1);
@@ -139,7 +139,7 @@ TEST_CASE("Graph","[Graph]"){
 	Graph g = Graph();
 
 	SECTION("a new node gets added to the graph") {
-		auto nodes = g.getNodes();
+		auto& nodes = g.getNodes();
 		REQUIRE(nodes.size()==0);
 		auto newNode = g.insertNode(std::make_shared<Node>());
 		nodes = g.getNodes();
@@ -164,7 +164,7 @@ TEST_CASE("Graph","[Graph]"){
 
 		auto nodeA = g.insertNode(std::make_shared<Node>("Johannesburg", 5, 10));
 		auto nodeB = g.insertNode(std::make_shared<Node>("Cape Town", 26, 10));
-		auto nodes_on_graph = g.getNodes();
+		auto& nodes_on_graph = g.getNodes();
 		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 1);
 
 		//expected edges if connectNodes(a,b,1) is run 
@@ -191,11 +191,11 @@ TEST_CASE("Graph","[Graph]"){
 			std::make_shared<Node>("Durban", -24, 78)
 		};
 
-		for(auto node : nodes) {
+		for(auto& node : nodes) {
 			g.insertNode(node);
 		}
 
-		auto nodes_on_graph = g.getNodes();
+		auto& nodes_on_graph = g.getNodes();
 		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 1);
 		g.connectNodes(nodes_on_graph[2].get(), nodes_on_graph[1].get(), 1);
 
@@ -219,7 +219,7 @@ TEST_CASE("Graph","[Graph]"){
 			std::make_shared<Node>("Cape Town", 26, 10),
 			std::make_shared<Node>("Durban", -24, 78)
 		};
-		for (auto node : nodes) {
+		for (auto& node : nodes) {
 			g.insertNode(node);
 		}
 		auto points = g.getCoordsForPlot();
@@ -235,13 +235,28 @@ TEST_CASE("Graph","[Graph]"){
 			std::make_shared<Node>("Cape Town", 26, 10),
 			std::make_shared<Node>("Durban", -24, 78)
 		};
-		for (auto node : nodes) {
+		for (auto& node : nodes) {
 			g.insertNode(node);
 		}
 		auto node = g.getNodeByName("Johannesburg");
 		REQUIRE(node->getXY().first == 5);
 		REQUIRE(node->getXY().second == 10);
 		REQUIRE(node->getNodeName() == "Johannesburg");
+	}
+	
+	SECTION("getinverseedge() returns the edge running in the opposite direction given some edge") {
+		Graph g = Graph();
+		std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("johannesburg", 5, 10),
+			std::make_shared<Node>("cape town", 26, 10),
+		};
+		for (auto& node : nodes) {
+			g.insertNode(node);
+		}
+		auto unidirectional_edge = g.connectNodes(g.getNodes()[0].get(), g.getNodes()[1].get(),0.5);
+		auto inverse_edge = getInverseEdge(g, *unidirectional_edge);
+		REQUIRE(inverse_edge->getSourceNode() == nodes[1].get());
+		REQUIRE(inverse_edge->getDestinationNode() == nodes[0].get());
 	}
 }
 
@@ -300,7 +315,7 @@ TEST_CASE("Prim's Algorithm", "[Prims]") {
 
 		cout << "========== Prims Algorithm ==========" << endl;
 		cout << "Found the following MST" << endl;
-		bool found;
+		bool found = false;
 		while (!MST.empty()) {
 			Edge e = MST.front();
 			cout << e << endl; //add something to print edges
@@ -311,6 +326,38 @@ TEST_CASE("Prim's Algorithm", "[Prims]") {
 			MST.pop();
 			expected_edges.erase(it);
 		}
+	}
+}
+
+TEST_CASE("Draw", "[Draw]") {
+
+	auto d = std::make_unique<Draw>();
+	auto g = make_unique<Graph>();
+
+	for (vector<int> node_properties : tinyEWGnodes) {
+		auto nodePtr = g->insertNode(std::make_shared<Node>(to_string(node_properties[0]), static_cast<int>(node_properties[1]), static_cast<int>(node_properties[2])));
+		auto markerPtrr = std::make_shared<Marker>(*nodePtr);
+		auto markerPtr = addMarkerToDraw(markerPtrr, d->getMarkers());
+		nodePtr->setMarkerPtr(markerPtr);
+		markerPtr->setNodePtr(nodePtr);
+	};
+	//connect the nodes
+	for (vector<double> node_data : tinyEWG) {
+		auto edgePtr = g->connectNodes(g->getNodeByName(to_string((int)node_data[0])).get(), g->getNodeByName(to_string((int)node_data[1])).get(), node_data[2]);
+		auto l = std::make_shared<Line>(Line(*edgePtr));
+		auto linePtr = addLineToDraw(l, d->getLines());
+		linePtr->setEdgePtr(edgePtr);
+		edgePtr->setLinePtr(linePtr);
+		auto edgeInversePtr = getInverseEdge(*g, *edgePtr);
+		edgeInversePtr->setLinePtr(linePtr); //two edges reference one line on the graph due to bidirectional nature 
+	};
+
+	SECTION("findLine() finds a line if it exists, otherwise doesn't find a line if not") {
+		bool foundTheLine = false; 
+		auto& someEdge = g->getNodeByName("0")->getEdgeList().front();
+		auto& foundLine = d->findLine(*someEdge.getLinePtr().get(), foundTheLine);
+		REQUIRE(foundTheLine == true); 
+		REQUIRE(*foundLine.get() == *someEdge.getLinePtr());
 	}
 }
 

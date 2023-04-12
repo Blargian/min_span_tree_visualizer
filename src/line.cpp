@@ -52,9 +52,31 @@ void Line::setLineColour(LineColours colour) {
 	colour_ = colour;
 }
 
+void Line::setLineThickness(float thickness) {
+	thickness_ = thickness;
+}
+
 void Line::setEdgePtr(Edge* edgePtr) {
 	edgePtr_ = edgePtr; 
 }
 Edge* Line::getEdgePtr() {
 	return edgePtr_;
 }
+
+bool operator==(Line a, Line b) {
+	if (
+		a.point_a[0] == b.point_a[0]
+		&& a.point_a[1] == b.point_a[1]
+		&& a.point_b[0] == b.point_b[0]
+		&& a.point_b[1] == b.point_b[1]
+		&& a.thickness_ == b.thickness_
+		&& a.edgePtr_ == b.edgePtr_
+		&& a.colour_ == b.colour_
+		)
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+};

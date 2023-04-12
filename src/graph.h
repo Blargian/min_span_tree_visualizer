@@ -30,3 +30,5 @@ public:
 	pair<float*,float*> getCoordsForPlot();
 	void drawEdge(Edge* e);
 }; 
+
+std::shared_ptr<Edge> getInverseEdge(Graph& g, Edge& edge);

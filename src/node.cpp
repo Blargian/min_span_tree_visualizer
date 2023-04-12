@@ -123,7 +123,7 @@ Edge* Node::getEdge(Node* fromNode, Node* toNode) {
 /**
  * @brief returns the edge list
  */
-list<Edge> Node::getEdgeList() {
+list<Edge>& Node::getEdgeList() {
 	return edgeList; 
 }
 

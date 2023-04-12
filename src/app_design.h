@@ -88,7 +88,7 @@ class App
 
             // Setup Dear ImGui style
             //ImGui::StyleColorsDark();
-            //ImGui::StyleColorsLight();
+            ImGui::StyleColorsLight();
 
             // Setup Platform/Renderer backends
             ImGui_ImplGlfw_InitForOpenGL(window, true);

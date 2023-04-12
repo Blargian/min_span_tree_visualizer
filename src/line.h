@@ -24,5 +24,7 @@ class Line {
 		ImVec4 lineColour();
 		void setLineColour(LineColours color);
 		void setEdgePtr(Edge* edgePtr);
+		void setLineThickness(float thickness);
 		Edge* getEdgePtr();
+		friend bool operator==(Line a, Line b);
 };

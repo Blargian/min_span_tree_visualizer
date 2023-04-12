@@ -22,11 +22,12 @@ public:
 	vector<SharedLinePtr>& getLines();
 	vector<SharedMarkerPtr>& getMarkers();
 	SharedMarkerPtr findMarker(ImPlotPoint p, bool& found);
-	SharedLinePtr findLine(Line l, bool& found);
+	SharedLinePtr findLine(Line& l, bool& found);
 	void setSelectedMarker(SharedMarkerPtr m);
 	SharedMarkerPtr selectedMarker();
 	void changeMarkerColour(SharedMarkerPtr m, MarkerColours c);
 	void changeLineColour(Line* m, LineColours c);
+	void changeLineThickness(Line* l, float thickness);
 	bool hasMarkersToDraw();
 	bool hasLinesToDraw();
 };

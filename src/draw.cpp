@@ -29,10 +29,10 @@ SharedMarkerPtr Draw::findMarker(ImPlotPoint p, bool& found) {
     };
 };
 
-SharedLinePtr Draw::findLine(Line l, bool& found) {
+SharedLinePtr Draw::findLine(Line& l, bool& found) {
 
     auto predicate = [&l](SharedLinePtr& line) {
-        return ((line->getPointA() == l.getPointA()) && (line->getPointB() == l.getPointB()));
+        return (*line.get() == l);
     };
 
     auto it = find_if(lines_.begin(), lines_.end(), predicate);
@@ -65,6 +65,14 @@ void Draw::changeLineColour(Line* l, LineColours c) {
     auto line = findLine(*l,foundLine);
     if (foundLine) {
         line->setLineColour(c);
+    }
+}
+
+void Draw::changeLineThickness(Line* l, float thickness) {
+    bool foundLine = false;
+    auto line = findLine(*l, foundLine);
+    if (foundLine) {
+        line->setLineThickness(thickness);
     }
 }
 
@@ -164,8 +172,21 @@ void drawFromSnapshots(vector<Snapshot> snapshots, Draw& d) {
         auto pq = snapshot.getPQ();
         while (!pq.empty()) {
             auto edge = pq.top();
-            d.changeLineColour(edge.getLinePtr().get(), LineColours::RED);
-            //bug here in that 0-4 has a pointer to a line but 4-0 is empty, so maybe those ones should not be added to the edge list? 
+            pq.pop();
+            if (edge.getLinePtr().get() != nullptr) {
+                d.changeLineColour(edge.getLinePtr().get(), LineColours::RED);
+            }
         }
-    };
+        auto MST = snapshot.getPQ();
+        while (!MST.empty()) {
+            auto edge = MST.top();
+            MST.pop();
+            if (edge.getLinePtr().get() != nullptr) {
+                d.changeLineColour(edge.getLinePtr().get(), LineColours::BLACK);
+                d.changeLineThickness(edge.getLinePtr().get(), 4.0);
+            }
+        }
+
+        d.changeLineColour(snapshot.getEdgeLeastWeight().getLinePtr().get(), LineColours::RED);
+   };
 }

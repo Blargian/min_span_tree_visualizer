@@ -131,3 +131,19 @@ pair<float*, float*> Graph::getCoordsForPlot() {
 void Graph::drawEdge(Edge* e) { 
 	this->Notify(Graph::DRAWEDGE, Line(*e));
 }
+
+/**
+ * @brief returns the inverse edge given an edge (i.e if given edge from 0 to 1 returns 1 to 0)
+ * @parameter 
+ */
+std::shared_ptr<Edge> getInverseEdge(Graph& g, Edge& edge) {
+	auto inverse = std::make_shared<Edge>();
+	auto srcNode = edge.getDestinationNode();
+	auto destNode = edge.getSourceNode();
+	auto& edgeList = srcNode->getEdgeList();
+	for (auto& e : edgeList) {
+		if (e.getDestinationNode() == destNode && e.getSourceNode() == srcNode)
+			inverse = std::make_shared<Edge>(e); 
+	}
+	return inverse;
+}

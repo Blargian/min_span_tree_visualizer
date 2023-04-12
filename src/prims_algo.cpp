@@ -26,6 +26,7 @@ queue<Edge> PrimsAlgorithm::findMST(Node& startingNode) {
 		};
 		MST_.push(edge_least_weight);
 		current_iteration.AddMST(MST_);
+		AddSnapshot(current_iteration);
 		if (!src->wasVisited()) {
 			findMST(*src);
 		};
@@ -34,7 +35,6 @@ queue<Edge> PrimsAlgorithm::findMST(Node& startingNode) {
 		};
 	}
 	
-	AddSnapshot(current_iteration);
 	return MST_;
 }
 

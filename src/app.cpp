@@ -40,7 +40,6 @@ void MyApp::StartUp()
 
     g->AddObserver(Graph::DRAWEDGE, this);
     //create the nodes
-    //I should be using smart pointers here... I know. 
     for (vector<int> node_properties : tinyEWGnodes) {
         auto nodePtr = g->insertNode(std::make_shared<Node>(to_string(node_properties[0]), static_cast<int>(node_properties[1]), static_cast<int>(node_properties[2])));
         auto markerPtrr = std::make_shared<Marker>(*nodePtr);
@@ -55,6 +54,8 @@ void MyApp::StartUp()
         auto linePtr = addLineToDraw(l,d->getLines());
         linePtr->setEdgePtr(edgePtr);
         edgePtr->setLinePtr(linePtr);
+        auto edgeInversePtr = getInverseEdge(*g, *edgePtr);
+        edgeInversePtr->setLinePtr(linePtr); //two edges reference one line on the graph due to bidirectional nature 
     };
 }
 
