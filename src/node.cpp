@@ -2,15 +2,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <cmath>
+#include <memory>
 
 using namespace std; 
-/**
- * @brief Default Node constructor
- *
- * @param 
- */
-Node::Node() {
-}
 
 /**
  * @brief Overloaded Node constructor
@@ -23,6 +17,14 @@ Node::Node(string nodeName, int x, int y) {
 	this->setNodeName(nodeName);
 	this->setXY(x, y);
 }
+
+Node::Node() {
+
+};
+
+Node::~Node() {
+
+};
 
 /**
  * @brief Setter method for the nodename
@@ -38,7 +40,7 @@ void Node::setNodeName(string nodeName) {
  */
 string Node::getNodeName() {
 	return this->nodeName;
-}
+};
 
 
 /**
@@ -58,16 +60,28 @@ void Node::setXY(int x, int y) {
 		this->coordinates.first = x;
 		this->coordinates.second = y;
 	}
-}
+};
+
+/**
+ * @brief sets a shared pointer to the corresponding marker for a node
+ *
+ * @param Marker m
+ */
+void Node::setMarkerPtr(SharedMarkerPtr m) {
+	markerPtr_ = m;
+};
+
+SharedMarkerPtr Node::getMarkerPtr() {
+	return markerPtr_;
+};
 
 /**
  * @brief inserts an edge to the edgelist
  *
  * @param edgeToAdd Edge 
  */
-void Node::insertEdge(Edge edgeToAdd) {
-	Edge e = edgeToAdd; 
-	this->edgeList.push_back(e);
+Edge* Node::insertEdge(Edge& edgeToAdd) {
+	return &edgeList.emplace_back(edgeToAdd);
 }
 
 /**
@@ -109,7 +123,7 @@ Edge* Node::getEdge(Node* fromNode, Node* toNode) {
 /**
  * @brief returns the edge list
  */
-list<Edge> Node::getEdgeList() {
+list<Edge>& Node::getEdgeList() {
 	return edgeList; 
 }
 

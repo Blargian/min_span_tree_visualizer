@@ -8,6 +8,7 @@ project ("min_span_tree_visualizer" VERSION 1.0
 									LANGUAGES CXX
 
 )
+set(CMAKE_CXX_STANDARD 17)
 
 # Include sub-projects.
 add_subdirectory ("src")
@@ -15,7 +16,30 @@ add_subdirectory ("src")
 # Configuration for Catch2 
 
 add_subdirectory(lib/Catch2)
-add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp  "src/graph.h" "src/graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp" "src/iSubject.h" "src/iObserver.h" "src/app.h" "src/app_design.h" "src/line.h" "src/line.cpp" "src/app.cpp" "src/mst_algo.h" "src/prims_algo.cpp" "src/prims_algo.h")
+add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp 
+"src/graph.h" 
+"src/graph.cpp" 
+"src/edge.cpp" 
+"src/edge.h" 
+"src/node.h" 
+"src/node.cpp" 
+"src/iSubject.h" 
+"src/iSubject.cpp"
+"src/iObserver.h" 
+"src/app.h" 
+"src/app_design.h" 
+"src/line.h" 
+"src/line.cpp" 
+"src/app.cpp" 
+"src/mst_algo.h" 
+"src/prims_algo.cpp" 
+"src/prims_algo.h" 
+"src/draw.h" 
+"src/draw.cpp"
+"src/marker.h"
+"src/marker.cpp"
+"src/snapshot.h" 
+"src/snapshot.cpp")
 
 target_link_libraries(
     tests 
@@ -41,7 +65,30 @@ find_package(imgui CONFIG REQUIRED)
 find_package(implot CONFIG REQUIRED)
 
 
-add_executable (min_span_tree_visualizer src/main.cpp "src/graph.h" "src/graph.cpp" "src/edge.cpp" "src/edge.h" "src/node.h" "src/node.cpp" "src/app_design.h" "src/app.h" "src/iSubject.h" "src/iObserver.h" "src/line.h" "src/line.cpp" "src/app.cpp" "src/mst_algo.h" "src/prims_algo.cpp" "src/prims_algo.h")
+add_executable (min_span_tree_visualizer src/main.cpp 
+"src/graph.h" 
+"src/graph.cpp" 
+"src/edge.cpp" 
+"src/edge.h" 
+"src/node.h" 
+"src/node.cpp" 
+"src/app_design.h" 
+"src/app.h" 
+"src/iSubject.h" 
+"src/iSubject.cpp"
+"src/iObserver.h" 
+"src/line.h"
+"src/line.cpp" 
+"src/app.cpp" 
+"src/mst_algo.h" 
+"src/prims_algo.cpp" 
+"src/prims_algo.h" 
+"src/draw.h" 
+"src/draw.cpp" 
+"src/marker.h"
+"src/marker.cpp"
+"src/snapshot.h" 
+"src/snapshot.cpp")
 set_property(TARGET min_span_tree_visualizer PROPERTY WIN32_EXECUTABLE FALSE)
 target_include_directories(min_span_tree_visualizer 
   PRIVATE 

@@ -4,6 +4,8 @@
 #include <Vector>
 #include <queue>
 #include <algorithm>
+#include "implot.h"
+#include "imgui.h"
 
 using namespace std;
 
@@ -24,32 +26,27 @@ Graph::~Graph() {
  *
  * @param n the node to insert of type Node
  */
-size_t  Graph::insertNode(Node n) {
-	this->nodeArray.push_back(n);
-	this->nodeCount++;
-	return size(this->nodeArray);
+SharedNodePtr Graph::insertNode(SharedNodePtr n) {
+	nodeCount++;
+	return SharedNodePtr(nodeArray.emplace_back(n));
 }
 
 /**
- * @brief returns the vector of nodes 
+ * @brief returns a vector of pointers to the nodes in nodeArray 
  *
  */
-vector<Node*> Graph::getNodes() {
-	vector<Node*> nodes;
-	for (size_t i = 0; i < size(this->nodeArray); i++) {
-		nodes.push_back(&(this->nodeArray[i]));
-	}
-	return nodes;
+vector<SharedNodePtr>& Graph::getNodes() {
+	return nodeArray;
 }
 
 /**
  * @brief returns a pointer to a node 
  * @param name String which is the nodeName member of Node
  */
-Node* Graph::getNodeByName(string name) {
-	auto it = find_if(this->nodeArray.begin(), this->nodeArray.end(), [&name](Node& obj) {return obj.getNodeName() == name; });
-	auto index = std::distance(this->nodeArray.begin(), it);
-	return &(this->nodeArray[index]);
+SharedNodePtr Graph::getNodeByName(string name) {
+	auto it = find_if(nodeArray.begin(), nodeArray.end(), [&name](auto& obj) {return obj->getNodeName() == name; });
+	auto index = std::distance(nodeArray.begin(), it);
+	return SharedNodePtr((nodeArray[index]));
 }
 
 /**
@@ -66,7 +63,7 @@ int Graph::getNodeCount() {
  *        b the second node
  *        edgeWeight the edge weight 
  */
-void Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
+Edge* Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
 
 	//check if the nodes are connected yet or not
 	//if not connected 
@@ -74,11 +71,11 @@ void Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
 		//make an edge b->a and add that edge to node b edgelist 
 	    //update the nodes
 
-	Edge ab = Edge(a, b, edgeWeight);
-	Edge ba = Edge(b, a, edgeWeight);
-	this->drawEdge(&ab);
-	a->insertEdge(ab);
-	b->insertEdge(ba);
+	Edge* ab = new Edge(a, b, edgeWeight);
+	Edge* ba = new Edge(b, a, edgeWeight);
+	auto aPtr = a->insertEdge(*ab);
+	auto bPtr = b->insertEdge(*ba);
+	return aPtr;
 }
 
 /**
@@ -99,14 +96,14 @@ void Graph::removeNode(Node* node_to_remove) {
 	node_to_remove->clearEdgeList(); 
 	
 	//finally, remove the node
-	std::vector<Node>::iterator position = this->nodeArray.end();
-	for (auto it = this->nodeArray.begin(); it != this->nodeArray.end(); ++it) {
-		if (*it == *node_to_remove) {
+	auto position = nodeArray.end();
+	for (auto it = nodeArray.begin(); it != nodeArray.end(); ++it) {
+		if (*(*it) == *node_to_remove) {
 			position = it;
 		}
 	}
-	this->nodeArray.erase(position);
-	this->nodeCount--;
+	nodeArray.erase(position);
+	nodeCount--;
 }
 
 /**
@@ -116,9 +113,9 @@ pair<float*, float*> Graph::getCoordsForPlot() {
 	int size = this->getNodeCount();
 	float* node_points_x = new float[size];
 	float* node_points_y = new float[size];
-	for (auto it = this->nodeArray.begin(); it != this->nodeArray.end(); ++it) {
-		int index = it - this->nodeArray.begin();
-		auto xy = it->getXY();
+	for (auto it = nodeArray.begin(); it != nodeArray.end(); ++it) {
+		int index = it - nodeArray.begin();
+		auto xy = (*it)->getXY();
 		node_points_x[index] = xy.first;
 		node_points_y[index] = xy.second;
 	}
@@ -131,49 +128,24 @@ pair<float*, float*> Graph::getCoordsForPlot() {
  *        a line with ImGui::PlotLine
  */
 
-void Graph::drawEdge(Edge* e) {
-	pair<int, int> src = e->getSourceNode()->getXY();
-	pair<int, int> dest = e->getDestinationNode()->getXY();
-
-	Line l = Line(src, dest);
-
-	this->Notify(Graph::DRAWEDGE, l);
+void Graph::drawEdge(Edge* e) { 
+	this->Notify(Graph::DRAWEDGE, Line(*e));
 }
 
 /**
- * @brief runs Prims algorithm on a grapg
- * @param startingNode pointer to any node which is selected as the starting point
+ * @brief returns the inverse edge given an edge (i.e if given edge from 0 to 1 returns 1 to 0)
+ * @parameter 
  */
-//queue<Edge> Graph::runPrimsAlgorithm(Node& startingNode) {
-//	priority_queue<Edge, vector<Edge>, greater<Edge>> minPQ; 
-//	queue<Edge> MST; 
-//
-//	visitNode(startingNode, minPQ);
-//	while (!minPQ.empty()) {
-//		Edge edge_least_weight = minPQ.top(); //get the edge of lowest weight
-//		minPQ.pop(); //remove that edge
-//		Node* src = edge_least_weight.getSourceNode();
-//		Node* dest = edge_least_weight.getDestinationNode();
-//		if (src->wasVisited() && dest->wasVisited()) { //skip edges between nodes already explored
-//			continue;
-//		};
-//		MST.push(edge_least_weight);
-//		if (!src->wasVisited()) {
-//			runPrimsAlgorithm(*src);
-//		};
-//		if (!dest->wasVisited()) {
-//			runPrimsAlgorithm(*dest);
-//		};
-//	}
-//	return MST;
-//}
-//
-//void  Graph::visitNode(Node& node, priority_queue<Edge, vector<Edge>, greater<Edge>>& pq) {
-//	node.markVisited();
-//	for (auto& e : node.getEdgeList())
-//	{
-//		if (!e.getDestinationNode()->wasVisited()) {
-//			pq.push(e);
-//		}
-//	}
-//}
+Edge* getInverseEdge(Graph& g, Edge& edge) {
+	auto inverse = std::make_shared<Edge>();
+	auto srcNode = edge.getDestinationNode();
+	auto destNode = edge.getSourceNode();
+	auto& edgeList = srcNode->getEdgeList();
+	for (auto& e : edgeList) {
+		if (e.getDestinationNode() == destNode && e.getSourceNode() == srcNode)
+			return &e;
+	}
+	return nullptr;
+}
+
+

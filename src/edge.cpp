@@ -1,7 +1,9 @@
 #include <iostream>
 #include "edge.h"
 #include <iomanip>
+#include <memory>
 
+using namespace std; 
 /**
  * @brief Edge constructor
  *
@@ -13,7 +15,28 @@ Edge::Edge(Node* srcNode, Node* destNode, double w)
 	sourceNode = srcNode; 
 	destinationNode = destNode;
 	edgeWeight = w;
+	linePtr_ = SharedLinePtr();
 };
+
+Edge::Edge()
+{
+	sourceNode = nullptr;
+	destinationNode = nullptr;
+	edgeWeight = 0.0;
+	linePtr_ = SharedLinePtr();
+};
+
+Edge::Edge(const Edge& e)
+{
+	sourceNode = e.sourceNode;
+	destinationNode = e.destinationNode;
+	edgeWeight = e.edgeWeight;
+	linePtr_ = e.linePtr_;
+}
+
+
+Edge::~Edge() {
+}
 
 /**
  * @brief Destination node setter
@@ -33,7 +56,7 @@ void Edge::setSourceNode(Node* srcNode)
 void Edge::setDestinationNode(Node* destNode)
 {
 	this->destinationNode = destNode;
-}
+};
 
 /**
  * @brief weight setter
@@ -42,7 +65,16 @@ void Edge::setDestinationNode(Node* destNode)
  */
 void Edge::setEdgeWeight(double weight)
 {
-	this->edgeWeight = weight;
+	edgeWeight = weight;
+};
+
+
+void Edge::setLinePtr(SharedLinePtr linePtr) {
+	linePtr_ = linePtr; 
+}
+
+SharedLinePtr Edge::getLinePtr() {
+	return linePtr_;
 }
 
 /**
@@ -53,7 +85,7 @@ void Edge::setEdgeWeight(double weight)
 Node* Edge::getSourceNode()
 {
 	return this->sourceNode;
-}
+};
 
 /**
  * @brief getter method for destination node
@@ -63,7 +95,7 @@ Node* Edge::getSourceNode()
 Node* Edge::getDestinationNode()
 {
 	return this->destinationNode;
-}
+};
 
 /**
  * @brief getter method for the weight of the edge
@@ -72,7 +104,8 @@ Node* Edge::getDestinationNode()
 double Edge::getEdgeWeight()
 {
 	return this->edgeWeight;
-}
+};
+
 
 bool operator==(Edge a, Edge b) {
 	if (
