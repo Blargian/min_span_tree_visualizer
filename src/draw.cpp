@@ -152,12 +152,14 @@ void checkPlotClicked(Draw &d) {
                 d.changeMarkerColour(found_marker, MarkerColours::WHITE);
             }
             else if (previously_selected != NULL && previously_selected != found_marker) {
+                d.resetLinesToDefault();
                 d.changeMarkerColour(previously_selected, MarkerColours::GREY);
                 d.setSelectedMarker(found_marker);
                 d.changeMarkerColour(found_marker, MarkerColours::WHITE);
             }
             else {
                 //deselect the currently selected marker
+                d.resetLinesToDefault();
                 d.changeMarkerColour(previously_selected, MarkerColours::GREY);
                 d.setSelectedMarker(nullptr);
             }
