@@ -13,11 +13,10 @@ The project was inspired by the following two youtube videos, which I thought wo
 
 ## Technologies 
 
-[![C++](https://skillicons.dev/icons?i=cpp,cmake)](https://skillicons.dev)
-
-## Design Patterns
-
-- The Observer Pattern 
+- C++ 
+- CMake
+- Dear ImGui 
+- Catch2 
 
 ## Local development guide Windows
 
