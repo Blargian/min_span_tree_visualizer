@@ -31,4 +31,4 @@ public:
 	void drawEdge(Edge* e);
 }; 
 
-std::shared_ptr<Edge> getInverseEdge(Graph& g, Edge& edge);
+Edge* getInverseEdge(Graph& g, Edge& edge);

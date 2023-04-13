@@ -26,9 +26,16 @@ Edge::Edge()
 	linePtr_ = SharedLinePtr();
 };
 
+Edge::Edge(const Edge& e)
+{
+	sourceNode = e.sourceNode;
+	destinationNode = e.destinationNode;
+	edgeWeight = e.edgeWeight;
+	linePtr_ = e.linePtr_;
+}
+
 
 Edge::~Edge() {
-
 }
 
 /**

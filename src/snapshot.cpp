@@ -7,6 +7,10 @@ using namespace std;
 Snapshot::Snapshot(){
 };
 
+Snapshot::Snapshot(std::queue<Edge> MST) {
+	MST_ = MST; 
+}
+
 Snapshot::~Snapshot() {
 
 };

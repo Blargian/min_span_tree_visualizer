@@ -6,6 +6,7 @@
 class Snapshot {
 public:
 	Snapshot();
+	Snapshot(std::queue<Edge> MST);
 	~Snapshot();
 	std::queue<Edge> getMST();
 	std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>> getPQ();

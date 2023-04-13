@@ -20,6 +20,7 @@ private:
 public:
 	//constructor
 	Edge();
+	Edge(const Edge& e);
 	Edge(Node* srcNode,Node* destNode, double w);
 	~Edge();
 

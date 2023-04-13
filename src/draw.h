@@ -30,6 +30,7 @@ public:
 	void changeLineThickness(Line* l, float thickness);
 	bool hasMarkersToDraw();
 	bool hasLinesToDraw();
+	void resetLinesToDefault();
 };
 
 void createPlot(Draw &d, int window_width, int window_height);

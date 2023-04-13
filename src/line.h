@@ -27,4 +27,5 @@ class Line {
 		void setLineThickness(float thickness);
 		Edge* getEdgePtr();
 		friend bool operator==(Line a, Line b);
+		void resetLineToDefault();
 };

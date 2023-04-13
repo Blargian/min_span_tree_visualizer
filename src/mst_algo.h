@@ -18,9 +18,11 @@ public:
 	MSTAlgorithm() {};
 	~MSTAlgorithm() {};
 	virtual std::queue<Edge> findMST(Node& startingNode) = 0;
+
 	void AddSnapshot(Snapshot s) {
 		solving_snapshots.emplace_back(s);
 	};
+
 	std::vector<Snapshot> getSnapshots()
 	{
 		return solving_snapshots;

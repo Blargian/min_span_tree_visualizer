@@ -75,7 +75,8 @@ void MyApp::Update()
     ImPlot::CreateContext();
     if (ImGui::Button("Controls")) {
         auto selectedNode = d->selectedMarker()->getNodePtr();
-        prims->findMST(*selectedNode);
+        auto MST = prims->findMST(*selectedNode);
+        prims->AddSnapshot(Snapshot(MST)); 
         std::cout << "found an MST" << std::endl;
         drawFromSnapshots(prims->getSnapshots(), *d);
     }

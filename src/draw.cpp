@@ -70,7 +70,7 @@ void Draw::changeLineColour(Line* l, LineColours c) {
 
 void Draw::changeLineThickness(Line* l, float thickness) {
     bool foundLine = false;
-    auto line = findLine(*l, foundLine);
+    auto& line = findLine(*l, foundLine);
     if (foundLine) {
         line->setLineThickness(thickness);
     }
@@ -103,6 +103,12 @@ bool Draw::hasLinesToDraw() {
     }
     else {
         return false;
+    }
+}
+
+void Draw::resetLinesToDefault() {
+    for (auto& line : lines_) {
+        line->resetLineToDefault();
     }
 }
 
@@ -169,6 +175,7 @@ void checkPlotClicked(Draw &d) {
 
 void drawFromSnapshots(vector<Snapshot> snapshots, Draw& d) {
     for (auto& snapshot : snapshots) {
+        d.resetLinesToDefault();
         auto pq = snapshot.getPQ();
         while (!pq.empty()) {
             auto edge = pq.top();
@@ -177,16 +184,20 @@ void drawFromSnapshots(vector<Snapshot> snapshots, Draw& d) {
                 d.changeLineColour(edge.getLinePtr().get(), LineColours::RED);
             }
         }
-        auto MST = snapshot.getPQ();
+        auto MST = snapshot.getMST();
         while (!MST.empty()) {
-            auto edge = MST.top();
+            auto edge = MST.front();
             MST.pop();
             if (edge.getLinePtr().get() != nullptr) {
                 d.changeLineColour(edge.getLinePtr().get(), LineColours::BLACK);
-                d.changeLineThickness(edge.getLinePtr().get(), 4.0);
+                d.changeLineThickness(edge.getLinePtr().get(), 6.0);
             }
         }
 
-        d.changeLineColour(snapshot.getEdgeLeastWeight().getLinePtr().get(), LineColours::RED);
+        if(snapshot.getEdgeLeastWeight().getLinePtr()!=nullptr){
+            auto line = snapshot.getEdgeLeastWeight().getLinePtr().get();
+            d.changeLineColour(line, LineColours::RED);
+            d.changeLineThickness(line, 6.0);
+        }
    };
 }

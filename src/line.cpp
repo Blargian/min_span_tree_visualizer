@@ -63,6 +63,11 @@ Edge* Line::getEdgePtr() {
 	return edgePtr_;
 }
 
+void Line::resetLineToDefault() {
+	thickness_ = 2.0;
+	colour_ = LineColours::GREY;
+}
+
 bool operator==(Line a, Line b) {
 	if (
 		a.point_a[0] == b.point_a[0]
