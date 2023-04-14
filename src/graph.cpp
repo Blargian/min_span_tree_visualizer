@@ -148,4 +148,12 @@ Edge* getInverseEdge(Graph& g, Edge& edge) {
 	return nullptr;
 }
 
+/**
+ * @brief for each node in the node list resets the node back to default as being marked 'unvisited' by some MST algorithm
+ */
+void Graph::resetVisitedState() {
+	for (auto& node : nodeArray) {
+		node->markUnvisited();
+	}
+}
 

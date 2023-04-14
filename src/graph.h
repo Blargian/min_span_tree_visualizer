@@ -29,6 +29,7 @@ public:
 	void removeNode(Node* node_to_remove);
 	pair<float*,float*> getCoordsForPlot();
 	void drawEdge(Edge* e);
+	void resetVisitedState();
 }; 
 
 Edge* getInverseEdge(Graph& g, Edge& edge);

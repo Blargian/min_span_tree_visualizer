@@ -138,14 +138,21 @@ pair <int, int> Node::getXY() {
  * @brief marks the visited property on a node true 
  */
 void Node::markVisited() {
-	this->visited = true;
+	visited = true;
+}
+
+/**
+ * @brief marks the visited property on a node true
+ */
+void Node::markUnvisited() {
+	visited = false;
 }
 
 /**
  * @brief returns true or false for if the node has been visited 
  */
 bool Node::wasVisited() {
-	return this->visited;
+	return visited;
 }
 
 

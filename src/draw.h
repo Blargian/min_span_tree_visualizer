@@ -5,6 +5,7 @@
 #include "marker.h"
 #include "prims_algo.h"
 #include <memory>
+#include <atomic>
 
 class Marker; 
 class Line; 
@@ -34,11 +35,11 @@ public:
 };
 
 void createPlot(Draw &d, int window_width, int window_height);
-void checkPlotClicked(Draw& d);
+bool checkPlotClicked(Draw& d);
 void drawNodes(vector<SharedMarkerPtr>);
 void drawLines(vector<SharedLinePtr>);
 void drawLine(Line);
 void drawMarker(Marker);
 SharedMarkerPtr addMarkerToDraw(SharedMarkerPtr m, vector<SharedMarkerPtr>& markers);
 SharedLinePtr addLineToDraw(SharedLinePtr l,vector<SharedLinePtr>& lines);
-void drawFromSnapshots(vector<Snapshot> s, Draw& d);
+void drawFromSnapshots(int iteration, vector<Snapshot> s, Draw& d);

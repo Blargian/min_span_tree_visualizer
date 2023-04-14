@@ -4,6 +4,7 @@
 #include "graph.h"
 #include "draw.h"
 #include "prims_algo.h"
+#include <atomic>
 
 class Line;
 
@@ -13,6 +14,14 @@ protected:
     std::unique_ptr<Graph> g = std::make_unique<Graph>();
     std::unique_ptr<Draw> d = std::make_unique<Draw>();
     std::unique_ptr<PrimsAlgorithm> prims = std::make_unique<PrimsAlgorithm>();
+
+    int algorithm_choice = 0;
+    int current_snapshot = 0;
+    int max_snapshots = 0;
+    float base_playback_speed_seconds = 0.1;
+    float selected_playback_speed = 1.0f, max_playback_speed = 1.0f;
+    std::atomic<bool> stop_playback = false; 
+
 public:
     MyApp() = default;
     ~MyApp() = default;
@@ -22,5 +31,10 @@ public:
     //GUI declarations go here
     virtual void Update() final;
     void OnNotify(Line l);
+    void drawOnceThread();
+    void drawMultipleThread();
 
 };
+
+
+
