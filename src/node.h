@@ -37,6 +37,7 @@ public:
 	Edge* getEdge(Node* fromNode, Node* toNode);
 	std:: pair <int, int> getXY();
 	void markVisited();
+	void markUnvisited();
 	bool wasVisited();
 	friend bool operator==(Node a, Node b);
 	friend std::ostream& operator<<(std::ostream& stream, Node const& n);

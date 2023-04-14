@@ -117,8 +117,6 @@ void createPlot(Draw &d,int window_width, int window_height) {
     ImPlot::SetupAxesLimits(-100, 100, -100, 100);
     if (d.hasMarkersToDraw()) { drawNodes(d.getMarkers()); };
     if (d.hasLinesToDraw()) { drawLines(d.getLines()); };
-    checkPlotClicked(d);
-    ImPlot::EndPlot();
 }
 
 void drawLines(vector<SharedLinePtr> lines) {
@@ -137,7 +135,7 @@ void drawNodes(vector<SharedMarkerPtr> markers) {
     };
 }
 
-void checkPlotClicked(Draw &d) {
+bool checkPlotClicked(Draw &d) {
 
     if (ImPlot::IsPlotHovered() && ImGui::IsMouseClicked(0)) {
         auto previously_selected = d.selectedMarker();
@@ -166,17 +164,17 @@ void checkPlotClicked(Draw &d) {
             
             
             //else deselect the currently selected marker and select a new one
-            return;
+            return true;
         }
         else {
             //do nothing
-            return;
+            return false;
         }
     }
 }
 
-void drawFromSnapshots(vector<Snapshot> snapshots, Draw& d) {
-    for (auto& snapshot : snapshots) {
+void drawFromSnapshots(int iteration, vector<Snapshot> snapshots, Draw& d) {
+    auto snapshot = snapshots[iteration];
         d.resetLinesToDefault();
         auto pq = snapshot.getPQ();
         while (!pq.empty()) {
@@ -201,5 +199,5 @@ void drawFromSnapshots(vector<Snapshot> snapshots, Draw& d) {
             d.changeLineColour(line, LineColours::RED);
             d.changeLineThickness(line, 6.0);
         }
-   };
+        return;
 }

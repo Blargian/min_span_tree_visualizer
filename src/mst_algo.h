@@ -1,6 +1,8 @@
 #pragma once
 
 #include <queue>
+#include <algorithm>
+#include <utility>
 #include "Edge.h"
 #include "Node.h"
 #include "snapshot.h"
@@ -27,6 +29,22 @@ public:
 	{
 		return solving_snapshots;
 	};
+
+	void clearSnapshots() {
+		solving_snapshots.clear();
+	}
+
+	void clearAll() {
+		solving_snapshots.clear();
+
+		//clear MST_ 
+		std::queue<Edge> empty_MST;
+		std::swap(MST_, empty_MST);
+	}
+
+	int getSnapshotLength() {
+		return solving_snapshots.size();
+	}
 };
 
 void  inline visitNode(Node& node, std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>>& pq) {
