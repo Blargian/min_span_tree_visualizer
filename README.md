@@ -2,7 +2,7 @@
 
 A beginner C++ project to visualize how two popular minimum spanning tree algorithms work - mainly Kruskal's and Prim's.
 
-![Recording 2023-04-14 at 16 09 29](https://user-images.githubusercontent.com/41984034/232086323-ff1c5d4a-62dd-4ef0-b850-9be7bb12d784.gif)
+![Recording 2023-04-14 at 19 50 48](https://user-images.githubusercontent.com/41984034/232121501-df875a28-c6f4-4a47-9ce1-95ce731cdbe0.gif)
 
 The project was inspired by the following two youtube videos, which I thought would be fun to try implement myself in C++:
 
