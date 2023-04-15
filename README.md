@@ -21,7 +21,7 @@ The project was inspired by the following two youtube videos, which I thought wo
 
 In computer science, a graph is a connection of nodes which are connected together by edges, which may or may not have some associated cost. In practical terms a cost might give the edge between two nodes some physical meaning such as distance in meters or time in hours. A tree is a graph without cycles. i.e) constructed in such a way that there is no path of edges that can be followed which which will allow you to arrive back at the same node you left from. A spanning tree is therefore a subgraph of some graph which "spans", or connects, all the vertices of the graph. This spanning tree can also be a 'minimum' spanning tree (MST) when it is selected in such a way as to select edges which have a minimum weight. It turns out that MSTs are pretty useful in many optimization problems, and in actual fact the first MST algorithm was discovered while designing an electricity network for the city of Moravia.  [^1]
 
-Whilst the first algorithm to be discovered for solving this problem was invented by Czech mathematician Otakar Borůvka, the two most popular algorithms today are Prim's and Kruskal's which work in slightly different ways. 
+Whilst the first algorithm to be discovered for solving this problem was invented by Czech mathematician Otakar Borůvka, the two most popular algorithms today are Prim's and Kruskal's which are examples of greedy algorithms that work in slightly different ways. 
 
 ### Prim's Algorithm 
 
