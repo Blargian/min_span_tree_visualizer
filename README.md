@@ -1,6 +1,6 @@
 # Minimum Spanning Tree Algorithm Visualizer
 
-A beginner C++ project to visualize how two popular minimum spanning tree algorithms work - mainly Kruskal's and Prim's.
+A beginner C++ project to visualize how two popular minimum spanning tree algorithms work - mainly Kruskal's and Prim's. The application allows the user to randomly generate a graph or to import one from a file, and then select which algorithm to use to solve for a minimum spanning tree. Helpful playback functionality is implemented so that the user can visually see step by step how the algorithms arrive at the final solution. 
 
 ![Recording 2023-04-14 at 19 50 48](https://user-images.githubusercontent.com/41984034/232121501-df875a28-c6f4-4a47-9ce1-95ce731cdbe0.gif)
 
