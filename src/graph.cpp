@@ -86,12 +86,7 @@ Edge* Graph::connectNodes(Node* a, Node* b, double edgeWeight) {
 void Graph::removeNode(Node* node_to_remove) {
 	//visit edges in node_to_remove and remove it from those other nodes' edgelists
 	list<Edge> connected_edges = node_to_remove->getEdgeList();
-	//for (auto it = connected_edges.begin(); it!=connected_edges.end();++it) {
-	//	auto node_to_remove = it->getSourceNode();
-	//	auto node_to_remove_from = it->getDestinationNode();
-	//	node_to_remove_from->removeEdge(node_to_remove_from, node_to_remove);
-	//}
-
+	
 	//remove the edges from itself 
 	node_to_remove->clearEdgeList(); 
 	
@@ -133,6 +128,16 @@ void Graph::drawEdge(Edge* e) {
 }
 
 /**
+ * @brief clears all of the graphs nodes, edges etc; 
+ */
+void Graph::clearAll() {
+
+	//use erase-remove idiom 
+	nodeArray.erase(nodeArray.begin(), nodeArray.end());
+	nodeCount = nodeArray.size();
+}
+
+/**
  * @brief returns the inverse edge given an edge (i.e if given edge from 0 to 1 returns 1 to 0)
  * @parameter 
  */
@@ -154,6 +159,13 @@ Edge* getInverseEdge(Graph& g, Edge& edge) {
 void Graph::resetVisitedState() {
 	for (auto& node : nodeArray) {
 		node->markUnvisited();
+	}
+}
+
+void addNodes(Graph* g, int n, NodeGenerator* nodegen) {
+	auto nodes = nodegen->generateNodes(n,200,200);
+	for (auto& node : nodes) {
+		//g->insertNode();
 	}
 }
 

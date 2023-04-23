@@ -39,7 +39,14 @@ add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp
 "src/marker.h"
 "src/marker.cpp"
 "src/snapshot.h" 
-"src/snapshot.cpp")
+"src/snapshot.cpp" 
+"src/node_generator_interface.h" 
+"src/node_generator_bestcandidate.h" 
+"src/node_generator_bestcandidate.cpp" 
+"src/edge_generator_interface.h" 
+"src/edge_generator_delaunay.h" 
+"src/edge_generator_delaunay.cpp"
+ "src/triangle.h" "src/triangle.cpp")
 
 target_link_libraries(
     tests 
@@ -88,7 +95,14 @@ add_executable (min_span_tree_visualizer src/main.cpp
 "src/marker.h"
 "src/marker.cpp"
 "src/snapshot.h" 
-"src/snapshot.cpp")
+"src/snapshot.cpp" 
+"src/node_generator_interface.h" 
+"src/node_generator_bestcandidate.h" 
+"src/node_generator_bestcandidate.cpp" 
+"src/edge_generator_interface.h" 
+"src/edge_generator_delaunay.h" 
+"src/edge_generator_delaunay.cpp"
+ "src/triangle.h" "src/triangle.cpp")
 set_property(TARGET min_span_tree_visualizer PROPERTY WIN32_EXECUTABLE FALSE)
 target_include_directories(min_span_tree_visualizer 
   PRIVATE 

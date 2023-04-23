@@ -15,7 +15,7 @@ class Edge {
 private:
 	Node* sourceNode;
 	Node* destinationNode;
-	double edgeWeight;
+	double edgeWeight = 1;
 	SharedLinePtr linePtr_;
 public:
 	//constructor

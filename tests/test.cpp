@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "../src/edge_generator_delaunay.h"
+#include "../src/triangle.h";
 
 using namespace std; 
 
@@ -212,6 +214,31 @@ TEST_CASE("Graph","[Graph]"){
 		REQUIRE(g.getNodeCount() == 0);
 	}
 
+	SECTION("clearAll removes all of the nodes from a graph") {
+		Graph g = Graph();
+
+		std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("Johannesburg", 5, 10),
+			std::make_shared<Node>("Cape Town", 26, 10),
+			std::make_shared<Node>("Durban", -24, 78)
+		};
+
+		for (auto& node : nodes) {
+			g.insertNode(node);
+		}
+
+		auto& nodes_on_graph = g.getNodes();
+		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 1);
+		g.connectNodes(nodes_on_graph[2].get(), nodes_on_graph[1].get(), 1);
+
+		REQUIRE(size(g.getNodes()[0].get()->getEdgeList()) == 1);
+		REQUIRE(size(g.getNodes()[1].get()->getEdgeList()) == 2);
+		REQUIRE(size(g.getNodes()[2].get()->getEdgeList()) == 1);
+
+		g.clearAll();
+		REQUIRE(g.getNodeCount() == 0);
+	}
+
 	SECTION("returns coordinates of nodes in an array of floats - to be used for plotting") {
 		Graph g = Graph();
 		std::vector<std::shared_ptr<Node>> nodes = {
@@ -358,6 +385,79 @@ TEST_CASE("Draw", "[Draw]") {
 		auto& foundLine = d->findLine(*someEdge.getLinePtr().get(), foundTheLine);
 		REQUIRE(foundTheLine == true); 
 		REQUIRE(*foundLine.get() == *someEdge.getLinePtr());
+	}
+}
+
+TEST_CASE("Delauney Edge Generator", "[DEG]") {
+	
+	std::vector<std::pair<int, int>> points =
+	{
+		std::make_pair<int,int>(-5,9),
+		std::make_pair<int,int>(17,-6),
+		std::make_pair<int,int>(-20,50),
+		std::make_pair<int,int>(100,27),
+	};
+	
+	SECTION("Correctly sorts points by ascending x-coordinate") {
+		auto sorted_points = sortAscending(points);
+		std::vector<int> sorted_x; 
+		for (auto& point : sorted_points) {
+			sorted_x.push_back(point.first);
+		}
+
+		int previous = -1000;
+		//check that sorted_x ascends 
+		for (auto it = sorted_x.begin(); it != sorted_x.end(); it++) {
+			REQUIRE(previous < *it);
+			previous = *it;
+		}
+	}
+}
+
+TEST_CASE("Triangle", "[Triangle]") {
+	
+	SECTION("Correctly computes the circumcenter of a given triangle") {
+
+		auto triangle = Triangle(std::make_pair<int, int>(0, 0), std::make_pair<int, int>(0, 4), std::make_pair<int, int>(3, 0));
+		REQUIRE((triangle.circumcenter.first == 1.50 && triangle.circumcenter.second == 2.00));
+	}
+
+	SECTION("Checks if a triangle contains an edge") {
+		using edge = std::pair<std::pair<int, int>, std::pair<int, int>>;
+		edge test_edge = edge
+		(
+			std::make_pair<int, int>(-10, 15),
+			std::make_pair<int, int>(20, 20)
+		);
+		Triangle triangle_with_edge = Triangle
+		(
+			test_edge.first,
+			test_edge.second,
+			std::make_pair<int, int>(50, 50)
+		);
+		REQUIRE((triangle_with_edge.ContainsEdge(test_edge)) == true);
+		
+		Triangle triangle_without_edge = Triangle(
+			std::make_pair<int, int>(100, -100),
+			std::make_pair<int, int>(32, 64),
+			std::make_pair<int, int>(50, 50)
+		);
+		REQUIRE((triangle_without_edge.ContainsEdge(test_edge)) == false);
+	}
+
+	SECTION("Checks that a triangles points are stored in anticlockwise order") {
+
+		REQUIRE(isAntiClockwise(
+			std::make_pair<int, int>(0, 10),
+			std::make_pair<int, int>(10, -10),
+			std::make_pair<int, int>(-10, -10)
+		)==false);
+
+		REQUIRE(isAntiClockwise(
+			std::make_pair<int, int>(-10, -10),
+			std::make_pair<int, int>(10, -10),
+			std::make_pair<int, int>(0, 10)
+		)==true);
 	}
 }
 

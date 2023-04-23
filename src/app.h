@@ -33,8 +33,12 @@ public:
     void OnNotify(Line l);
     void drawOnceThread();
     void drawMultipleThread();
-
 };
+
+void createNodes(Graph* g, Draw* d, vector<vector<int>> nodes);
+void createNodes(Graph* g, Draw* d, vector<std::pair<int,int>> nodes);
+void connectNodes(Graph* g, Draw* d, vector<vector<double>> ewg);
+void clearGraph(Graph* g, Draw* d);
 
 
 

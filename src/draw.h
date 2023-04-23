@@ -32,6 +32,7 @@ public:
 	bool hasMarkersToDraw();
 	bool hasLinesToDraw();
 	void resetLinesToDefault();
+	void clearAll();
 };
 
 void createPlot(Draw &d, int window_width, int window_height);
