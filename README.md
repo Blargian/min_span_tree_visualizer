@@ -49,7 +49,7 @@ Finally, run:
 
 `./vcpkg integrate install`
 
-You can now open the folder in visualize studio code. Open up the CMakeLists.txt file, `ctrl + save` and the project should compile. 
+You can now open the folder in visual studio. Open up the CMakeLists.txt file, `ctrl + save` and the project should compile. 
 
 There are two executables which can be run. To run the main project select `min_span_tree_visualizer.exe` or to run the test suite select `tests.exe`
 
