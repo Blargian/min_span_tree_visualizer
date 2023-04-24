@@ -15,6 +15,15 @@ Line::Line(Edge& e)
 	colour_ = LineColours::GREY;
 };
 
+Line::Line(std::pair<int, int> a, std::pair<int, int> b) {
+	point_a[0] = a.first;
+	point_a[1] = b.first;
+	point_b[0] = a.second;
+	point_b[1] = b.second;
+	colour_ = LineColours::GREY;
+	edgePtr_ = nullptr; 
+}
+
 Line::~Line() {
 
 };

@@ -3,7 +3,6 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
-#include <random>
 
 
 BestCandidateGenerator::BestCandidateGenerator(int candidateSize) {
@@ -59,17 +58,6 @@ std::vector<std::pair<int,int>> BestCandidateGenerator::generatePoints(int n, in
 	}
 	
 	return points; 
-}
-
-//generates a random number within the confines of some range
-int randomNumber(int min, int max) {
-	//float random = (float) rand() / RAND_MAX;
-	//return (int)(((float)rand() / (float)RAND_MAX)*(float)( max - min ) + (float)min);
-	std::random_device rd;
-	std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-	std::uniform_real_distribution<> dis(min, max);
-	auto num = dis(gen);
-	return (int)(dis(gen));
 }
 
 //calculates the distance between two pairs of points 

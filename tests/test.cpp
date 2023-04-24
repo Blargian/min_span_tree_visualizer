@@ -9,7 +9,7 @@
 #include <string>
 #include <memory>
 #include "../src/edge_generator_delaunay.h"
-#include "../src/triangle.h";
+#include "../src/triangle.h"
 
 using namespace std; 
 
@@ -412,6 +412,17 @@ TEST_CASE("Delauney Edge Generator", "[DEG]") {
 			previous = *it;
 		}
 	}
+
+	SECTION("Removes duplicate triangles from a vector (and orders by triangle size as part of the duplicate removal process)") {
+		std::vector<Triangle> with_duplicates =
+		{
+			Triangle(std::make_pair<int, int>(-100, -100), std::make_pair<int, int>(32, -64), std::make_pair<int, int>(0, 50)),
+			Triangle(std::make_pair<int, int>(-100, -100), std::make_pair<int, int>(32, -64), std::make_pair<int, int>(0, 50)),
+			Triangle(std::make_pair<int, int>(-20, -15), std::make_pair<int, int>(60, -13), std::make_pair<int, int>(0, 12))
+		};
+		auto removed_duplicates = removeDuplicates(with_duplicates);
+		REQUIRE(removed_duplicates.size() == 2);
+	}
 }
 
 TEST_CASE("Triangle", "[Triangle]") {
@@ -451,14 +462,15 @@ TEST_CASE("Triangle", "[Triangle]") {
 			std::make_pair<int, int>(0, 10),
 			std::make_pair<int, int>(10, -10),
 			std::make_pair<int, int>(-10, -10)
-		)==false);
+		) == false);
 
 		REQUIRE(isAntiClockwise(
 			std::make_pair<int, int>(-10, -10),
 			std::make_pair<int, int>(10, -10),
 			std::make_pair<int, int>(0, 10)
-		)==true);
-	}
+		) == true);
+	};
+
 }
 
 

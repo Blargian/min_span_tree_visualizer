@@ -17,6 +17,7 @@ class Line {
 		Edge* edgePtr_;
 	public:
 		Line(Edge& e);
+		Line(std::pair<int,int> a, std::pair<int,int> b); //used for testing edge_generators
 		~Line();
 		float* getPointA();
 		float* getPointB();

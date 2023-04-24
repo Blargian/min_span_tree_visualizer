@@ -53,7 +53,14 @@ bool operator!=(Triangle a, Triangle b)
 	return (a.A != b.A) && (a.B != b.B) && (a.C != b.C);
 }
 
-bool operator==(Triangle a, Triangle b)
+bool operator<(Triangle a, Triangle b)
+{
+	auto area_a = a.A.first * (a.B.second - a.C.second) + a.B.first * (a.C.second - a.A.second) + a.C.first * (a.A.second - a.B.second);
+	auto area_b = b.A.first * (b.B.second - b.C.second) + b.B.first * (b.C.second - b.A.second) + b.C.first * (b.A.second - b.B.second);
+	return area_a < area_b;
+}
+
+bool operator==(const Triangle a, const Triangle b)
 {
 	return (a.A == b.A) && (a.B == b.B) && (a.C == b.C);
 }

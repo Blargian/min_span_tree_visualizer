@@ -22,7 +22,8 @@ public:
 	void computeCircumradius();
 	bool ContainsEdge(edge e);
 	friend bool operator!=(Triangle a, Triangle b);
-	friend bool operator==(Triangle a, Triangle b);
+	friend bool operator<(Triangle a, Triangle b);
+	friend bool operator==(const Triangle a, const Triangle b);
 	friend std::ostream& operator<<(std::ostream& stream, Triangle const& e);
 };
 

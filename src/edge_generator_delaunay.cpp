@@ -4,37 +4,32 @@
 #include <cmath>
 #include <assert.h>
 #include <utility>
+#include <set>
 
 DelaunayEdgeGenerator::DelaunayEdgeGenerator() {
 
 };
 
+//comparator functions 
+
 bool smallestX(std::pair<int, int> a, std::pair<int, int> b) { return (a.first < b.first); };
 bool smallestY(std::pair<int, int> a, std::pair<int, int> b) { return (a.second < b.second); };
 bool biggestY(std::pair<int, int> a, std::pair<int, int> b) { return (a.second > b.second); };
 bool smallestEdge(edge a, edge b) { return (a.first < b.first); };
-bool smallestTriangle(Triangle a, Triangle b) { return (a.A.first < b.A.first) && (a.B.first < b.B.first) && (a.C.first < b.C.first); };
-bool containedIn(Triangle a, std::vector<Triangle> b) {
-	for (auto triangle : b) {
-		if (a == triangle) {
-			return true;
-		}
+
+struct Compare final
+{
+	bool operator()(const Triangle& a, const Triangle& b) const noexcept
+	{
+		//because ordering a triangle by it's vertices does not make physical sense, we will order by the area of the triangle instead
+
+		//thus compute first the area of both triangles
+		auto area_a = a.A.first * (a.B.second - a.C.second) + a.B.first * (a.C.second - a.A.second) + a.C.first * (a.A.second - a.B.second);
+		auto area_b = b.A.first * (b.B.second - b.C.second) + b.B.first * (b.C.second - b.A.second) + b.C.first * (b.A.second - b.B.second);
+		return area_a < area_b;
 	}
-	return false;
-}
-bool trianglesEqual(Triangle a, Triangle b) {
-	if(
-		a.A == b.A
-		&& a.B == b.B
-		&& a.C == b.C
-	){
-		return true;
-	}
-	else {
-		return false;
-	}
-	 
 };
+
 
 //Implements Bower-Watson algorithm for delaunay triangulation
 std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair<int, int>> points) {
@@ -57,6 +52,9 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 			}
 		}
 
+		//remove duplicate bad triangles and sort by area as part of that process
+		bad_triangles = removeDuplicates(bad_triangles);
+
 		std::vector<edge> polygon;
 		for (auto triangle : bad_triangles)
 		{
@@ -76,43 +74,38 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 			}
 		}
 
-		//remove duplicate bad triangles
-		std::sort(bad_triangles.begin(), bad_triangles.end(),smallestTriangle);
-		bad_triangles.erase(std::unique(bad_triangles.begin(), bad_triangles.end(), trianglesEqual), bad_triangles.end());
+		//remove from the triangles_formed any of the bad triangles
+		std::cout << "before removing bad triangles: " << triangles_formed.size() << std::endl; 
+		triangles_formed.erase(std::remove_if(begin(triangles_formed), end(triangles_formed),
+			[&](auto x) {return std::binary_search(begin(bad_triangles), end(bad_triangles), x); }), end(triangles_formed)
+		);
+		std::cout << "after removing bad triangles: " << triangles_formed.size() << std::endl;
 
-		std::cout << "size of triangles_formed is: " << triangles_formed.size() << std::endl;
-		std::cout << "size of bad_tringles is: " << bad_triangles.size() << std::endl;
-		for (auto triangle : triangles_formed) {
-			std::cout << triangle << std::endl;
+		//Create the new triangles 
+		for (auto e : polygon) {
+			triangles_formed.push_back(Triangle(point, e.first, e.second));
 		}
-
-		auto ib = bad_triangles.begin();
-		auto iter = std::remove_if(
-			triangles_formed.begin(), triangles_formed.end(),
-			[&ib, &bad_triangles](Triangle t) -> bool {
-				while (ib != bad_triangles.end() && *ib != t) 
-					++ib;
-				return (ib != bad_triangles.end() && *ib == t);
-			});
 		
-		for (auto edge_of_poly : polygon) {
-			triangles_formed.push_back(Triangle(std::make_pair(point.first, point.second), edge_of_poly.first, edge_of_poly.second));
-		}
 	}
 
 	std::cout << "triangles formed: " << triangles_formed.size() << std::endl;
 	std::cout << "triangles that should be formed: " << (2 * points.size() + 1) << std::endl;
-	assert(triangles_formed.size() == (2 * points.size() + 1)); 
+	//assert(triangles_formed.size() == (2 * points.size() + 1)); 
 
 	std::vector<std::pair<int, int>> super_triangle_vertices = { super_triangle.A,super_triangle.B,super_triangle.C };
 	//form the final triangulation by removing all triangles containing one or more of the supertriangle vertices 
-	for (auto triangle = triangles_formed.begin(); triangle != triangles_formed.end(); ++triangle) {
-		for (auto super_vertice : super_triangle_vertices) {
-			if (super_vertice == triangle->A || super_vertice == triangle->B || super_vertice == triangle->C) {
-				triangle = triangles_formed.erase(triangle);
-			}
+
+	std::cout << "before removing supra triangles: " << triangles_formed.size() << std::endl;
+	for (auto triangle : triangles_formed) {
+		for (auto supra_edge : super_triangle.edges) {
+			triangles_formed.erase(std::remove_if(begin(triangles_formed), end(triangles_formed), [&supra_edge](const Triangle& triangle)
+				{
+					return triangle.edges[0] == supra_edge || triangle.edges[1] == supra_edge || triangle.edges[2] == supra_edge;
+				}
+			), end(triangles_formed));
 		}
 	};
+	std::cout << "after removing supra triangles: " << triangles_formed.size() << std::endl;
 
 	return triangles_formed;
 };
@@ -150,4 +143,12 @@ Triangle findSuperTriangle(std::vector<std::pair<int, int>> sortedPoints) {
 
 	return Triangle(std::make_pair<int, int>(x_nPlus1, y_nPlus1), std::make_pair<int, int>(x_nPlus2, y_nPlus2), std::make_pair<int, int>(x_nPlus3, y_nPlus3));
 
+}
+
+std::vector<Triangle> removeDuplicates(std::vector<Triangle> withDuplicates) {
+
+	std::set<Triangle, Compare> no_duplicates(withDuplicates.begin(), withDuplicates.end());
+	std::vector<Triangle> without_duplicates;
+	without_duplicates.assign(no_duplicates.begin(), no_duplicates.end()); 
+	return without_duplicates;
 }

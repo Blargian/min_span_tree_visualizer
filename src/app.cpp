@@ -4,6 +4,7 @@
 #include <thread>
 #include <chrono>
 #include "node_generator_bestcandidate.h"
+#include "node_generator_uniform.h"
 #include "edge_generator_delaunay.h"
 
 void MyApp::StartUp()
@@ -81,11 +82,20 @@ void MyApp::Update()
     if (ImGui::Button("Generate random tree")) 
     {
         clearGraph(g.get(), d.get());
-        auto node_generator = std::make_unique<BestCandidateGenerator>(10);
-        auto points = node_generator->generatePoints(10, 200, 200);
+        //auto node_generator = std::make_unique<BestCandidateGenerator>(20);
+        //auto node_generator = std::make_unique<UniformGenerator>();
+        //auto points = node_generator->generatePoints(4, 200, 200);
+
+        std::vector<std::pair<int, int>> points = {std::make_pair<int,int>(0,0),std::make_pair<int,int>(0,10),std::make_pair<int,int>(0,-10),std::make_pair<int,int>(10,0),std::make_pair<int,int>(-10,0) };
         auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
         createNodes(g.get(), d.get(), points);
-        edge_generator->generateEdges(points);
+        auto triangles = edge_generator->generateEdges(points);
+        
+        for (auto triangle : triangles) {
+            for (auto edge : triangle.edges) {
+                addLineToDraw(std::make_unique<Line>(edge.first, edge.second), d->getLines());
+            }
+        }
     }
 
     ImGui::RadioButton("Prim's algorithm", &algorithm_choice, 0);
