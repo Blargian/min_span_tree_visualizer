@@ -83,10 +83,9 @@ void MyApp::Update()
     {
         clearGraph(g.get(), d.get());
         //auto node_generator = std::make_unique<BestCandidateGenerator>(20);
-        //auto node_generator = std::make_unique<UniformGenerator>();
-        //auto points = node_generator->generatePoints(4, 200, 200);
+        auto node_generator = std::make_unique<UniformGenerator>();
+        auto points = node_generator->generatePoints(4, 200, 200);
 
-        std::vector<std::pair<int, int>> points = {std::make_pair<int,int>(0,0),std::make_pair<int,int>(0,10),std::make_pair<int,int>(0,-10),std::make_pair<int,int>(10,0),std::make_pair<int,int>(-10,0) };
         auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
         createNodes(g.get(), d.get(), points);
         auto triangles = edge_generator->generateEdges(points);

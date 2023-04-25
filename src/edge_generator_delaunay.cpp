@@ -17,20 +17,6 @@ bool smallestY(std::pair<int, int> a, std::pair<int, int> b) { return (a.second 
 bool biggestY(std::pair<int, int> a, std::pair<int, int> b) { return (a.second > b.second); };
 bool smallestEdge(edge a, edge b) { return (a.first < b.first); };
 
-struct Compare final
-{
-	bool operator()(const Triangle& a, const Triangle& b) const noexcept
-	{
-		//because ordering a triangle by it's vertices does not make physical sense, we will order by the area of the triangle instead
-
-		//thus compute first the area of both triangles
-		auto area_a = a.A.first * (a.B.second - a.C.second) + a.B.first * (a.C.second - a.A.second) + a.C.first * (a.A.second - a.B.second);
-		auto area_b = b.A.first * (b.B.second - b.C.second) + b.B.first * (b.C.second - b.A.second) + b.C.first * (b.A.second - b.B.second);
-		return area_a < area_b;
-	}
-};
-
-
 //Implements Bower-Watson algorithm for delaunay triangulation
 std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair<int, int>> points) {
 	auto sorted_points = sortAscending(points);
@@ -51,9 +37,6 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 				bad_triangles.push_back(triangles_formed[i]);
 			}
 		}
-
-		//remove duplicate bad triangles and sort by area as part of that process
-		//bad_triangles = removeDuplicates(bad_triangles);
 
 		std::vector<edge> polygon;
 		for (auto triangle : bad_triangles)
@@ -77,7 +60,7 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 		//remove bad triangles from the triangles formed
 		for (auto bad_triangle : bad_triangles) {
 			auto it = remove(begin(triangles_formed), end(triangles_formed), bad_triangle);
-			triangles_formed.erase(it);
+			triangles_formed.erase(it,end(triangles_formed));
 		}
 
 		//remove duplicates from the polygon to ensure edges of polygon are unique 
@@ -97,15 +80,18 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 	std::vector<std::pair<int, int>> super_triangle_vertices = { super_triangle.A,super_triangle.B,super_triangle.C };
 	
 	//form the final triangulation by removing all triangles containing one or more of the supertriangle vertices
-	for (auto triangle : triangles_formed) {
-		for (auto vertex : triangle.vertices) {
-			if (vertex == super_triangle_vertices[0] || vertex == super_triangle_vertices[1] || vertex == super_triangle_vertices[2]) {
-				auto it = remove(begin(triangles_formed), end(triangles_formed)-1, triangle);
-				triangles_formed.erase(it);
-				continue;
+	auto it = std::remove_if(std::begin(triangles_formed), std::end(triangles_formed), [super_triangle_vertices](Triangle t)
+		{
+			int vertexMatch = false;
+			for (auto vertex : t.vertices) {
+				if (vertex == super_triangle_vertices[0] || vertex == super_triangle_vertices[1] || vertex == super_triangle_vertices[2]) {
+					vertexMatch = true;
+					break;
+				}
 			}
-		}
-	}
+			return vertexMatch;
+		});
+	triangles_formed.erase(it, std::end(triangles_formed));
 
 	return triangles_formed;
 };
@@ -145,18 +131,33 @@ Triangle findSuperTriangle(std::vector<std::pair<int, int>> sortedPoints) {
 
 }
 
-std::vector<Triangle> removeDuplicateTriangles(std::vector<Triangle> withDuplicates) {
-
-	std::set<Triangle, Compare> no_duplicates(withDuplicates.begin(), withDuplicates.end());
-	std::vector<Triangle> without_duplicates;
-	without_duplicates.assign(no_duplicates.begin(), no_duplicates.end()); 
-	return without_duplicates;
-}
-
 std::vector<edge> removeDuplicateEdges(std::vector<edge> withDuplicates) {
 
-	std::set<edge> no_duplicates(withDuplicates.begin(), withDuplicates.end());
-	std::vector<edge> without_duplicates;
+	auto polygon = withDuplicates;
+	//loop over all edges
+	//check if a.first==b.first && a.second==b.second (i.e edge is the same)
+	//check also if a.first=b.second && a.second = b.first (i.e edge is the same but flipped)
+
+	/*std::set<edge> no_duplicates(withDuplicates.begin(), withDuplicates.end());*/
+
+	for (auto x : polygon) {
+		bool removed = false;
+		for (auto y : polygon) {
+			if (x.first == y.second) {
+				if (y.first == x.second) {
+					polygon.erase(std::remove(begin(polygon), end(polygon), y),end(polygon)); //remove the first instance
+					removed = true;
+					break;
+				}
+			}
+		}
+		if (removed) {
+			polygon.erase(std::remove(begin(polygon), end(polygon), x), end(polygon)); //remove the second instance
+			break;
+		}
+	}
+	/*std::vector<edge> without_duplicates;
 	without_duplicates.assign(no_duplicates.begin(), no_duplicates.end());
-	return without_duplicates;
+	return without_duplicates;*/
+	return polygon;
 }

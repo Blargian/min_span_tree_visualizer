@@ -9,7 +9,20 @@ Triangle::Triangle(std::pair<int, int> n1, std::pair<int, int> n2, std::pair<int
 	A = n1;
 	B = isACW ? n2 : n3;
 	C = isACW ? n3 : n2;
-	edges = { edge(A, B),edge(B, C),edge(A, C) };
+	edges = { edge(A, B),edge(B, C),edge(C, A) };
+	vertices = { A,B,C };
+	computeCircumcenter();
+	computeCircumradius();
+};
+
+Triangle::Triangle(const Triangle& t) {
+
+	bool isACW = isAntiClockwise(t.A, t.B, t.C);
+
+	A = t.A;
+	B = isACW ? t.B : t.C;
+	C = isACW ? t.C : t.B;
+	edges = { edge(A, B),edge(B, C),edge(C, A) };
 	vertices = { A,B,C };
 	computeCircumcenter();
 	computeCircumradius();
@@ -36,10 +49,8 @@ bool Triangle::ContainsEdge(edge e) {
 	for (const auto vertex : vertices) {
 		if (vertex == e.first || vertex == e.second)
 			sharedVertices++;
-		if (sharedVertices == 2)
-			return true;
 	}
-	return false;
+	return sharedVertices == 2;
 }
 
 bool isAntiClockwise(std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C) {

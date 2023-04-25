@@ -10,14 +10,15 @@ class Triangle {
 
 public:
 	//member variables
-	std::pair<int, int> A, B, C; 
-	std::pair<float, float> circumcenter = std::make_pair<float,float>(0.0,0.0); 
-	float circumradius;
-	std::vector<edge> edges; 
-	std::vector<std::pair<int, int>> vertices;
+	std::pair<int, int> A, B, C;
+	std::pair<float, float> circumcenter = std::make_pair<float, float>(0.0, 0.0);
+	float circumradius = 0.0;
+	std::vector<edge> edges = {};
+	std::vector<std::pair<int, int>> vertices = {};
 
 	//methods
 	Triangle(std::pair<int, int> n1, std::pair<int, int> n2, std::pair<int, int> n3);
+	Triangle(const Triangle& t);
 	void computeCircumcenter();
 	void computeCircumradius();
 	bool ContainsEdge(edge e);
