@@ -454,6 +454,13 @@ TEST_CASE("Triangle", "[Triangle]") {
 			std::make_pair<int, int>(50, 50)
 		);
 		REQUIRE((triangle_without_edge.ContainsEdge(test_edge)) == false);
+
+		//and another test for sanity check 
+		Triangle bad_triangle = Triangle(std::make_pair<int, int>(0, 0), std::make_pair<int, int>(0, 60), std::make_pair<int, int>(-51, -30));
+		Triangle triangle = Triangle(std::make_pair<int, int>(0, 0), std::make_pair<int, int>(51, -30), std::make_pair<int, int>(0, 60));
+
+		auto test_edge_2 = triangle.edges[0];
+		REQUIRE((bad_triangle.ContainsEdge(test_edge_2)) == false);
 	}
 
 	SECTION("Checks that a triangles points are stored in anticlockwise order") {

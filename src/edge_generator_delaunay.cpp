@@ -53,7 +53,7 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 		}
 
 		//remove duplicate bad triangles and sort by area as part of that process
-		bad_triangles = removeDuplicates(bad_triangles);
+		//bad_triangles = removeDuplicates(bad_triangles);
 
 		std::vector<edge> polygon;
 		for (auto triangle : bad_triangles)
@@ -63,7 +63,7 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 			bool rejectEdge = false;
 			for (auto edge : triangle.edges) {
 				for (auto bad_triangle : bad_triangles) {
-					if ((bad_triangle != triangle) && bad_triangle.ContainsEdge(edge)) {
+					if ((bad_triangle != triangle) & (bad_triangle.ContainsEdge(edge))) { //using logical && here shortcircuits the second check
 						rejectEdge = true;
 					}
 				}
@@ -74,13 +74,15 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 			}
 		}
 
-		//remove from the triangles_formed any of the bad triangles
-		std::cout << "before removing bad triangles: " << triangles_formed.size() << std::endl; 
-		triangles_formed.erase(std::remove_if(begin(triangles_formed), end(triangles_formed),
-			[&](auto x) {return std::binary_search(begin(bad_triangles), end(bad_triangles), x); }), end(triangles_formed)
-		);
-		std::cout << "after removing bad triangles: " << triangles_formed.size() << std::endl;
+		//remove bad triangles from the triangles formed
+		for (auto bad_triangle : bad_triangles) {
+			auto it = remove(begin(triangles_formed), end(triangles_formed), bad_triangle);
+			triangles_formed.erase(it);
+		}
 
+		//remove duplicates from the polygon to ensure edges of polygon are unique 
+		polygon = removeDuplicateEdges(polygon);
+		
 		//Create the new triangles 
 		for (auto e : polygon) {
 			triangles_formed.push_back(Triangle(point, e.first, e.second));
@@ -93,19 +95,17 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 	//assert(triangles_formed.size() == (2 * points.size() + 1)); 
 
 	std::vector<std::pair<int, int>> super_triangle_vertices = { super_triangle.A,super_triangle.B,super_triangle.C };
-	//form the final triangulation by removing all triangles containing one or more of the supertriangle vertices 
-
-	std::cout << "before removing supra triangles: " << triangles_formed.size() << std::endl;
+	
+	//form the final triangulation by removing all triangles containing one or more of the supertriangle vertices
 	for (auto triangle : triangles_formed) {
-		for (auto supra_edge : super_triangle.edges) {
-			triangles_formed.erase(std::remove_if(begin(triangles_formed), end(triangles_formed), [&supra_edge](const Triangle& triangle)
-				{
-					return triangle.edges[0] == supra_edge || triangle.edges[1] == supra_edge || triangle.edges[2] == supra_edge;
-				}
-			), end(triangles_formed));
+		for (auto vertex : triangle.vertices) {
+			if (vertex == super_triangle_vertices[0] || vertex == super_triangle_vertices[1] || vertex == super_triangle_vertices[2]) {
+				auto it = remove(begin(triangles_formed), end(triangles_formed)-1, triangle);
+				triangles_formed.erase(it);
+				continue;
+			}
 		}
-	};
-	std::cout << "after removing supra triangles: " << triangles_formed.size() << std::endl;
+	}
 
 	return triangles_formed;
 };
@@ -145,10 +145,18 @@ Triangle findSuperTriangle(std::vector<std::pair<int, int>> sortedPoints) {
 
 }
 
-std::vector<Triangle> removeDuplicates(std::vector<Triangle> withDuplicates) {
+std::vector<Triangle> removeDuplicateTriangles(std::vector<Triangle> withDuplicates) {
 
 	std::set<Triangle, Compare> no_duplicates(withDuplicates.begin(), withDuplicates.end());
 	std::vector<Triangle> without_duplicates;
 	without_duplicates.assign(no_duplicates.begin(), no_duplicates.end()); 
+	return without_duplicates;
+}
+
+std::vector<edge> removeDuplicateEdges(std::vector<edge> withDuplicates) {
+
+	std::set<edge> no_duplicates(withDuplicates.begin(), withDuplicates.end());
+	std::vector<edge> without_duplicates;
+	without_duplicates.assign(no_duplicates.begin(), no_duplicates.end());
 	return without_duplicates;
 }

@@ -24,4 +24,5 @@ bool smallestX(std::pair<int, int> a, std::pair<int, int> b);
 bool smallestY(std::pair<int, int> a, std::pair<int, int> b);
 bool biggestY(std::pair<int, int> a, std::pair<int, int> b);
 bool smallestEdge(edge a, edge b);
-std::vector<Triangle> removeDuplicates(std::vector<Triangle> withDuplicates);
+std::vector<Triangle> removeDuplicateTriangles(std::vector<Triangle> withDuplicates);
+std::vector<edge> removeDuplicateEdges(std::vector<edge> withDuplicates);
