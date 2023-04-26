@@ -84,7 +84,7 @@ void MyApp::Update()
         clearGraph(g.get(), d.get());
         //auto node_generator = std::make_unique<BestCandidateGenerator>(20);
         auto node_generator = std::make_unique<UniformGenerator>();
-        auto points = node_generator->generatePoints(4, 200, 200);
+        auto points = node_generator->generatePoints(10, 200, 200);
 
         auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
         createNodes(g.get(), d.get(), points);

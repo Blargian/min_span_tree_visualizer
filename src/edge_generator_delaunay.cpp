@@ -75,7 +75,7 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 
 	std::cout << "triangles formed: " << triangles_formed.size() << std::endl;
 	std::cout << "triangles that should be formed: " << (2 * points.size() + 1) << std::endl;
-	//assert(triangles_formed.size() == (2 * points.size() + 1)); 
+	assert(triangles_formed.size() == (2 * points.size() + 1)); 
 
 	std::vector<std::pair<int, int>> super_triangle_vertices = { super_triangle.A,super_triangle.B,super_triangle.C };
 	
@@ -153,7 +153,6 @@ std::vector<edge> removeDuplicateEdges(std::vector<edge> withDuplicates) {
 		}
 		if (removed) {
 			polygon.erase(std::remove(begin(polygon), end(polygon), x), end(polygon)); //remove the second instance
-			break;
 		}
 	}
 	/*std::vector<edge> without_duplicates;
