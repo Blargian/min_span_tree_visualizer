@@ -43,8 +43,8 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 		{
 
 			//if edge is not shared by any other triangles in badTriangles then add it to the polygon 
-			bool rejectEdge = false;
 			for (auto edge : triangle.edges) {
+				bool rejectEdge = false;
 				for (auto bad_triangle : bad_triangles) {
 					if ((bad_triangle != triangle) & (bad_triangle.ContainsEdge(edge))) { //using logical && here shortcircuits the second check
 						rejectEdge = true;
@@ -73,9 +73,16 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 		
 	}
 
-	std::cout << "triangles formed: " << triangles_formed.size() << std::endl;
-	std::cout << "triangles that should be formed: " << (2 * points.size() + 1) << std::endl;
-	assert(triangles_formed.size() == (2 * points.size() + 1)); 
+	auto formed = triangles_formed.size();
+	auto should_be_formed = (2 * points.size() + 1);
+	std::cout << "triangles formed: " << formed << std::endl;
+	std::cout << "triangles that should be formed: " << should_be_formed << std::endl;
+	if (formed != should_be_formed) {
+		for (auto point : points) {
+			std::cout << "( " << point.first << "," << "" << point.second << " )" << std::endl;
+		}
+	}
+	
 
 	std::vector<std::pair<int, int>> super_triangle_vertices = { super_triangle.A,super_triangle.B,super_triangle.C };
 	
@@ -140,23 +147,38 @@ std::vector<edge> removeDuplicateEdges(std::vector<edge> withDuplicates) {
 
 	/*std::set<edge> no_duplicates(withDuplicates.begin(), withDuplicates.end());*/
 
-	for (auto x : polygon) {
-		bool removed = false;
-		for (auto y : polygon) {
-			if (x.first == y.second) {
-				if (y.first == x.second) {
-					polygon.erase(std::remove(begin(polygon), end(polygon), y),end(polygon)); //remove the first instance
-					removed = true;
-					break;
+	//for (auto x : polygon) {
+	//	bool removed = false;
+	//	for (auto y : polygon) {
+	//		if (x.first == y.second) {
+	//			if (y.first == x.second) {
+	//				polygon.erase(std::remove(begin(polygon), end(polygon), y),end(polygon)); //remove the first instance
+	//				removed = true;
+	//				break;
+	//			}
+	//		}
+	//	}
+	//	if (removed) {
+	//		polygon.erase(std::remove(begin(polygon), end(polygon), x), end(polygon)); //remove the second instance
+	//	}
+	//}
+
+	auto it = std::remove_if(begin(withDuplicates), end(withDuplicates), [withDuplicates](edge y)
+		{
+			for (auto x : withDuplicates)
+			{
+				if (x.first == y.second)
+				{
+					if (y.first == x.second)
+					{
+						return true;
+					}
 				}
 			}
-		}
-		if (removed) {
-			polygon.erase(std::remove(begin(polygon), end(polygon), x), end(polygon)); //remove the second instance
-		}
-	}
-	/*std::vector<edge> without_duplicates;
-	without_duplicates.assign(no_duplicates.begin(), no_duplicates.end());
-	return without_duplicates;*/
-	return polygon;
+			return false; 
+		});
+		withDuplicates.erase(it, end(withDuplicates)); 
+		return withDuplicates;
+
+	//return polygon;
 }

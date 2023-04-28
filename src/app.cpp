@@ -86,6 +86,19 @@ void MyApp::Update()
         auto node_generator = std::make_unique<UniformGenerator>();
         auto points = node_generator->generatePoints(10, 200, 200);
 
+     /*   auto points = std::vector<std::pair<int, int>>{
+            std::make_pair<int,int>(3,73),
+            std::make_pair<int,int>(-11,-58),
+            std::make_pair<int,int>(-26,-28),
+            std::make_pair<int,int>(-16,32),
+            std::make_pair<int,int>(-69,-15),
+            std::make_pair<int,int>(69,51),
+            std::make_pair<int,int>(-79,-86),
+            std::make_pair<int,int>(63,40),
+            std::make_pair<int,int>(-60,90),
+            std::make_pair<int,int>(-80,-96),
+        };*/
+
         auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
         createNodes(g.get(), d.get(), points);
         auto triangles = edge_generator->generateEdges(points);
