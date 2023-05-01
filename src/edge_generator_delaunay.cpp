@@ -19,20 +19,29 @@ bool smallestEdge(edge a, edge b) { return (a.first < b.first); };
 
 //Implements Bower-Watson algorithm for delaunay triangulation
 std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair<int, int>> points) {
+
 	auto sorted_points = sortAscending(points);
 	auto super_triangle = findSuperTriangle(sorted_points);
 	std::vector<Triangle> triangles_formed = { super_triangle };
+	int number_triangles_previously = triangles_formed.size();
 
 	//for each point perform triangulation
 	for (auto point : points)
 	{
+		if (triangles_formed.size() != 1) {
+			if (triangles_formed.size() != number_triangles_previously + 2) {
+				assert(triangles_formed.size() == number_triangles_previously + 2);
+			}
+		}
+
 		std::vector<Triangle> bad_triangles;
 
 		//find bad triangles (triangles are bad if their circumcenters contain the point)
 		for (auto i = 0; i < triangles_formed.size(); i++)
 		{
 			auto d = sqrt(pow(point.first - triangles_formed[i].circumcenter.first, 2) + pow(point.second - triangles_formed[i].circumcenter.second,2));
-			if (d < triangles_formed[i].circumradius) //or d <= r put another way 
+			d = roundf(d * 1000) / 1000;
+			if (d < triangles_formed[i].circumradius)
 			{
 				bad_triangles.push_back(triangles_formed[i]);
 			}
@@ -57,6 +66,7 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 			}
 		}
 
+		number_triangles_previously = triangles_formed.size();
 		//remove bad triangles from the triangles formed
 		for (auto bad_triangle : bad_triangles) {
 			auto it = remove(begin(triangles_formed), end(triangles_formed), bad_triangle);
@@ -65,7 +75,7 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 
 		//remove duplicates from the polygon to ensure edges of polygon are unique 
 		polygon = removeDuplicateEdges(polygon);
-		
+
 		//Create the new triangles 
 		for (auto e : polygon) {
 			triangles_formed.push_back(Triangle(point, e.first, e.second));

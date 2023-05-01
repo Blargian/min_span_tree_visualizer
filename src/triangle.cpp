@@ -37,6 +37,9 @@ void Triangle::computeCircumcenter() {
 	auto Ux = (1 / D) * ((std::pow(A.first, 2) + std::pow(A.second, 2)) * (B.second - C.second) + (std::pow(B.first, 2) + std::pow(B.second, 2)) * (C.second - A.second) + (std::pow(C.first, 2) + std::pow(C.second, 2)) * (A.second - B.second));
 	auto Uy = (1 / D) * ((std::pow(A.first, 2) + std::pow(A.second, 2)) * (C.first - B.first) + (std::pow(B.first, 2) + std::pow(B.second, 2)) * (A.first - C.first) + (std::pow(C.first, 2) + std::pow(C.second, 2)) * (B.first - A.first));
 
+	Ux = roundf(Ux * 1000) / 1000;
+	Uy = roundf(Uy * 1000) / 1000;
+
 	circumcenter = std::make_pair<float, float>(Ux, Uy);
 }
 
