@@ -88,13 +88,8 @@ void MyApp::Update()
 
         auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
         createNodes(g.get(), d.get(), points);
-        auto triangles = edge_generator->generateEdges(points);
-        
-        for (auto triangle : triangles) {
-            for (auto edge : triangle.edges) {
-                addLineToDraw(std::make_unique<Line>(edge.first, edge.second), d->getLines());
-            }
-        }
+        auto edges = TrianglesToEdgeList(edge_generator->generateEdges(points));
+        connectNodes(g.get(), d.get(), edges);
     }
 
     ImGui::RadioButton("Prim's algorithm", &algorithm_choice, 0);
@@ -234,6 +229,20 @@ void createNodes(Graph* g, Draw* d, vector<std::pair<int,int>> nodes) {
 void connectNodes(Graph* g, Draw* d, vector<vector<double>> edgeWeightGraph) {
     for (vector<double> node_data : edgeWeightGraph) {
         auto edgePtr = g->connectNodes(g->getNodeByName(to_string((int)node_data[0])).get(), g->getNodeByName(to_string((int)node_data[1])).get(), node_data[2]);
+        auto l = std::make_shared<Line>(Line(*edgePtr));
+        auto linePtr = addLineToDraw(l, d->getLines());
+        linePtr->setEdgePtr(edgePtr);
+        edgePtr->setLinePtr(linePtr);
+        auto edgeInversePtr = getInverseEdge(*g, *edgePtr);
+        edgeInversePtr->setLinePtr(linePtr); //two edges reference one line on the graph due to bidirectional nature 
+    };
+}
+
+
+//connect nodes from std::pair<int,int> of A and B coordinates of the edge
+void connectNodes(Graph* g, Draw* d, vector<std::pair<std::pair<int,int>,std::pair<int,int>>> edges) {
+    for (auto edge : edges) {
+        auto edgePtr = g->connectNodes(g->getNodeByCoord(edge.first).get(), g->getNodeByCoord(edge.second).get(), 1);
         auto l = std::make_shared<Line>(Line(*edgePtr));
         auto linePtr = addLineToDraw(l, d->getLines());
         linePtr->setEdgePtr(edgePtr);

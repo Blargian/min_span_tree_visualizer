@@ -151,27 +151,6 @@ Triangle findSuperTriangle(std::vector<std::pair<int, int>> sortedPoints) {
 std::vector<edge> removeDuplicateEdges(std::vector<edge> withDuplicates) {
 
 	auto polygon = withDuplicates;
-	//loop over all edges
-	//check if a.first==b.first && a.second==b.second (i.e edge is the same)
-	//check also if a.first=b.second && a.second = b.first (i.e edge is the same but flipped)
-
-	/*std::set<edge> no_duplicates(withDuplicates.begin(), withDuplicates.end());*/
-
-	//for (auto x : polygon) {
-	//	bool removed = false;
-	//	for (auto y : polygon) {
-	//		if (x.first == y.second) {
-	//			if (y.first == x.second) {
-	//				polygon.erase(std::remove(begin(polygon), end(polygon), y),end(polygon)); //remove the first instance
-	//				removed = true;
-	//				break;
-	//			}
-	//		}
-	//	}
-	//	if (removed) {
-	//		polygon.erase(std::remove(begin(polygon), end(polygon), x), end(polygon)); //remove the second instance
-	//	}
-	//}
 
 	auto it = std::remove_if(begin(withDuplicates), end(withDuplicates), [withDuplicates](edge y)
 		{
@@ -191,4 +170,15 @@ std::vector<edge> removeDuplicateEdges(std::vector<edge> withDuplicates) {
 		return withDuplicates;
 
 	//return polygon;
+}
+
+std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> TrianglesToEdgeList(std::vector<Triangle> triangles) {
+	
+	std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> edges;
+	for (auto t : triangles) {
+		for (auto e : t.edges) {
+			edges.emplace_back(e);
+		}
+	}
+	return edges;
 }

@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "implot.h"
 #include "imgui.h"
+#include "utility_mstv.h"
 
 using namespace std;
 
@@ -47,6 +48,19 @@ SharedNodePtr Graph::getNodeByName(string name) {
 	auto it = find_if(nodeArray.begin(), nodeArray.end(), [&name](auto& obj) {return obj->getNodeName() == name; });
 	auto index = std::distance(nodeArray.begin(), it);
 	return SharedNodePtr((nodeArray[index]));
+}
+
+
+/**
+ * @brief returns a pointer to a node
+ * @param std::pair<int,int> coordinate of the node
+ */
+SharedNodePtr Graph::getNodeByCoord(std::pair<int, int> coords) {
+
+	auto node_list = getNodes();
+	mstv_utility::SortNodeVector(node_list);
+	auto found = mstv_utility::BinarySearch(node_list, coords);
+  	return found; 
 }
 
 /**

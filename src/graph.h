@@ -25,6 +25,7 @@ public:
 	SharedNodePtr insertNode(SharedNodePtr n);
 	vector<SharedNodePtr>& getNodes();
 	SharedNodePtr getNodeByName(string name);
+	SharedNodePtr getNodeByCoord(std::pair<int,int> coords);
 	int getNodeCount();
 	Edge* connectNodes(Node* a, Node* b, double edgeWeight);
 	void removeNode(Node* node_to_remove);

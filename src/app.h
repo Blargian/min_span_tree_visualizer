@@ -38,6 +38,7 @@ public:
 void createNodes(Graph* g, Draw* d, vector<vector<int>> nodes);
 void createNodes(Graph* g, Draw* d, vector<std::pair<int,int>> nodes);
 void connectNodes(Graph* g, Draw* d, vector<vector<double>> ewg);
+void connectNodes(Graph* g, Draw* d, vector<std::pair<std::pair<int, int>, std::pair<int, int>>> edges);
 void clearGraph(Graph* g, Draw* d);
 
 
