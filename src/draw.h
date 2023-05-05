@@ -19,6 +19,7 @@ private:
 	vector<SharedLinePtr> lines_;
 	vector<SharedMarkerPtr> markers_;
 	SharedMarkerPtr selectedMarker_ = NULL;
+	int marker_size_ = 4;
 public:
 	vector<SharedLinePtr>& getLines();
 	vector<SharedMarkerPtr>& getMarkers();
@@ -37,7 +38,7 @@ public:
 
 void createPlot(Draw &d, int window_width, int window_height);
 bool checkPlotClicked(Draw& d);
-void drawNodes(vector<SharedMarkerPtr>);
+void drawNodes(vector<SharedMarkerPtr>, int marker_size=4);
 void drawLines(vector<SharedLinePtr>);
 void drawLine(Line);
 void drawMarker(Marker);

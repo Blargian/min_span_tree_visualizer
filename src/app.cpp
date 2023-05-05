@@ -79,17 +79,27 @@ void MyApp::Update()
     ImGui::Begin("Controls", NULL, flags);
     ImPlot::CreateContext();
 
-    if (ImGui::Button("Generate random tree")) 
+    if (ImGui::Button("Generate random tree"))
     {
-        clearGraph(g.get(), d.get());
-        //auto node_generator = std::make_unique<BestCandidateGenerator>(20);
-        auto node_generator = std::make_unique<UniformGenerator>();
-        auto points = node_generator->generatePoints(1000, 200, 200);
+        show_random_generation_dialogue = true;
+    }
+    
+    if (show_random_generation_dialogue) {
+        ImGui::Begin("Random Tree Generation Dialogue", &show_random_generation_dialogue);
+        ImGui::SetWindowFocus();
+        if (ImGui::Button("Generate")) {
+            clearGraph(g.get(), d.get());
+            //auto node_generator = std::make_unique<BestCandidateGenerator>(20);
+            auto node_generator = std::make_unique<UniformGenerator>();
+            auto points = node_generator->generatePoints(5, 200, 200);
 
-        auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
-        createNodes(g.get(), d.get(), points);
-        auto edges = TrianglesToEdgeList(edge_generator->generateEdges(points));
-        connectNodes(g.get(), d.get(), edges);
+            auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
+            createNodes(g.get(), d.get(), points);
+            auto edges = TrianglesToEdgeList(edge_generator->generateEdges(points));
+            auto weights = edge_generator->generateWeightsEuclidean(edges);
+            connectNodes(g.get(), d.get(), edges, weights);
+        }
+        ImGui::End();
     }
 
     ImGui::RadioButton("Prim's algorithm", &algorithm_choice, 0);
@@ -240,15 +250,18 @@ void connectNodes(Graph* g, Draw* d, vector<vector<double>> edgeWeightGraph) {
 
 
 //connect nodes from std::pair<int,int> of A and B coordinates of the edge
-void connectNodes(Graph* g, Draw* d, vector<std::pair<std::pair<int,int>,std::pair<int,int>>> edges) {
+void connectNodes(Graph* g, Draw* d, vector<std::pair<std::pair<int,int>,std::pair<int,int>>> edges, vector<double> weights) {
+
+    int i = 0;
     for (auto edge : edges) {
-        auto edgePtr = g->connectNodes(g->getNodeByCoord(edge.first).get(), g->getNodeByCoord(edge.second).get(), 1);
+        auto edgePtr = g->connectNodes(g->getNodeByCoord(edge.first).get(), g->getNodeByCoord(edge.second).get(), weights[i]);
         auto l = std::make_shared<Line>(Line(*edgePtr));
         auto linePtr = addLineToDraw(l, d->getLines());
         linePtr->setEdgePtr(edgePtr);
         edgePtr->setLinePtr(linePtr);
         auto edgeInversePtr = getInverseEdge(*g, *edgePtr);
         edgeInversePtr->setLinePtr(linePtr); //two edges reference one line on the graph due to bidirectional nature 
+        i++;
     };
 }
 

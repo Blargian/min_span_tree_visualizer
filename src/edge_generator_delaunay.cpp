@@ -85,9 +85,9 @@ std::vector<Triangle> DelaunayEdgeGenerator::generateEdges(std::vector<std::pair
 
 	auto formed = triangles_formed.size();
 	auto should_be_formed = (2 * points.size() + 1);
-	std::cout << "triangles formed: " << formed << std::endl;
-	std::cout << "triangles that should be formed: " << should_be_formed << std::endl;
+	
 	if (formed != should_be_formed) {
+		std::cout << "an error occured while generating the delaunay triangulation: expected number of triangles was: " << should_be_formed << " ; but triangles formed were: " << formed << std::endl;
 		for (auto point : points) {
 			std::cout << "( " << point.first << "," << "" << point.second << " )" << std::endl;
 		}

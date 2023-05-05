@@ -121,7 +121,7 @@ void Draw::clearAll() {
 void createPlot(Draw &d,int window_width, int window_height) {
     ImPlot::BeginPlot("Spanning Tree", ImVec2(window_width * 0.8, window_height * 0.95), ImPlotFlags_NoLegend);
     ImPlot::SetupAxesLimits(-100, 100, -100, 100);
-    if (d.hasMarkersToDraw()) { drawNodes(d.getMarkers()); };
+    if (d.hasMarkersToDraw()) { drawNodes(d.getMarkers(),6); };
     if (d.hasLinesToDraw()) { drawLines(d.getLines()); };
 }
 
@@ -132,11 +132,11 @@ void drawLines(vector<SharedLinePtr> lines) {
     }
 }
 
-void drawNodes(vector<SharedMarkerPtr> markers) {
+void drawNodes(vector<SharedMarkerPtr> markers, int marker_size) {
     for (auto const& marker : markers) {
         double xs[1] = {marker->coordinates().x};
         double ys[1] = {marker->coordinates().y};
-        ImPlot::SetNextMarkerStyle(ImPlotMarker_Circle,4, marker->markerColour(), IMPLOT_AUTO, marker->markerColour());
+        ImPlot::SetNextMarkerStyle(ImPlotMarker_Circle, marker_size, marker->markerColour(), IMPLOT_AUTO, marker->markerColour());
         ImPlot::PlotScatter(marker->id(), xs, ys, 2, ImPlotScatterFlags_None);
     };
 }
