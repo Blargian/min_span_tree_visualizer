@@ -121,8 +121,8 @@ void Draw::clearAll() {
 void createPlot(Draw &d,int window_width, int window_height) {
     ImPlot::BeginPlot("Spanning Tree", ImVec2(window_width * 0.8, window_height * 0.95), ImPlotFlags_NoLegend);
     ImPlot::SetupAxesLimits(-100, 100, -100, 100);
-    if (d.hasMarkersToDraw()) { drawNodes(d.getMarkers(),6); };
     if (d.hasLinesToDraw()) { drawLines(d.getLines()); };
+    if (d.hasMarkersToDraw()) { drawNodes(d.getMarkers(),6); };
 }
 
 void drawLines(vector<SharedLinePtr> lines) {
