@@ -28,7 +28,6 @@ Node::~Node() {
 
 /**
  * @brief Setter method for the nodename
- *
  * @param nodeName name of the node as a string
  */
 void Node::setNodeName(string nodeName) {
@@ -45,7 +44,6 @@ string Node::getNodeName() {
 
 /**
  * @brief Setter method for the node co-ordinates on 100x100 grid 
- *
  * @param x x-coordinate (0-100), y y-coordinate (0-100)
  */
 void Node::setXY(int x, int y) {
@@ -64,7 +62,6 @@ void Node::setXY(int x, int y) {
 
 /**
  * @brief sets a shared pointer to the corresponding marker for a node
- *
  * @param Marker m
  */
 void Node::setMarkerPtr(SharedMarkerPtr m) {
@@ -77,7 +74,6 @@ SharedMarkerPtr Node::getMarkerPtr() {
 
 /**
  * @brief inserts an edge to the edgelist
- *
  * @param edgeToAdd Edge 
  */
 Edge* Node::insertEdge(Edge& edgeToAdd) {
@@ -86,7 +82,6 @@ Edge* Node::insertEdge(Edge& edgeToAdd) {
 
 /**
  * @brief removes an edge from the edgelist
- *
  * @param fromNode Node
  *        toNode   Node
  */
@@ -97,7 +92,6 @@ void Node::removeEdge(Node* fromNode, Node* toNode) {
 
 /**
  * @brief returns a pointer to an edge
- *
  */
 void Node::clearEdgeList() {
 	this->edgeList = {};
@@ -107,7 +101,6 @@ void Node::clearEdgeList() {
  * @brief returns a pointer to an edge
  * @param fromNode Node (start of the edge)
  *        toNode (end of the edge)
- *
  */
 Edge* Node::getEdge(Node* fromNode, Node* toNode) {
 	

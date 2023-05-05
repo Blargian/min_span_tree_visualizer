@@ -21,6 +21,7 @@ protected:
     float base_playback_speed_seconds = 0.1;
     float selected_playback_speed = 1.0f, max_playback_speed = 1.0f;
     std::atomic<bool> stop_playback = false; 
+    bool show_random_generation_dialogue = false;
 
 public:
     MyApp() = default;
@@ -33,8 +34,13 @@ public:
     void OnNotify(Line l);
     void drawOnceThread();
     void drawMultipleThread();
-
 };
+
+void createNodes(Graph* g, Draw* d, vector<vector<int>> nodes);
+void createNodes(Graph* g, Draw* d, vector<std::pair<int,int>> nodes);
+void connectNodes(Graph* g, Draw* d, vector<vector<double>> ewg);
+void connectNodes(Graph* g, Draw* d, vector<std::pair<std::pair<int, int>, std::pair<int, int>>> edges, vector<double> weights);
+void clearGraph(Graph* g, Draw* d);
 
 
 

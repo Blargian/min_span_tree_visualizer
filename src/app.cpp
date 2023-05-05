@@ -3,9 +3,15 @@
 #include <memory>
 #include <thread>
 #include <chrono>
+#include "node_generator_bestcandidate.h"
+#include "node_generator_uniform.h"
+#include "edge_generator_delaunay.h"
 
 void MyApp::StartUp()
 {
+
+    // mock data graph representation for a small test graph 
+
     vector<vector<double>> tinyEWG =
     {
         {4, 5, 0.35},
@@ -41,24 +47,9 @@ void MyApp::StartUp()
     };
 
     g->AddObserver(Graph::DRAWEDGE, this);
-    //create the nodes
-    for (vector<int> node_properties : tinyEWGnodes) {
-        auto nodePtr = g->insertNode(std::make_shared<Node>(to_string(node_properties[0]), static_cast<int>(node_properties[1]), static_cast<int>(node_properties[2])));
-        auto markerPtrr = std::make_shared<Marker>(*nodePtr);
-        auto markerPtr = addMarkerToDraw(markerPtrr, d->getMarkers());
-        nodePtr->setMarkerPtr(markerPtr);
-        markerPtr->setNodePtr(nodePtr);
-    };
-    //connect the nodes
-    for (vector<double> node_data : tinyEWG) {
-        auto edgePtr = g->connectNodes(g->getNodeByName(to_string((int)node_data[0])).get(), g->getNodeByName(to_string((int)node_data[1])).get(), node_data[2]);
-        auto l = std::make_shared<Line>(Line(*edgePtr));
-        auto linePtr = addLineToDraw(l, d->getLines());
-        linePtr->setEdgePtr(edgePtr);
-        edgePtr->setLinePtr(linePtr);
-        auto edgeInversePtr = getInverseEdge(*g, *edgePtr);
-        edgeInversePtr->setLinePtr(linePtr); //two edges reference one line on the graph due to bidirectional nature 
-    };
+
+    createNodes(g.get(), d.get(), tinyEWGnodes);
+    connectNodes(g.get(),d.get(),tinyEWG);
 
     const float spacing = 15;
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(spacing, spacing));
@@ -87,6 +78,29 @@ void MyApp::Update()
     ImGui::SetNextWindowPos(ImVec2(1000, 0), ImGuiCond_FirstUseEver);
     ImGui::Begin("Controls", NULL, flags);
     ImPlot::CreateContext();
+
+    if (ImGui::Button("Generate random tree"))
+    {
+        show_random_generation_dialogue = true;
+    }
+    
+    if (show_random_generation_dialogue) {
+        ImGui::Begin("Random Tree Generation Dialogue", &show_random_generation_dialogue);
+        ImGui::SetWindowFocus();
+        if (ImGui::Button("Generate")) {
+            clearGraph(g.get(), d.get());
+            //auto node_generator = std::make_unique<BestCandidateGenerator>(20);
+            auto node_generator = std::make_unique<UniformGenerator>();
+            auto points = node_generator->generatePoints(5, 200, 200);
+
+            auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
+            createNodes(g.get(), d.get(), points);
+            auto edges = TrianglesToEdgeList(edge_generator->generateEdges(points));
+            auto weights = edge_generator->generateWeightsEuclidean(edges);
+            connectNodes(g.get(), d.get(), edges, weights);
+        }
+        ImGui::End();
+    }
 
     ImGui::RadioButton("Prim's algorithm", &algorithm_choice, 0);
     ImGui::RadioButton("Kruskal's algorithm", &algorithm_choice, 1); 
@@ -196,4 +210,62 @@ void MyApp::drawMultipleThread() {
         int time_in_ms = (int)((base_playback_speed_seconds * (1.0/(selected_playback_speed+0.1)))*1000.0);
         std::this_thread::sleep_for(std::chrono::milliseconds(time_in_ms));
     }
+}
+
+//creates nodes from a vector consisting of {nodeName,x-coordinate,y-coordinate}
+void createNodes(Graph* g, Draw* d, vector<vector<int>> nodes) {
+    for (vector<int> node_properties : nodes) {
+        auto nodePtr = g->insertNode(std::make_shared<Node>(to_string(node_properties[0]), static_cast<int>(node_properties[1]), static_cast<int>(node_properties[2])));
+        auto markerPtrr = std::make_shared<Marker>(*nodePtr);
+        auto markerPtr = addMarkerToDraw(markerPtrr, d->getMarkers());
+        nodePtr->setMarkerPtr(markerPtr);
+        markerPtr->setNodePtr(nodePtr);
+    };
+}
+
+//creates nodes from std::pair<int,int> of x and y coordinates, no name is provided for a node so the function generates it itself
+void createNodes(Graph* g, Draw* d, vector<std::pair<int,int>> nodes) {
+    int nodeName = 0;
+    for (auto& node_properties : nodes) {
+        auto nodePtr = g->insertNode(std::make_shared<Node>(to_string(nodeName), node_properties.first, node_properties.second));
+        auto markerPtrr = std::make_shared<Marker>(*nodePtr);
+        auto markerPtr = addMarkerToDraw(markerPtrr, d->getMarkers());
+        nodePtr->setMarkerPtr(markerPtr);
+        markerPtr->setNodePtr(nodePtr);
+        nodeName++;
+    };
+}
+
+void connectNodes(Graph* g, Draw* d, vector<vector<double>> edgeWeightGraph) {
+    for (vector<double> node_data : edgeWeightGraph) {
+        auto edgePtr = g->connectNodes(g->getNodeByName(to_string((int)node_data[0])).get(), g->getNodeByName(to_string((int)node_data[1])).get(), node_data[2]);
+        auto l = std::make_shared<Line>(Line(*edgePtr));
+        auto linePtr = addLineToDraw(l, d->getLines());
+        linePtr->setEdgePtr(edgePtr);
+        edgePtr->setLinePtr(linePtr);
+        auto edgeInversePtr = getInverseEdge(*g, *edgePtr);
+        edgeInversePtr->setLinePtr(linePtr); //two edges reference one line on the graph due to bidirectional nature 
+    };
+}
+
+
+//connect nodes from std::pair<int,int> of A and B coordinates of the edge
+void connectNodes(Graph* g, Draw* d, vector<std::pair<std::pair<int,int>,std::pair<int,int>>> edges, vector<double> weights) {
+
+    int i = 0;
+    for (auto edge : edges) {
+        auto edgePtr = g->connectNodes(g->getNodeByCoord(edge.first).get(), g->getNodeByCoord(edge.second).get(), weights[i]);
+        auto l = std::make_shared<Line>(Line(*edgePtr));
+        auto linePtr = addLineToDraw(l, d->getLines());
+        linePtr->setEdgePtr(edgePtr);
+        edgePtr->setLinePtr(linePtr);
+        auto edgeInversePtr = getInverseEdge(*g, *edgePtr);
+        edgeInversePtr->setLinePtr(linePtr); //two edges reference one line on the graph due to bidirectional nature 
+        i++;
+    };
+}
+
+void clearGraph(Graph* g, Draw* d) {
+    g->clearAll();
+    d->clearAll();
 }

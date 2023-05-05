@@ -8,6 +8,9 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include "../src/edge_generator_delaunay.h"
+#include "../src/triangle.h"
+#include "../src/utility_mstv.h"
 
 using namespace std; 
 
@@ -212,6 +215,31 @@ TEST_CASE("Graph","[Graph]"){
 		REQUIRE(g.getNodeCount() == 0);
 	}
 
+	SECTION("clearAll removes all of the nodes from a graph") {
+		Graph g = Graph();
+
+		std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("Johannesburg", 5, 10),
+			std::make_shared<Node>("Cape Town", 26, 10),
+			std::make_shared<Node>("Durban", -24, 78)
+		};
+
+		for (auto& node : nodes) {
+			g.insertNode(node);
+		}
+
+		auto& nodes_on_graph = g.getNodes();
+		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 1);
+		g.connectNodes(nodes_on_graph[2].get(), nodes_on_graph[1].get(), 1);
+
+		REQUIRE(size(g.getNodes()[0].get()->getEdgeList()) == 1);
+		REQUIRE(size(g.getNodes()[1].get()->getEdgeList()) == 2);
+		REQUIRE(size(g.getNodes()[2].get()->getEdgeList()) == 1);
+
+		g.clearAll();
+		REQUIRE(g.getNodeCount() == 0);
+	}
+
 	SECTION("returns coordinates of nodes in an array of floats - to be used for plotting") {
 		Graph g = Graph();
 		std::vector<std::shared_ptr<Node>> nodes = {
@@ -358,6 +386,167 @@ TEST_CASE("Draw", "[Draw]") {
 		auto& foundLine = d->findLine(*someEdge.getLinePtr().get(), foundTheLine);
 		REQUIRE(foundTheLine == true); 
 		REQUIRE(*foundLine.get() == *someEdge.getLinePtr());
+	}
+}
+
+TEST_CASE("Delauney Edge Generator", "[DEG]") {
+	
+	std::vector<std::pair<int, int>> points =
+	{
+		std::make_pair<int,int>(-5,9),
+		std::make_pair<int,int>(17,-6),
+		std::make_pair<int,int>(-20,50),
+		std::make_pair<int,int>(100,27),
+	};
+	
+	SECTION("Correctly sorts points by ascending x-coordinate") {
+		auto sorted_points = sortAscending(points);
+		std::vector<int> sorted_x; 
+		for (auto& point : sorted_points) {
+			sorted_x.push_back(point.first);
+		}
+
+		int previous = -1000;
+		//check that sorted_x ascends 
+		for (auto it = sorted_x.begin(); it != sorted_x.end(); it++) {
+			REQUIRE(previous < *it);
+			previous = *it;
+		}
+	}
+
+	SECTION("converts list of triangles to list of edge") {
+		std::vector<Triangle> triangles =
+		{
+			Triangle(std::make_pair<int,int>(0,2),std::make_pair<int,int>(4,0),std::make_pair<int,int>(0,4)),
+			Triangle(std::make_pair<int,int>(2,2),std::make_pair<int,int>(6,0),std::make_pair<int,int>(2,4)),
+			Triangle(std::make_pair<int, int>(4, 2), std::make_pair<int, int>(4, 0), std::make_pair<int, int>(0, 4))
+		};
+		auto edges_list = TrianglesToEdgeList(triangles);
+		REQUIRE(edges_list.size() == 9);
+		auto first = std::make_pair<std::pair<int, int>, std::pair<int, int>>(std::make_pair<int, int>(0, 2), std::make_pair<int, int>(4, 0));
+		REQUIRE((edges_list[0] == first));
+	}
+}
+
+TEST_CASE("Triangle", "[Triangle]") {
+
+	SECTION("Correctly computes the circumcenter of a given triangle") {
+
+		auto triangle = Triangle(std::make_pair<int, int>(0, 0), std::make_pair<int, int>(0, 4), std::make_pair<int, int>(3, 0));
+		REQUIRE((triangle.circumcenter.first == 1.50 && triangle.circumcenter.second == 2.00));
+	}
+
+	SECTION("Checks if a triangle contains an edge") {
+		using edge = std::pair<std::pair<int, int>, std::pair<int, int>>;
+		edge test_edge = edge
+		(
+			std::make_pair<int, int>(-10, 15),
+			std::make_pair<int, int>(20, 20)
+		);
+		Triangle triangle_with_edge = Triangle
+		(
+			test_edge.first,
+			test_edge.second,
+			std::make_pair<int, int>(50, 50)
+		);
+		REQUIRE((triangle_with_edge.ContainsEdge(test_edge)) == true);
+
+		Triangle triangle_without_edge = Triangle(
+			std::make_pair<int, int>(100, -100),
+			std::make_pair<int, int>(32, 64),
+			std::make_pair<int, int>(50, 50)
+		);
+		REQUIRE((triangle_without_edge.ContainsEdge(test_edge)) == false);
+
+		//and another test for sanity check 
+		Triangle bad_triangle = Triangle(std::make_pair<int, int>(0, 0), std::make_pair<int, int>(0, 60), std::make_pair<int, int>(-51, -30));
+		Triangle triangle = Triangle(std::make_pair<int, int>(0, 0), std::make_pair<int, int>(51, -30), std::make_pair<int, int>(0, 60));
+
+		auto test_edge_2 = triangle.edges[0];
+		REQUIRE((bad_triangle.ContainsEdge(test_edge_2)) == false);
+	}
+
+
+	SECTION("Checks that a triangles points are stored in anticlockwise order") {
+
+		REQUIRE(isAntiClockwise(
+			std::make_pair<int, int>(0, 10),
+			std::make_pair<int, int>(10, -10),
+			std::make_pair<int, int>(-10, -10)
+		) == false);
+
+		REQUIRE(isAntiClockwise(
+			std::make_pair<int, int>(-10, -10),
+			std::make_pair<int, int>(10, -10),
+			std::make_pair<int, int>(0, 10)
+		) == true);
+	};
+
+};
+
+TEST_CASE("Utility", "[Utility]") {
+
+	SECTION("SortNodeVector correctly sorts a vector of shared Node ptrs first by x and then by y") {
+
+		std::vector<std::shared_ptr<Node>> unsorted_nodes = {
+			std::make_shared<Node>("0",-5,0),
+			std::make_shared<Node>("0",5,-5),
+			std::make_shared<Node>("0",-5,5),
+			std::make_shared<Node>("0",0,0),
+			std::make_shared<Node>("0",5,5),
+			std::make_shared<Node>("0",-5,-5),
+			std::make_shared<Node>("0",5,0),
+		};
+		mstv_utility::SortNodeVector(unsorted_nodes);
+		REQUIRE((
+			   unsorted_nodes[0].get()->getXY() == std::pair<int,int>(-5,-5)
+			&& unsorted_nodes[1].get()->getXY() == std::pair<int, int>(-5, 0)
+			&& unsorted_nodes[2].get()->getXY() == std::pair<int, int>(-5, 5)
+			&& unsorted_nodes[3].get()->getXY() == std::pair<int, int>(0, 0)
+			&& unsorted_nodes[4].get()->getXY() == std::pair<int, int>(5, -5)
+			&& unsorted_nodes[5].get()->getXY() == std::pair<int, int>(5, 0)
+			&& unsorted_nodes[6].get()->getXY() == std::pair<int, int>(5, 5)
+		));
+	}
+
+	std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("0",5,0),
+			std::make_shared<Node>("0",-5,2),
+			std::make_shared<Node>("0",-5,3),
+			std::make_shared<Node>("0",10,0),
+			std::make_shared<Node>("0",-10,0)
+	};
+	mstv_utility::SortNodeVector(nodes);
+
+	SECTION("Binary Search correctly takes array of shared pointers to Node and finds using std::pair<int,int>") {
+		
+		auto found = mstv_utility::BinarySearch(nodes, std::make_pair<int,int>(-5,3));
+		REQUIRE(found.get()!=nullptr);
+		REQUIRE((found.get()->getXY().first == -5 && found.get()->getXY().second == 3));
+
+		found = mstv_utility::BinarySearch(nodes, std::make_pair<int, int>(-5, 2));
+		REQUIRE(found.get() != nullptr);
+		REQUIRE((found.get()->getXY().first == -5 && found.get()->getXY().second == 2));
+		
+	}
+
+	SECTION("Binary Search returns nullptr if asked to find something which is not in the sorted vector") {
+		auto not_found = mstv_utility::BinarySearch(nodes, std::make_pair<int, int>(25, 25));
+		REQUIRE(not_found.get() == nullptr);
+	}
+
+	SECTION("Binary Search passes a test case which was failing in practicality") {
+		nodes = {
+			std::make_shared<Node>("0",-86, -29),
+			std::make_shared<Node>("0",-51,-43),
+			std::make_shared<Node>("0",-34,-57),
+			std::make_shared<Node>("0",18,-95),
+			std::make_shared<Node>("0",99,61)
+		};
+		mstv_utility::SortNodeVector(nodes);
+		auto found = mstv_utility::BinarySearch(nodes, std::make_pair<int, int>(-86, -29));
+		REQUIRE(found.get() != nullptr);
+		REQUIRE((found.get()->getXY().first == -86 && found.get()->getXY().second == -29));
 	}
 }
 

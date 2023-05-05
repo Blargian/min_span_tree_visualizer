@@ -1,0 +1,32 @@
+#pragma once 
+#include "node.h"
+#include <vector>
+#include <utility>
+#include <string>
+#include <cmath>
+
+//Interface for a node generator 
+class EdgeGenerator {
+private:
+public:
+	virtual ~EdgeGenerator() {};
+
+	//edge weight is given as the euclidean distance between two nodes
+	std::vector<double> generateWeightsEuclidean(std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>& edges) {
+		std::vector<double> weights;
+		for (auto& edge : edges) {
+			auto distance = sqrt(pow(edge.second.first - edge.first.first, 2) - pow(edge.second.second - edge.first.second, 2));
+			weights.emplace_back(distance);
+		}
+		return weights;
+	};
+
+	//edge weight is randomly assigned as a value between 0 and 1
+	std::vector<double> generateWeightsUniformRandom(size_t numberOfEdges) {
+		std::vector<double> result = { 0.0 };
+		return result;
+	};
+};
+
+
+

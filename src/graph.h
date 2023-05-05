@@ -3,6 +3,7 @@
 #include <queue>
 #include "node.h"
 #include <memory>
+#include "node_generator_interface.h"
 
 using namespace std;
 
@@ -24,12 +25,16 @@ public:
 	SharedNodePtr insertNode(SharedNodePtr n);
 	vector<SharedNodePtr>& getNodes();
 	SharedNodePtr getNodeByName(string name);
+	SharedNodePtr getNodeByCoord(std::pair<int,int> coords);
 	int getNodeCount();
 	Edge* connectNodes(Node* a, Node* b, double edgeWeight);
 	void removeNode(Node* node_to_remove);
 	pair<float*,float*> getCoordsForPlot();
 	void drawEdge(Edge* e);
 	void resetVisitedState();
+	void clearAll();
 }; 
 
 Edge* getInverseEdge(Graph& g, Edge& edge);
+
+void addNodes(Graph g, int n, NodeGenerator nodegen);
