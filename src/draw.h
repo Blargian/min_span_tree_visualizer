@@ -40,6 +40,7 @@ void createPlot(Draw &d, int window_width, int window_height);
 bool checkPlotClicked(Draw& d);
 void drawNodes(vector<SharedMarkerPtr>, int marker_size=4);
 void drawLines(vector<SharedLinePtr>);
+void drawWeights(vector<SharedLinePtr> lines);
 void drawLine(Line);
 void drawMarker(Marker);
 SharedMarkerPtr addMarkerToDraw(SharedMarkerPtr m, vector<SharedMarkerPtr>& markers);

@@ -548,6 +548,10 @@ TEST_CASE("Utility", "[Utility]") {
 		REQUIRE(found.get() != nullptr);
 		REQUIRE((found.get()->getXY().first == -86 && found.get()->getXY().second == -29));
 	}
+
+	SECTION("converts double to char*") {
+		REQUIRE(mstv_utility::ConvertToStr(2.0) == "2.0");
+	}
 }
 
 
