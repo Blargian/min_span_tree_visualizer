@@ -54,7 +54,8 @@ add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp
  "src/utility_mstv.cpp"
  "src/union_find.h"
  "src/union_find.cpp"
-)
+ "src/kruskals_algo.h" 
+ "src/kruskals_algo.cpp")
 
 target_link_libraries(
     tests 
@@ -110,15 +111,16 @@ add_executable (min_span_tree_visualizer src/main.cpp
 "src/edge_generator_interface.h" 
 "src/edge_generator_delaunay.h" 
 "src/edge_generator_delaunay.cpp"
-"src/triangle.h" 
-"src/triangle.cpp" 
-"src/node_generator_uniform.h" 
-"src/node_generator_uniform.cpp" 
-"src/utility_mstv.h"
-"src/utility_mstv.cpp"
 "src/union_find.h"
 "src/union_find.cpp"
-)
+ "src/triangle.h" 
+ "src/triangle.cpp" 
+ "src/node_generator_uniform.h" 
+ "src/node_generator_uniform.cpp" 
+ "src/utility_mstv.h"
+  "src/utility_mstv.cpp"
+ "src/kruskals_algo.h" 
+ "src/kruskals_algo.cpp")
 set_property(TARGET min_span_tree_visualizer PROPERTY WIN32_EXECUTABLE FALSE)
 target_include_directories(min_span_tree_visualizer 
   PRIVATE 

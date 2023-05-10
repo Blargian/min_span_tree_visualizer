@@ -31,11 +31,6 @@ namespace mstv_utility {
 
 		strcpy(char_array_ptr.get(), s.c_str());
 
-		for (int i = 0; i < length; i++) {
-			std::cout << char_array_ptr.get()[i];
-		}
-		std::cout << std::endl;
-
 		return char_array_ptr;
 
 	}
