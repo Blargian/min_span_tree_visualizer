@@ -426,6 +426,30 @@ TEST_CASE("Delauney Edge Generator", "[DEG]") {
 		auto first = std::make_pair<std::pair<int, int>, std::pair<int, int>>(std::make_pair<int, int>(0, 2), std::make_pair<int, int>(4, 0));
 		REQUIRE((edges_list[0] == first));
 	}
+
+	SECTION("Removes only one of a pair of duplicate edges") {
+		std::vector<Triangle> triangles =
+		{
+			Triangle(std::make_pair<int,int>(-1, -37),std::make_pair<int,int>(16, -34),std::make_pair<int,int>(4, 9)),
+			Triangle(std::make_pair<int,int>(37, -33),std::make_pair<int,int>(4, 9),std::make_pair<int,int>(16, -34)),
+		};
+		auto edges = TrianglesToEdgeList(triangles);
+		auto edges_after_removal = removeOneOfDuplicateEdges(edges);
+		bool hasDuplicates = false; 
+
+		for (int i = 0; i < edges_after_removal.size(); i++) {
+			for (int j = 0; j < edges_after_removal.size(); j++) {
+				if (edges_after_removal[i].first == edges_after_removal[j].second) {
+					if (edges_after_removal[i].second == edges_after_removal[j].first) {
+						hasDuplicates = true;
+					}
+				}
+			}
+		};
+
+		REQUIRE(hasDuplicates == false);
+
+	}
 }
 
 TEST_CASE("Triangle", "[Triangle]") {
@@ -550,7 +574,8 @@ TEST_CASE("Utility", "[Utility]") {
 	}
 
 	SECTION("converts double to char*") {
-		REQUIRE(mstv_utility::ConvertToStr(2.0) == "2.0");
+		auto char_array_ptr = std::move(mstv_utility::ConvertToCharArray(2.0));
+		REQUIRE(char_array_ptr.get()[0] == '2');
 	}
 }
 

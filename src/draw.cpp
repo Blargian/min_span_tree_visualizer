@@ -126,7 +126,6 @@ void createPlot(Draw &d,int window_width, int window_height) {
     if (d.hasLinesToDraw()) {
         auto lines = d.getLines();
         drawLines(lines);
-        drawWeights(lines);
     };
     if (d.hasMarkersToDraw()) { drawNodes(d.getMarkers(),6); };
 }
@@ -141,9 +140,10 @@ void drawLines(vector<SharedLinePtr> lines) {
 void drawWeights(vector<SharedLinePtr> lines) {
 
     for (auto const& l : lines) {
-        auto A = (l->getPointA()[0] - l->getPointB()[0]);
-        auto B = (l->getPointA()[1] - l->getPointB()[1]);
-        ImPlot::PlotText(mstv_utility::ConvertToStr(l->getEdgePtr()->getEdgeWeight()), 5.0f, 6.0f, ImVec2(A, B), ImPlotTextFlags_Vertical);
+        auto A = (l->getPointA()[0] - l->getPointB()[0])/2;
+        auto B = (l->getPointA()[1] - l->getPointB()[1])/2;
+        auto edge_weight = std::move(mstv_utility::ConvertToCharArray(l->getEdgePtr()->getEdgeWeight()));
+        ImPlot::PlotText(edge_weight.get(), A, B);
     }
 }
 

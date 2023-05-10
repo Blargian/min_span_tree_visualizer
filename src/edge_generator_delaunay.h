@@ -25,4 +25,5 @@ bool smallestY(std::pair<int, int> a, std::pair<int, int> b);
 bool biggestY(std::pair<int, int> a, std::pair<int, int> b);
 bool smallestEdge(edge a, edge b);
 std::vector<edge> removeDuplicateEdges(std::vector<edge> withDuplicates);
+std::vector<edge> removeOneOfDuplicateEdges(std::vector<edge> withDuplicates);
 std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> TrianglesToEdgeList(std::vector<Triangle>);

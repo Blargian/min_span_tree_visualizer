@@ -15,7 +15,9 @@ public:
 	std::vector<double> generateWeightsEuclidean(std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>& edges) {
 		std::vector<double> weights;
 		for (auto& edge : edges) {
-			auto distance = sqrt(pow(edge.second.first - edge.first.first, 2) - pow(edge.second.second - edge.first.second, 2));
+			double x = edge.second.first - edge.first.first;
+			double y = edge.second.second - edge.first.second;
+			auto distance = sqrt(pow(x,2) + pow(y, 2));
 			weights.emplace_back(distance);
 		}
 		return weights;
