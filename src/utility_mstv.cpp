@@ -1,5 +1,7 @@
 #include "utility_mstv.h"
 #include <algorithm>
+#include <string>
+#include <sstream>
 
 namespace mstv_utility {
 	SharedNodePtr BinarySearch(std::vector<SharedNodePtr>& sorted_node_vector, std::pair<int, int> coord) {
@@ -51,5 +53,12 @@ namespace mstv_utility {
 			}
 			}
 		);
+	}
+
+	void PrintPoints(std::vector<std::pair<int, int>>& points) {
+		std::cout << "generated points: " << std::endl;
+		for (const auto& point : points) {
+			std::cout << "(" << point.first << "," << point.second << ")" << std::endl;
+		}
 	}
 }

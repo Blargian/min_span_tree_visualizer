@@ -166,10 +166,33 @@ std::vector<edge> removeDuplicateEdges(std::vector<edge> withDuplicates) {
 			}
 			return false; 
 		});
-		withDuplicates.erase(it, end(withDuplicates)); 
+		withDuplicates.erase(it, end(withDuplicates));
 		return withDuplicates;
+}
 
-	//return polygon;
+std::vector<edge> removeOneOfDuplicateEdges(std::vector<edge> withDuplicates) {
+	
+	for (auto& edge : withDuplicates) {
+		auto it = std::find_if(withDuplicates.begin(), withDuplicates.end(), [edge](auto find_edge)
+			{
+				if (edge.first == find_edge.second) {
+					if (edge.second == find_edge.first) {
+						return true;
+					}
+					else {
+						return false;
+					}
+				}
+				else {
+					return false;
+				}
+			});
+		if (it != withDuplicates.end()) {
+			withDuplicates.erase(it);
+		}
+		
+	}
+	return withDuplicates;
 }
 
 std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> TrianglesToEdgeList(std::vector<Triangle> triangles) {
@@ -180,5 +203,6 @@ std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> TrianglesToEdge
 			edges.emplace_back(e);
 		}
 	}
+
 	return edges;
 }

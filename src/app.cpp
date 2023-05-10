@@ -6,6 +6,7 @@
 #include "node_generator_bestcandidate.h"
 #include "node_generator_uniform.h"
 #include "edge_generator_delaunay.h"
+#include "utility_mstv.h"
 
 void MyApp::StartUp()
 {
@@ -89,13 +90,16 @@ void MyApp::Update()
         ImGui::SetWindowFocus();
         if (ImGui::Button("Generate")) {
             clearGraph(g.get(), d.get());
-            //auto node_generator = std::make_unique<BestCandidateGenerator>(20);
             auto node_generator = std::make_unique<UniformGenerator>();
-            auto points = node_generator->generatePoints(5, 200, 200);
+            auto points = node_generator->generatePoints(100, 200, 200);
+
+
+            //mstv_utility::PrintPoints(points); //for debugging
 
             auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
             createNodes(g.get(), d.get(), points);
             auto edges = TrianglesToEdgeList(edge_generator->generateEdges(points));
+            edges = removeOneOfDuplicateEdges(edges); //removes one of the edges of any two triangles which share an edge
             auto weights = edge_generator->generateWeightsEuclidean(edges);
             connectNodes(g.get(), d.get(), edges, weights);
         }

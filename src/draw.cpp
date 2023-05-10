@@ -1,7 +1,9 @@
 #include "draw.h"
 #include "line.h"
 #include "marker.h"
+#include "utility_mstv.h"
 #include<utility>
+
 
 vector<SharedLinePtr>& Draw::getLines() {
     return lines_;
@@ -121,7 +123,10 @@ void Draw::clearAll() {
 void createPlot(Draw &d,int window_width, int window_height) {
     ImPlot::BeginPlot("Spanning Tree", ImVec2(window_width * 0.8, window_height * 0.95), ImPlotFlags_NoLegend);
     ImPlot::SetupAxesLimits(-100, 100, -100, 100);
-    if (d.hasLinesToDraw()) { drawLines(d.getLines()); };
+    if (d.hasLinesToDraw()) {
+        auto lines = d.getLines();
+        drawLines(lines);
+    };
     if (d.hasMarkersToDraw()) { drawNodes(d.getMarkers(),6); };
 }
 
@@ -129,6 +134,16 @@ void drawLines(vector<SharedLinePtr> lines) {
     for (auto const& l : lines) {
         ImPlot::SetNextLineStyle(l->lineColour(), l->lineThickness());
         ImPlot::PlotLine("1", l->getPointA(), l->getPointB(), 2, ImPlotLineFlags_Segments);
+    }
+}
+
+void drawWeights(vector<SharedLinePtr> lines) {
+
+    for (auto const& l : lines) {
+        auto A = (l->getPointA()[0] - l->getPointB()[0])/2;
+        auto B = (l->getPointA()[1] - l->getPointB()[1])/2;
+        auto edge_weight = std::move(mstv_utility::ConvertToCharArray(l->getEdgePtr()->getEdgeWeight()));
+        ImPlot::PlotText(edge_weight.get(), A, B);
     }
 }
 
