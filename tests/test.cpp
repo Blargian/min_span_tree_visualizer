@@ -11,6 +11,7 @@
 #include "../src/edge_generator_delaunay.h"
 #include "../src/triangle.h"
 #include "../src/utility_mstv.h"
+#include "../src/union_find.h"
 
 using namespace std; 
 
@@ -577,6 +578,53 @@ TEST_CASE("Utility", "[Utility]") {
 		auto char_array_ptr = std::move(mstv_utility::ConvertToCharArray(2.0));
 		REQUIRE(char_array_ptr.get()[0] == '2');
 	}
+}
+
+TEST_CASE("Union Find", "[UF]") {
+	std::vector<std::pair<int, int>> tinyUF =
+	{
+		std::make_pair<int,int>(4,3),
+		std::make_pair<int, int>(3,8),
+		std::make_pair<int, int>(6,5),
+		std::make_pair<int, int>(9,4),
+		std::make_pair<int, int>(2,1),
+		std::make_pair<int, int>(8,9),
+		std::make_pair<int, int>(5,0),
+		std::make_pair<int, int>(7,2),
+		std::make_pair<int, int>(6,1),
+		std::make_pair<int, int>(1,0),
+		std::make_pair<int, int>(6,7),
+	};
+
+	std::vector<int> elementsInA =
+	{
+		3,4,8,9
+	};
+
+	std::vector<int> elementsInB =
+	{
+		0,1,2,5,7,6
+	};
+
+	SECTION("Union Find executes correctly for a series of inputs") {
+		
+		UnionFind uf = UnionFind(10);
+		
+		for (auto& union_these : tinyUF) {
+			uf.Union(union_these.first, union_these.second);
+		};
+
+		//check that the structure was unioned correctly
+		for (auto& element : elementsInA) {
+			REQUIRE(uf.Find(element)==4);
+		}
+
+		for (auto& element : elementsInB) {
+			REQUIRE(uf.Find(element) == 6);
+		}
+		
+	}
+
 }
 
 
