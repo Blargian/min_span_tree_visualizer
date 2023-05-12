@@ -1,6 +1,6 @@
 # Minimum Spanning Tree Algorithm Visualizer 🌴
 
-A C++ project to visualize how two of the most popular minimum spanning tree algorithms work - mainly Kruskal's and Prim's. The application allows the user to randomly generate a tree structure or to import one from a file, and then select which algorithm to use to solve for a minimum spanning tree. Helpful playback functionality is implemented so that the user can visually see step by step how the algorithms arrive at the final solution. You can step through how the algorithm arrives at the final solution step by step, or select a playback speed and watch it work it's magic.  
+A C++ project to visualize how two of the most common minimum spanning tree (MST) algorithms work - mainly Kruskal's and Prim's. The application allows the user to randomly generate a tree structure or to import one from a file, and then select which algorithm to use to find the MST. Helpful playback functionality is implemented so that the user can visually see step by step how the algorithms arrive at the final solution. User has the ability to step through the algorithm solving process step by step, or select a playback speed and watch it work it's magic.  
 
 ![Recording 2023-05-10 at 13 44 28](https://github.com/Blargian/min_span_tree_visualizer/assets/41984034/48db76fe-9d5a-4c1d-83a4-2ad7e36eee6d)
 
@@ -25,7 +25,11 @@ Whilst the first algorithm to be discovered for solving this problem was invente
 
 ### Prim's Algorithm 
 
+Prim's algorithm is a greedy-algorithm which constructs the MST one edge at a time by examing all outgoing edges from some starting node, and adding the edge with lowest weight to the MST. In this way the MST is built successively until all edges have been explored. 
+
 ### Kruskal's Algorithm 
+
+In the same way that Prim's algorithm builds the MST one edge at a time, Kruskal's algorithm also does so, however it does so by starting off with a number of disjoint sets of edges between nodes and successively joins the sets together by edges of least weight until there is only one remaining set of edges which is the MST.   
 
 [^1]: [O jistém problému minimálním (On a certain minimal problem)](https://www.sciencedirect.com/science/article/pii/S0012365X00002247?via%3Dihub)
 
