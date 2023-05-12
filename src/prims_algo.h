@@ -8,7 +8,7 @@ private:
 public:
 	PrimsAlgorithm();
 	~PrimsAlgorithm();
-	std::queue<Edge> findMST(Node& startingNode) override;
+	std::queue<Edge> findMST(Node& startingNode);
 	void increaseIteration() { iterationCount_++; }; 
 	void resetIterationCount() { iterationCount_ = 0; };
 };

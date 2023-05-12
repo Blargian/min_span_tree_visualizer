@@ -27,6 +27,7 @@ public:
 	SharedNodePtr getNodeByName(string name);
 	SharedNodePtr getNodeByCoord(std::pair<int,int> coords);
 	int getNodeCount();
+	std::vector<Edge> getEdges();
 	Edge* connectNodes(Node* a, Node* b, double edgeWeight);
 	void removeNode(Node* node_to_remove);
 	pair<float*,float*> getCoordsForPlot();

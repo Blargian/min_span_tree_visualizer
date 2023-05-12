@@ -106,7 +106,6 @@ double Edge::getEdgeWeight()
 	return this->edgeWeight;
 };
 
-
 bool operator==(Edge a, Edge b) {
 	if (
 		a.getSourceNode() == b.getSourceNode()

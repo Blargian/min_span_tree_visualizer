@@ -20,6 +20,7 @@ private:
 	std::string nodeName; 
 	std::pair <int, int> coordinates;
 	bool visited = false;
+	int uf_id_; //id used in union_find structure
 	SharedMarkerPtr markerPtr_;
 public:
 	Node();
@@ -29,12 +30,14 @@ public:
 	std::string getNodeName();
 	void setXY(int x, int y);
 	void setMarkerPtr(SharedMarkerPtr marker);
+	void setUFIID(int i);
 	SharedMarkerPtr getMarkerPtr();
 	Edge* insertEdge(Edge& edgeToAdd);
 	void removeEdge(Node* fromNode, Node* toEdge);
 	void clearEdgeList();
 	std::list<Edge>& getEdgeList();
 	Edge* getEdge(Node* fromNode, Node* toNode);
+	int getUFIID();
 	std:: pair <int, int> getXY();
 	void markVisited();
 	void markUnvisited();

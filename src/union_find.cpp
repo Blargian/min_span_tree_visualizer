@@ -1,20 +1,16 @@
 #include "union_find.h";
 
+UnionFind::UnionFind() {};
+
 UnionFind::UnionFind(int n) {
 	count_ = n;
-	id_ = new int[n];
-	sz_ = new int[n];
 	for (int i = 0; i < n; i++) {
-		id_[i] = i;
-		sz_[i] = 1;
+		id_.emplace_back(i);
+		sz_.emplace_back(1);
 	};
 }
 
 UnionFind::~UnionFind() {
-	delete[] id_;
-	id_ = nullptr;
-	delete[] sz_;
-	sz_ = nullptr;
 }
 
 int UnionFind::Count() {

@@ -153,7 +153,7 @@ TEST_CASE("Graph","[Graph]"){
 
 	SECTION("node count updates correctly") {
 		Node a = Node();
-		Graph g = Graph();
+		g = Graph();
 		REQUIRE(g.getNodeCount() == 0);
 		g.insertNode(std::make_shared<Node>());
 		REQUIRE(g.getNodeCount() == 1);
@@ -188,7 +188,7 @@ TEST_CASE("Graph","[Graph]"){
 
 	SECTION("Node and it's edges are removed from the graph") {
 		
-		Graph g = Graph();
+		g = Graph();
 		
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("Johannesburg", 5, 10),
@@ -218,7 +218,7 @@ TEST_CASE("Graph","[Graph]"){
 	}
 
 	SECTION("clearAll removes all of the nodes from a graph") {
-		Graph g = Graph();
+		g = Graph();
 
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("Johannesburg", 5, 10),
@@ -243,7 +243,7 @@ TEST_CASE("Graph","[Graph]"){
 	}
 
 	SECTION("returns coordinates of nodes in an array of floats - to be used for plotting") {
-		Graph g = Graph();
+		g = Graph();
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("Johannesburg", 5, 10),
 			std::make_shared<Node>("Cape Town", 26, 10),
@@ -259,7 +259,7 @@ TEST_CASE("Graph","[Graph]"){
 	}
 
 	SECTION("getNodeByName returns a pointer to a node given the name") {
-		Graph g = Graph();
+		g = Graph();
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("Johannesburg", 5, 10),
 			std::make_shared<Node>("Cape Town", 26, 10),
@@ -275,7 +275,7 @@ TEST_CASE("Graph","[Graph]"){
 	}
 	
 	SECTION("getinverseedge() returns the edge running in the opposite direction given some edge") {
-		Graph g = Graph();
+		g = Graph();
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("johannesburg", 5, 10),
 			std::make_shared<Node>("cape town", 26, 10),
@@ -287,6 +287,32 @@ TEST_CASE("Graph","[Graph]"){
 		auto inverse_edge = getInverseEdge(g, *unidirectional_edge);
 		REQUIRE(inverse_edge->getSourceNode() == nodes[1].get());
 		REQUIRE(inverse_edge->getDestinationNode() == nodes[0].get());
+	}
+
+	SECTION("returns all edges of the graph") {
+		g = Graph();
+		std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("johannesburg", 5, 10),
+			std::make_shared<Node>("cape town", 26, 10),
+			std::make_shared<Node>("Durban", -24, 78)
+		};
+		for (auto& node : nodes) {
+			g.insertNode(node);
+		}
+
+		auto& nodes_on_graph = g.getNodes();
+		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 1);
+		g.connectNodes(nodes_on_graph[2].get(), nodes_on_graph[1].get(), 1);
+
+		std::vector<Edge> edges = g.getEdges();
+		
+		int num_edges = 0;
+		for (auto& node : g.getNodes()) {
+			num_edges += node->getEdgeList().size();
+		}
+
+		REQUIRE(edges.size() == num_edges);
+		
 	}
 }
 
@@ -378,14 +404,13 @@ TEST_CASE("Kruskal's Algorithm", "[Kruskals]") {
 			Edge(tinyGraph.getNodeByName("0").get(),tinyGraph.getNodeByName("2").get(),0.26),
 			Edge(tinyGraph.getNodeByName("6").get(),tinyGraph.getNodeByName("2").get(),0.40),
 			Edge(tinyGraph.getNodeByName("2").get(),tinyGraph.getNodeByName("3").get(),0.17),
-			Edge(tinyGraph.getNodeByName("6").get(),tinyGraph.getNodeByName("2").get(),0.40),
 			Edge(tinyGraph.getNodeByName("1").get(),tinyGraph.getNodeByName("7").get(),0.19),
 			Edge(tinyGraph.getNodeByName("5").get(),tinyGraph.getNodeByName("7").get(),0.28),
 			Edge(tinyGraph.getNodeByName("4").get(),tinyGraph.getNodeByName("5").get(),0.35),
 		};
 
-		KruskalsAlgorithm kruskal = KruskalsAlgorithm();
-		auto MST = kruskal.findMST(*tinyGraph.getNodeByName("0"));
+		KruskalsAlgorithm kruskal = KruskalsAlgorithm(tinyGraph);
+		auto MST = kruskal.findMST();
 
 		cout << "========== Kruskals Algorithm ==========" << endl;
 		cout << "Found the following MST" << endl;
