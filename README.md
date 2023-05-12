@@ -23,13 +23,17 @@ In computer science, a graph is a collection of nodes which are connected togeth
 
 Whilst the first algorithm to be discovered for solving this problem was invented by Czech mathematician Otakar Borůvka, the two most popular algorithms today are Prim's and Kruskal's which are examples of greedy algorithms that work in slightly different ways. 
 
-### Prim's Algorithm 
+### 🌳 Prim's Algorithm 
 
 Prim's algorithm is a greedy-algorithm which constructs the MST one edge at a time by examing all outgoing edges from some starting node, and adding the edge with lowest weight to the MST. In this way the MST is built successively until all edges have been explored. 
 
-### Kruskal's Algorithm 
+### 🌲 Kruskal's Algorithm
 
-In the same way that Prim's algorithm builds the MST one edge at a time, Kruskal's algorithm also does so, however it does so by starting off with a number of disjoint sets of edges between nodes and successively joins the sets together by edges of least weight until there is only one remaining set of edges which is the MST.   
+In the same way that Prim's algorithm builds the MST one edge at a time, Kruskal's algorithm also does so, however it does so by starting off with a number of disjoint sets of edges between nodes and successively joins the sets together by edges of least weight until there is only one remaining set of edges which is the MST. 
+
+### 🎄 Chazelle's Algorithm (coming soon)
+
+Chazelle's algorithm is an almost linear time algorithm for finding an MST. 
 
 [^1]: [O jistém problému minimálním (On a certain minimal problem)](https://www.sciencedirect.com/science/article/pii/S0012365X00002247?via%3Dihub)
 
