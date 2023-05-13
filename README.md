@@ -27,9 +27,13 @@ Whilst the first algorithm to be discovered for solving this problem was invente
 
 Prim's algorithm is a greedy-algorithm which constructs the MST one edge at a time by examining all outgoing edges from some starting node, and adding the edge with lowest weight to the MST. In this way the MST is built successively until all edges have been explored. 
 
+<img src="https://github.com/Blargian/min_span_tree_visualizer/assets/41984034/e65e5708-f02e-4450-a558-f1df3bc9951e" width="50%" height="50%"/>
+
 ### 🌲 Kruskal's Algorithm
 
 In the same way that Prim's algorithm builds the MST one edge at a time, Kruskal's algorithm also does so, however it does so by starting off with a number of disjoint sets of edges between nodes and successively joins the sets together by edges of least weight until there is only one remaining set of edges which is the MST. 
+
+<img src="https://github.com/Blargian/min_span_tree_visualizer/assets/41984034/3d5caaeb-fd4f-471a-bb57-92416da3c67c" width="50%" height="50%"/>
 
 ### 🎄 Chazelle's Algorithm (coming soon)
 
