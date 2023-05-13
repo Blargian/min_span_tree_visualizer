@@ -38,3 +38,14 @@ queue<Edge> PrimsAlgorithm::findMST(Node& startingNode) {
 	return MST_;
 }
 
+void PrimsAlgorithm::clearAll() {
+	{
+		if (solving_snapshots.size() != 0)
+			solving_snapshots.clear();
+
+		//clear MST_ 
+		std::queue<Edge> empty_MST;
+		std::swap(MST_, empty_MST);
+	}
+}
+

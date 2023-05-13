@@ -35,12 +35,26 @@ void Node::setNodeName(string nodeName) {
 }
 
 /**
+ * @brief sets an id on a node to be used to match up union_find ids to object
+ * @param int index
+ */
+void Node::setUFIID(int i) {
+	uf_id_ = i;
+};
+
+/**
  * @brief Getter method for the nodename
  */
 string Node::getNodeName() {
 	return this->nodeName;
 };
 
+/**
+ * @brief get an id on a node to be used to match up union_find ids to object
+ */
+int Node::getUFIID() {
+	return uf_id_;
+}
 
 /**
  * @brief Setter method for the node co-ordinates on 100x100 grid 

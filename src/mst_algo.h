@@ -13,13 +13,14 @@ class MSTAlgorithm {
 
 protected:
 	std::queue<Edge> MST_;
+	std::vector<Snapshot> solving_snapshots;
 private:
 	std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>> minPQ_;
-	std::vector<Snapshot> solving_snapshots;
+	int iterationCount_ = 0;
 public:
 	MSTAlgorithm() {};
 	~MSTAlgorithm() {};
-	virtual std::queue<Edge> findMST(Node& startingNode) = 0;
+	std::queue<Edge> findMST(Node& startingNode);
 
 	void AddSnapshot(Snapshot s) {
 		solving_snapshots.emplace_back(s);
@@ -34,17 +35,14 @@ public:
 		solving_snapshots.clear();
 	}
 
-	void clearAll() {
-		solving_snapshots.clear();
-
-		//clear MST_ 
-		std::queue<Edge> empty_MST;
-		std::swap(MST_, empty_MST);
-	}
+	virtual void clearAll() = 0;
 
 	int getSnapshotLength() {
 		return solving_snapshots.size();
 	}
+
+	void increaseIteration() { iterationCount_++; };
+	void resetIterationCount() { iterationCount_ = 0; };
 };
 
 void  inline visitNode(Node& node, std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>>& pq) {

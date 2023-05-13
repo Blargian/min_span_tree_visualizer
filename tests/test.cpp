@@ -4,6 +4,7 @@
 #include "../src/graph.h"
 #include "../src/app.h"
 #include "../src/prims_algo.h"
+#include "../src/kruskals_algo.h"
 #include <algorithm>
 #include <vector>
 #include <string>
@@ -152,7 +153,7 @@ TEST_CASE("Graph","[Graph]"){
 
 	SECTION("node count updates correctly") {
 		Node a = Node();
-		Graph g = Graph();
+		g = Graph();
 		REQUIRE(g.getNodeCount() == 0);
 		g.insertNode(std::make_shared<Node>());
 		REQUIRE(g.getNodeCount() == 1);
@@ -187,7 +188,7 @@ TEST_CASE("Graph","[Graph]"){
 
 	SECTION("Node and it's edges are removed from the graph") {
 		
-		Graph g = Graph();
+		g = Graph();
 		
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("Johannesburg", 5, 10),
@@ -217,7 +218,7 @@ TEST_CASE("Graph","[Graph]"){
 	}
 
 	SECTION("clearAll removes all of the nodes from a graph") {
-		Graph g = Graph();
+		g = Graph();
 
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("Johannesburg", 5, 10),
@@ -242,7 +243,7 @@ TEST_CASE("Graph","[Graph]"){
 	}
 
 	SECTION("returns coordinates of nodes in an array of floats - to be used for plotting") {
-		Graph g = Graph();
+		g = Graph();
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("Johannesburg", 5, 10),
 			std::make_shared<Node>("Cape Town", 26, 10),
@@ -258,7 +259,7 @@ TEST_CASE("Graph","[Graph]"){
 	}
 
 	SECTION("getNodeByName returns a pointer to a node given the name") {
-		Graph g = Graph();
+		g = Graph();
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("Johannesburg", 5, 10),
 			std::make_shared<Node>("Cape Town", 26, 10),
@@ -274,7 +275,7 @@ TEST_CASE("Graph","[Graph]"){
 	}
 	
 	SECTION("getinverseedge() returns the edge running in the opposite direction given some edge") {
-		Graph g = Graph();
+		g = Graph();
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("johannesburg", 5, 10),
 			std::make_shared<Node>("cape town", 26, 10),
@@ -286,6 +287,36 @@ TEST_CASE("Graph","[Graph]"){
 		auto inverse_edge = getInverseEdge(g, *unidirectional_edge);
 		REQUIRE(inverse_edge->getSourceNode() == nodes[1].get());
 		REQUIRE(inverse_edge->getDestinationNode() == nodes[0].get());
+	}
+
+	SECTION("returns all edges of the graph in order of edge weight") {
+		g = Graph();
+		std::vector<std::shared_ptr<Node>> nodes = {
+			std::make_shared<Node>("johannesburg", 5, 10),
+			std::make_shared<Node>("cape town", 26, 10),
+			std::make_shared<Node>("Durban", -24, 78)
+		};
+		for (auto& node : nodes) {
+			g.insertNode(node);
+		}
+
+		auto& nodes_on_graph = g.getNodes();
+		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 0.23);
+		g.connectNodes(nodes_on_graph[1].get(), nodes_on_graph[2].get(), 0.16);
+		g.connectNodes(nodes_on_graph[2].get(), nodes_on_graph[0].get(), 0.80);
+
+		std::vector<Edge> edges = g.getEdges();
+		
+		int num_edges = 0;
+		for (auto& node : g.getNodes()) {
+			num_edges += node->getEdgeList().size();
+		}
+
+		REQUIRE(edges.size() == num_edges);
+
+		REQUIRE(edges[0].getEdgeWeight() == 0.80);
+		REQUIRE(edges[4].getEdgeWeight() == 0.16);
+		
 	}
 }
 
@@ -345,6 +376,50 @@ TEST_CASE("Prim's Algorithm", "[Prims]") {
 		cout << "========== Prims Algorithm ==========" << endl;
 		cout << "Found the following MST" << endl;
 		bool found = false;
+		REQUIRE(!MST.empty());
+		while (!MST.empty()) {
+			Edge e = MST.front();
+			cout << e << endl; //add something to print edges
+			auto it = find(expected_edges.begin(), expected_edges.end(), e);
+			int index = distance(expected_edges.begin(), it);
+			REQUIRE(it != expected_edges.end()); //check that the edge does exist in expected_edges
+			CHECK((expected_edges[index] == e)); //check that the contents of the edge are correct
+			MST.pop();
+			expected_edges.erase(it);
+		}
+	}
+}
+
+TEST_CASE("Kruskal's Algorithm", "[Kruskals]") {
+
+	SECTION("check that Kruskal's algorithm finds the correct MST") {
+		Graph tinyGraph;
+		//create the nodes
+		for (vector<int> node : tinyEWGnodes) {
+			tinyGraph.insertNode(std::make_shared<Node>(to_string(node[0]), static_cast<int>(node[0]), static_cast<int>(node[0])));
+		};
+		//connect the nodes
+		for (vector<double> node_data : tinyEWG) {
+			tinyGraph.connectNodes(tinyGraph.getNodeByName(to_string((int)node_data[0])).get(), tinyGraph.getNodeByName(to_string((int)node_data[1])).get(), node_data[2]);
+		};
+
+		vector<Edge> expected_edges{
+			Edge(tinyGraph.getNodeByName("0").get(),tinyGraph.getNodeByName("7").get(),0.16),
+			Edge(tinyGraph.getNodeByName("0").get(),tinyGraph.getNodeByName("2").get(),0.26),
+			Edge(tinyGraph.getNodeByName("6").get(),tinyGraph.getNodeByName("2").get(),0.40),
+			Edge(tinyGraph.getNodeByName("2").get(),tinyGraph.getNodeByName("3").get(),0.17),
+			Edge(tinyGraph.getNodeByName("1").get(),tinyGraph.getNodeByName("7").get(),0.19),
+			Edge(tinyGraph.getNodeByName("5").get(),tinyGraph.getNodeByName("7").get(),0.28),
+			Edge(tinyGraph.getNodeByName("4").get(),tinyGraph.getNodeByName("5").get(),0.35),
+		};
+
+		KruskalsAlgorithm kruskal = KruskalsAlgorithm(tinyGraph);
+		auto MST = kruskal.findMST();
+
+		cout << "========== Kruskals Algorithm ==========" << endl;
+		cout << "Found the following MST" << endl;
+		bool found = false;
+		REQUIRE(!MST.empty());
 		while (!MST.empty()) {
 			Edge e = MST.front();
 			cout << e << endl; //add something to print edges

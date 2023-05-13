@@ -1,11 +1,13 @@
 #pragma once
+#include <vector>
 
 class UnionFind {
 private:
-	int* id_;
+	std::vector<int> id_;
 	int count_;
-	int* sz_;
+	std::vector<int> sz_;
 public:
+	UnionFind();
 	UnionFind (int n);
 	~UnionFind();
 	void Union(int p, int q);

@@ -168,6 +168,29 @@ Edge* getInverseEdge(Graph& g, Edge& edge) {
 }
 
 /**
+ * @brief returns a vector of indexed edges on the graph sorted by edge weight
+ * @parameter
+ */
+
+struct weightSort {
+	bool operator() (Edge a, Edge b) { return (a.getEdgeWeight() > b.getEdgeWeight()); }
+} sortByWeight;
+
+std::vector<Edge> Graph::getEdges() {
+	auto edges = std::vector<Edge>();
+	int i = 0;
+	for (auto& node : nodeArray) {
+		node->setUFIID(i);
+		for (auto& edge : node->getEdgeList()) {
+			edges.emplace_back(edge);
+		}
+		i++;
+	}
+	std::sort(edges.begin(), edges.end(), sortByWeight);
+	return edges;
+}
+
+/**
  * @brief for each node in the node list resets the node back to default as being marked 'unvisited' by some MST algorithm
  */
 void Graph::resetVisitedState() {
