@@ -25,7 +25,7 @@ Whilst the first algorithm to be discovered for solving this problem was invente
 
 ### 🌳 Prim's Algorithm 
 
-Prim's algorithm is a greedy-algorithm which constructs the MST one edge at a time by examing all outgoing edges from some starting node, and adding the edge with lowest weight to the MST. In this way the MST is built successively until all edges have been explored. 
+Prim's algorithm is a greedy-algorithm which constructs the MST one edge at a time by examining all outgoing edges from some starting node, and adding the edge with lowest weight to the MST. In this way the MST is built successively until all edges have been explored. 
 
 ### 🌲 Kruskal's Algorithm
 
