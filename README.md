@@ -2,7 +2,7 @@
 
 A C++ project to visualize how two of the most common minimum spanning tree (MST) algorithms work - mainly Kruskal's and Prim's. The application allows the user to randomly generate a tree structure or to import one from a file, and then select which algorithm to use to find the MST. Helpful playback functionality is implemented so that the user can visually see step by step how the algorithms arrive at the final solution. User has the ability to step through the algorithm solving process step by step, or select a playback speed and watch it work it's magic.  
 
-![Recording 2023-05-10 at 13 44 28](https://github.com/Blargian/min_span_tree_visualizer/assets/41984034/48db76fe-9d5a-4c1d-83a4-2ad7e36eee6d)
+![Recording 2023-05-13 at 19 01 42](https://github.com/Blargian/min_span_tree_visualizer/assets/41984034/344fafeb-de47-4439-8cb9-1e994d5e3912)
 
 The project was inspired by the following two youtube videos, which I thought would be fun to try implement myself in C++:
 
