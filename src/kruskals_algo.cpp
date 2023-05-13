@@ -1,11 +1,12 @@
 #include "kruskals_algo.h"
 #include "edge.h"
+#include "snapshot.h"
 
+KruskalsAlgorithm::KruskalsAlgorithm() {};
 
 KruskalsAlgorithm::KruskalsAlgorithm(Graph& g) {
 	g_ = g;
 	uf_ = UnionFind(g.getNodeCount());
-	mst_ = std::queue<Edge>();
 
 	auto edges = g.getEdges();
 	for (auto& edge : edges) {
@@ -17,15 +18,33 @@ KruskalsAlgorithm::~KruskalsAlgorithm() {
 };
 
 std::queue<Edge> KruskalsAlgorithm::findMST() {
-	while (!minPQ_.empty() && mst_.size() < g_.getNodeCount())
+	Snapshot current_iteration = Snapshot();
+	while (!minPQ_.empty() && MST_.size() < g_.getNodeCount())
 	{
 		auto edge = minPQ_.top();
+		current_iteration.SetEdgeLeastWeight(edge);
 		minPQ_.pop();
 		auto a = edge.getSourceNode();
 		auto b = edge.getDestinationNode();
 		if (uf_.Connected(a->getUFIID(),b->getUFIID())) continue;
 		uf_.Union(a->getUFIID(), b->getUFIID());
-		mst_.push(edge);
+		current_iteration.AddMST(MST_);
+		MST_.push(edge);
+		AddSnapshot(current_iteration);
+		increaseIteration();
 	}
-	return mst_;
+	return MST_;
+}
+
+void KruskalsAlgorithm::clearAll() {
+		
+	if (solving_snapshots.size() != 0)
+		solving_snapshots.clear();
+
+	//clear MST_ 
+	std::queue<Edge> empty_MST;
+	std::swap(MST_, empty_MST);
+
+	std::priority_queue<Edge, std::vector<Edge>, customLess> empty_pq;
+	std::swap(minPQ_, empty_pq);
 }

@@ -289,7 +289,7 @@ TEST_CASE("Graph","[Graph]"){
 		REQUIRE(inverse_edge->getDestinationNode() == nodes[0].get());
 	}
 
-	SECTION("returns all edges of the graph") {
+	SECTION("returns all edges of the graph in order of edge weight") {
 		g = Graph();
 		std::vector<std::shared_ptr<Node>> nodes = {
 			std::make_shared<Node>("johannesburg", 5, 10),
@@ -301,8 +301,9 @@ TEST_CASE("Graph","[Graph]"){
 		}
 
 		auto& nodes_on_graph = g.getNodes();
-		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 1);
-		g.connectNodes(nodes_on_graph[2].get(), nodes_on_graph[1].get(), 1);
+		g.connectNodes(nodes_on_graph[0].get(), nodes_on_graph[1].get(), 0.23);
+		g.connectNodes(nodes_on_graph[1].get(), nodes_on_graph[2].get(), 0.16);
+		g.connectNodes(nodes_on_graph[2].get(), nodes_on_graph[0].get(), 0.80);
 
 		std::vector<Edge> edges = g.getEdges();
 		
@@ -312,6 +313,9 @@ TEST_CASE("Graph","[Graph]"){
 		}
 
 		REQUIRE(edges.size() == num_edges);
+
+		REQUIRE(edges[0].getEdgeWeight() == 0.80);
+		REQUIRE(edges[4].getEdgeWeight() == 0.16);
 		
 	}
 }

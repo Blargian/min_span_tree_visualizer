@@ -168,9 +168,14 @@ Edge* getInverseEdge(Graph& g, Edge& edge) {
 }
 
 /**
- * @brief returns a vector of indexed edges on the graph
+ * @brief returns a vector of indexed edges on the graph sorted by edge weight
  * @parameter
  */
+
+struct weightSort {
+	bool operator() (Edge a, Edge b) { return (a.getEdgeWeight() > b.getEdgeWeight()); }
+} sortByWeight;
+
 std::vector<Edge> Graph::getEdges() {
 	auto edges = std::vector<Edge>();
 	int i = 0;
@@ -181,6 +186,7 @@ std::vector<Edge> Graph::getEdges() {
 		}
 		i++;
 	}
+	std::sort(edges.begin(), edges.end(), sortByWeight);
 	return edges;
 }
 

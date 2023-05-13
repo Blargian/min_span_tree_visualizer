@@ -68,9 +68,7 @@ void MyApp::Update()
     ImPlot::CreateContext();
     createPlot(*d, window_width, window_height);
     if (checkPlotClicked(*d)) {
-        d->resetLinesToDefault();
-        current_snapshot = 0; 
-        max_snapshots = 0;
+        resetDrawState(*d, this);
     };
     ImPlot::EndPlot();
     ImGui::End();
@@ -106,8 +104,14 @@ void MyApp::Update()
         ImGui::End();
     }
 
-    ImGui::RadioButton("Prim's algorithm", &algorithm_choice, 0);
-    ImGui::RadioButton("Kruskal's algorithm", &algorithm_choice, 1); 
+    if(ImGui::RadioButton("Prim's algorithm", &algorithm_choice, 0))
+    {
+        resetDrawState(*d, this);
+    }
+    if (ImGui::RadioButton("Kruskal's algorithm", &algorithm_choice, 1)) 
+    {
+        resetDrawState(*d, this);
+    };
 
     float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
 
@@ -136,52 +140,57 @@ void MyApp::Update()
     ImGui::SameLine(0.0f, spacing);
 
     if (ImGui::ArrowButton("##left", ImGuiDir_Left)) {
-        auto temp = current_snapshot;
-        if (!(temp-- <= 0) && max_snapshots != 0) {
-            current_snapshot--;
+        auto temp = getCurrentSnapshot();
+        if (!(temp-- <= 0) && getMaxSnapshots() != 0) {
+            setCurrentSnapshot(getCurrentSnapshot()-1);
             thread draw_thread([this] {this->drawOnceThread(); });
             draw_thread.join();
         }
     }
     ImGui::SameLine(0.0f, spacing);
     if (ImGui::ArrowButton("##right", ImGuiDir_Right)) {
-        auto temp = current_snapshot;
-        if (!(temp++ >= max_snapshots-1) && max_snapshots != 0) {
-            current_snapshot++;
+        auto temp = getCurrentSnapshot();
+        auto max = getMaxSnapshots();
+        if (!(temp++ >= max -1) && max != 0) {
+            setCurrentSnapshot(getCurrentSnapshot()+1);
             thread draw_thread([this] {this->drawOnceThread(); });
             draw_thread.detach();
         }
             
         
     }
-    if (max_snapshots == 0) {
-        ImGui::Text("Step: - / -", current_snapshot, max_snapshots);
+    if (getMaxSnapshots() == 0) {
+        ImGui::Text("Step: - / -", getCurrentSnapshot(), getMaxSnapshots());
     }
     else {
-        ImGui::Text("Step: %d / %d", current_snapshot+1, max_snapshots+1);
+        ImGui::Text("Step: %d / %d", getCurrentSnapshot()+1, getMaxSnapshots() +1);
     }
     
 
     ImGui::SliderFloat("speed", &selected_playback_speed, 0.0f, 1.0f, "speed = %.2f x");
 
     if (ImGui::Button("Solve")) {
-        auto selectedNode = d->selectedMarker()->getNodePtr();
 
         if (algorithm_choice == 0) {
+            auto selectedNode = d->selectedMarker()->getNodePtr();
             prims->clearAll();
             prims->resetIterationCount();
             g->resetVisitedState(); 
             auto MST = prims->findMST(*selectedNode);
             prims->AddSnapshot(Snapshot(MST));
-            max_snapshots = prims->getSnapshotLength();
+            setMaxSnapshots(prims->getSnapshotLength());
             thread draw_thread([this] {this->drawOnceThread();});
             draw_thread.detach();
         }
         
         if (algorithm_choice == 1) {
-            //auto MST = kruskals->findMST(*selectedNode);
-            //kruskals->AddSnapshot(Snapshot(MST));
-            //max_snapshots = kruskals->getSnapshotLength();
+            
+            kruskals = std::make_unique<KruskalsAlgorithm>(*g);
+            auto MST_kruskal = kruskals->findMST();
+            kruskals->AddSnapshot(Snapshot(MST_kruskal));
+            setMaxSnapshots(kruskals->getSnapshotLength());
+            thread draw_thread([this] {this->drawOnceThread(); });
+            draw_thread.detach();
         }
         
     }
@@ -197,11 +206,18 @@ void MyApp::OnNotify(Line l)
 
 void MyApp::drawOnceThread()
 {
-    drawFromSnapshots(current_snapshot, prims->getSnapshots(), *d);
+    if (algorithm_choice == 0) {
+        drawFromSnapshots(getCurrentSnapshot(), prims->getSnapshots(), *d);
+    }
+
+    if (algorithm_choice == 1) {
+        drawFromSnapshots(getCurrentSnapshot(), kruskals->getSnapshots(), *d);
+    }
+    
 };
 
 void MyApp::drawMultipleThread() {
-    while (current_snapshot != max_snapshots) {
+    while (getCurrentSnapshot() != getMaxSnapshots()) {
 
         //If the stop button was pressed, exit the while loop stopping playback 
         if (stop_playback) {
@@ -209,8 +225,15 @@ void MyApp::drawMultipleThread() {
             break;
         }
 
-        drawFromSnapshots(current_snapshot, prims->getSnapshots(), *d);
-        current_snapshot++;
+        if (algorithm_choice == 0) {
+            drawFromSnapshots(getCurrentSnapshot(), prims->getSnapshots(), *d);
+        }
+
+        if (algorithm_choice == 1) {
+            drawFromSnapshots(getCurrentSnapshot(), kruskals->getSnapshots(), *d);
+        }
+        
+        setCurrentSnapshot(getCurrentSnapshot()+1);
         int time_in_ms = (int)((base_playback_speed_seconds * (1.0/(selected_playback_speed+0.1)))*1000.0);
         std::this_thread::sleep_for(std::chrono::milliseconds(time_in_ms));
     }
@@ -273,3 +296,14 @@ void clearGraph(Graph* g, Draw* d) {
     g->clearAll();
     d->clearAll();
 }
+
+void resetDrawState(Draw& d, MyApp* a) {
+    d.resetLinesToDefault();
+    a->setMaxSnapshots(0);
+    a->setCurrentSnapshot(0);
+}
+
+int MyApp::getCurrentSnapshot() { return current_snapshot_; };
+int MyApp::getMaxSnapshots() { return max_snapshots_; };
+void MyApp::setCurrentSnapshot(int current_snapshot) { current_snapshot_ = current_snapshot; };
+void MyApp::setMaxSnapshots(int max_snapshots) { max_snapshots_ = max_snapshots; };
