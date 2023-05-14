@@ -5,15 +5,11 @@
 #include <algorithm>
 
 
+BestCandidateGenerator::BestCandidateGenerator() {}
 BestCandidateGenerator::BestCandidateGenerator(int candidateSize) {
 	candidateSize_ = candidateSize;
 }
 
-std::vector<Node> BestCandidateGenerator::generateNodes(int n, int plot_width, int plot_height) {
-	return std::vector<Node>();
-}
-
-//
 
 /**
  * @brief Implements Mitchell's best candidate algorithm to pseudorandomly generate points within some grid space 

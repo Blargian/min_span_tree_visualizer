@@ -15,6 +15,10 @@ class MyApp : public App, public IObserver
 private:
     int current_snapshot_ = 0;
     int max_snapshots_ = 0;
+    int nodegen_current_idx_ = 0; // Here we store our selection data as an index.
+    int edgegen_current_idx_ = 0;
+    int weightgen_current_idx_ = 0;
+    int numberOfNodes_ = 100;
 protected:
     std::unique_ptr<Graph> g = std::make_unique<Graph>();
     std::unique_ptr<Draw> d = std::make_unique<Draw>();

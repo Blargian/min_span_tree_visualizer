@@ -5,10 +5,6 @@ UniformGenerator::UniformGenerator()
 {
 }
 
-std::vector<Node> UniformGenerator::generateNodes(int n, int plot_width, int plot_height) {
-	return std::vector<Node>();
-}
-
 std::vector<std::pair<int, int>> UniformGenerator::generatePoints(int n, int plot_width, int plot_height) {
 
 	std::unordered_set<std::pair<int, int>,pairhash> unique_points; //using a set to gaurantee unique values

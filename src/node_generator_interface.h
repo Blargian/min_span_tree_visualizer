@@ -8,7 +8,7 @@ class NodeGenerator {
 private:
 public:
 	virtual ~NodeGenerator() {};
-	virtual std::vector<Node> generateNodes(int n, int plot_width, int plot_height) = 0;
+	virtual std::vector<std::pair<int, int>> generatePoints(int n, int plot_width, int plot_height) = 0;
 
 	//generates a random number within the confines of some range
 	int randomNumber(int min, int max) {
