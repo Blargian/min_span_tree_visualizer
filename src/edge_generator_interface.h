@@ -4,13 +4,14 @@
 #include <utility>
 #include <string>
 #include <cmath>
+#include "triangle.h"
 
 //Interface for a node generator 
 class EdgeGenerator {
 private:
 public:
 	virtual ~EdgeGenerator() {};
-
+	virtual std::vector<Triangle> generateEdges(std::vector<std::pair<int, int>> points) = 0;
 	//edge weight is given as the euclidean distance between two nodes
 	std::vector<double> generateWeightsEuclidean(std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>& edges) {
 		std::vector<double> weights;

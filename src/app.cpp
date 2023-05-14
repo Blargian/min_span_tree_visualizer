@@ -85,20 +85,98 @@ void MyApp::Update()
     
     if (show_random_generation_dialogue) {
         ImGui::Begin("Random Tree Generation Dialogue", &show_random_generation_dialogue);
-        ImGui::SetWindowFocus();
-        if (ImGui::Button("Generate")) {
+
+        const char* node_generator_items[] = { "Uniform Random", "Best Fit"};
+        const char* edge_generator_items[] = { "Delaunay"};
+        const char* weight_generator_items[] = { "Euclidean Distance","Uniform Random (0.0 , 1.0]"};
+        const char* nodecombo_preview_value = node_generator_items[nodegen_current_idx_];  // Pass in the preview value visible before opening the combo (it could be anything)
+        const char* edgecombo_preview_value = edge_generator_items[edgegen_current_idx_];
+        const char* weightcombo_preview_value = weight_generator_items[weightgen_current_idx_];
+
+        if (ImGui::BeginCombo("Node Generator", nodecombo_preview_value, flags))
+        {
+            for (int n = 0; n < IM_ARRAYSIZE(node_generator_items); n++)
+            {
+                const bool is_selected = (nodegen_current_idx_ == n);
+                if (ImGui::Selectable(node_generator_items[n], is_selected))
+                    nodegen_current_idx_ = n;
+
+                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                if (is_selected)
+                    ImGui::SetItemDefaultFocus();
+            }
+            ImGui::EndCombo();
+        }
+
+        if (ImGui::BeginCombo("Edge Generator", edgecombo_preview_value, flags))
+        {
+            for (int n = 0; n < IM_ARRAYSIZE(edge_generator_items); n++)
+            {
+                const bool is_selected = (edgegen_current_idx_ == n);
+                if (ImGui::Selectable(edge_generator_items[n], is_selected))
+                    edgegen_current_idx_ = n;
+
+                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                if (is_selected)
+                    ImGui::SetItemDefaultFocus();
+            }
+            ImGui::EndCombo();
+        }
+
+        if (ImGui::BeginCombo("Weight Generator", weightcombo_preview_value, flags))
+        {
+            for (int n = 0; n < IM_ARRAYSIZE(weight_generator_items); n++)
+            {
+                const bool is_selected = (weightgen_current_idx_ == n);
+                if (ImGui::Selectable(weight_generator_items[n], is_selected))
+                    weightgen_current_idx_ = n;
+
+                // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+                if (is_selected)
+                    ImGui::SetItemDefaultFocus();
+            }
+            ImGui::EndCombo();
+        }
+
+        ImGui::SliderInt("Nodes", &numberOfNodes_, 3, 1000, "N = %d ");
+
+        if (ImGui::Button("Generate Tree")) {
             clearGraph(g.get(), d.get());
-            auto node_generator = std::make_unique<UniformGenerator>();
-            auto points = node_generator->generatePoints(100, 200, 200);
 
-
-            //mstv_utility::PrintPoints(points); //for debugging
-
-            auto edge_generator = std::make_unique<DelaunayEdgeGenerator>();
+            //Select node generator based on selection
+            std::unique_ptr<NodeGenerator> node_generator;
+            switch (nodegen_current_idx_) {
+            default:
+                node_generator = std::make_unique<UniformGenerator>();
+                break;
+            case 1:
+                node_generator = std::make_unique<BestCandidateGenerator>();
+                break;
+            };
+            auto points = node_generator->generatePoints(numberOfNodes_, 200, 200);
             createNodes(g.get(), d.get(), points);
+
+            //Select edge generator based on selection
+            std::unique_ptr<EdgeGenerator> edge_generator;
+            switch (nodegen_current_idx_) {
+            default:
+                edge_generator = std::make_unique<DelaunayEdgeGenerator>();
+                break;
+            };
             auto edges = TrianglesToEdgeList(edge_generator->generateEdges(points));
             edges = removeOneOfDuplicateEdges(edges); //removes one of the edges of any two triangles which share an edge
-            auto weights = edge_generator->generateWeightsEuclidean(edges);
+
+            //add weights to edges
+            std::vector<double> weights;
+            switch (nodegen_current_idx_) {
+            default:
+                weights = edge_generator->generateWeightsEuclidean(edges);
+                break;
+            case 1:
+                //weights = edge_generator->generateWeightsUniformRandom(edges);
+                break;
+            }
+
             connectNodes(g.get(), d.get(), edges, weights);
         }
         ImGui::End();
@@ -115,6 +193,17 @@ void MyApp::Update()
 
     float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
 
+    if (ImGui::ArrowButton("##left", ImGuiDir_Left)) {
+        auto temp = getCurrentSnapshot();
+        if (!(temp-- <= 0) && getMaxSnapshots() != 0) {
+            setCurrentSnapshot(getCurrentSnapshot()-1);
+            thread draw_thread([this] {this->drawOnceThread(); });
+            draw_thread.join();
+        }
+    }
+
+    ImGui::SameLine(0.0f, spacing);
+
     ImGui::PushID(0);
     ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0 / 7.0f, 0.6f, 0.6f));
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0 / 7.0f, 0.7f, 0.7f));
@@ -129,7 +218,7 @@ void MyApp::Update()
     ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(2 / 7.0f, 0.6f, 0.6f));
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(2 / 7.0f, 0.7f, 0.7f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(2 / 7.0f, 0.8f, 0.8f));
-    if(ImGui::Button("START"))
+    if (ImGui::Button("START"))
     {
         thread draw_multiple_thread([this] {this->drawMultipleThread(); });
         draw_multiple_thread.detach();
@@ -139,14 +228,6 @@ void MyApp::Update()
 
     ImGui::SameLine(0.0f, spacing);
 
-    if (ImGui::ArrowButton("##left", ImGuiDir_Left)) {
-        auto temp = getCurrentSnapshot();
-        if (!(temp-- <= 0) && getMaxSnapshots() != 0) {
-            setCurrentSnapshot(getCurrentSnapshot()-1);
-            thread draw_thread([this] {this->drawOnceThread(); });
-            draw_thread.join();
-        }
-    }
     ImGui::SameLine(0.0f, spacing);
     if (ImGui::ArrowButton("##right", ImGuiDir_Right)) {
         auto temp = getCurrentSnapshot();
@@ -167,7 +248,7 @@ void MyApp::Update()
     }
     
 
-    ImGui::SliderFloat("speed", &selected_playback_speed, 0.0f, 1.0f, "speed = %.2f x");
+    ImGui::SliderFloat("Speed", &selected_playback_speed, 0.0f, 1.0f, "speed = %.2f x");
 
     if (ImGui::Button("Solve")) {
 

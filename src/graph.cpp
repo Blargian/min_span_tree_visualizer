@@ -199,10 +199,4 @@ void Graph::resetVisitedState() {
 	}
 }
 
-void addNodes(Graph* g, int n, NodeGenerator* nodegen) {
-	auto nodes = nodegen->generateNodes(n,200,200);
-	for (auto& node : nodes) {
-		//g->insertNode();
-	}
-}
 

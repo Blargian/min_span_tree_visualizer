@@ -37,5 +37,3 @@ public:
 }; 
 
 Edge* getInverseEdge(Graph& g, Edge& edge);
-
-void addNodes(Graph g, int n, NodeGenerator nodegen);
