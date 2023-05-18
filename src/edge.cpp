@@ -4,106 +4,67 @@
 #include <memory>
 
 using namespace std; 
-/**
- * @brief Edge constructor
- *
- * @param destNode pointer to the destination Node 
- * @param w weight of the edge 
- */
+
 Edge::Edge(Node* srcNode, Node* destNode, double w)
-{
-	sourceNode = srcNode; 
-	destinationNode = destNode;
-	edgeWeight = w;
-	linePtr_ = SharedLinePtr();
-};
+	: sourceNode_(srcNode),
+	  destinationNode_(destNode),
+	  edgeWeight_(w),
+	  linePtr_(SharedLinePtr())
+{};
 
 Edge::Edge()
-{
-	sourceNode = nullptr;
-	destinationNode = nullptr;
-	edgeWeight = 0.0;
-	linePtr_ = SharedLinePtr();
-};
+	: sourceNode_(nullptr),
+	  destinationNode_(nullptr),
+	  edgeWeight_(0.0),
+	  linePtr_(SharedLinePtr())
+{};
 
 Edge::Edge(const Edge& e)
-{
-	sourceNode = e.sourceNode;
-	destinationNode = e.destinationNode;
-	edgeWeight = e.edgeWeight;
-	linePtr_ = e.linePtr_;
-}
+	: sourceNode_(e.sourceNode_),
+	  destinationNode_(e.destinationNode_),
+	  edgeWeight_(e.edgeWeight_),
+	  linePtr_(e.linePtr_)
+{};
 
 
-Edge::~Edge() {
-}
+Edge::~Edge() {};
 
-/**
- * @brief Destination node setter
- *
- * @param destNode pointer to the destination Node
- */
 void Edge::setSourceNode(Node* srcNode)
 {
-	this->sourceNode = srcNode;
+	sourceNode_ = srcNode;
 }
 
-/**
- * @brief Destination node setter
- *
- * @param destNode pointer to the destination Node
- */
 void Edge::setDestinationNode(Node* destNode)
 {
-	this->destinationNode = destNode;
+	this->destinationNode_ = destNode;
 };
 
-/**
- * @brief weight setter
- *
- * @param w the weight of the edge
- */
 void Edge::setEdgeWeight(double weight)
 {
-	edgeWeight = weight;
+	edgeWeight_ = weight;
 };
-
 
 void Edge::setLinePtr(SharedLinePtr linePtr) {
 	linePtr_ = linePtr; 
 }
 
-SharedLinePtr Edge::getLinePtr() {
+SharedLinePtr Edge::getLinePtr() const {
 	return linePtr_;
 }
 
-/**
- * @brief getter method for source node
- *
- * @param
- */
-Node* Edge::getSourceNode()
+Node* Edge::getSourceNode() const
 {
-	return this->sourceNode;
+	return sourceNode_;
 };
 
-/**
- * @brief getter method for destination node
- *
- * @param 
- */
-Node* Edge::getDestinationNode()
+Node* Edge::getDestinationNode() const
 {
-	return this->destinationNode;
+	return destinationNode_;
 };
 
-/**
- * @brief getter method for the weight of the edge
- *
- */
-double Edge::getEdgeWeight()
+double Edge::getEdgeWeight() const
 {
-	return this->edgeWeight;
+	return edgeWeight_;
 };
 
 bool operator==(Edge a, Edge b) {
@@ -141,9 +102,9 @@ bool operator>(Edge a, Edge b) {
 };
 
 std::ostream& operator<<(std::ostream& stream, Edge const& e) {
-	stream << "Source node: " << e.sourceNode->getNodeName() << std::endl
-		<< "Destination node: " << e.destinationNode->getNodeName() << std::endl
-		<< "Edge weight: " << fixed << setprecision(2) << e.edgeWeight << std::endl;
+	stream << "Source node: " << e.sourceNode_->getNodeName() << std::endl
+		<< "Destination node: " << e.destinationNode_->getNodeName() << std::endl
+		<< "Edge weight: " << fixed << setprecision(2) << e.edgeWeight_ << std::endl;
 
 	return stream;
 };
