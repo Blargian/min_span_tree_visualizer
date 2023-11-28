@@ -59,9 +59,9 @@ Once done, `cd` to the vcpkg folder and run:
 
 Finally, run:
 
-`./vcpkg install`
+`./vcpkg integrate install`
 
-You can now open the folder in visual studio. Open up the CMakeLists.txt file, `ctrl + save` and the project should compile. 
+You can now open the folder in visual studio. Open up the CMakeLists.txt file, `ctrl + save` and the project should compile. Alternatively you can run `cmake ..  -DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` from within the build directory to build from command line.
 
 There are two executables which can be run. To run the main project select `min_span_tree_visualizer.exe` or to run the test suite select `tests.exe`
 
