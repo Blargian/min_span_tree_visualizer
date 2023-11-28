@@ -59,7 +59,7 @@ Once done, `cd` to the vcpkg folder and run:
 
 Finally, run:
 
-`./vcpkg integrate install`
+`./vcpkg install`
 
 You can now open the folder in visual studio. Open up the CMakeLists.txt file, `ctrl + save` and the project should compile. 
 
