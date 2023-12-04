@@ -2,6 +2,7 @@
   "name": "mst-visualizer",
   "version": "1.0.0",
   "dependencies": [
+    "boost",
     "glfw3",
     "glad",
     "glm",

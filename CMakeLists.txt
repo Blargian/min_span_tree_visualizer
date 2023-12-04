@@ -80,12 +80,20 @@ find_package(glm CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(implot CONFIG REQUIRED)
 
+set(Boost_USE_STATIC_LIBS OFF) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF) 
+find_package(Boost 1.45.0 COMPONENTS Graph) 
+
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
 
 add_executable (min_span_tree_visualizer src/main.cpp 
 "src/graph.h" 
 "src/graph.cpp" 
 "src/edge.cpp" 
-"src/edge.h" 
+"src/edge.h"
 "src/node.h" 
 "src/node.cpp" 
 "src/app_design.h" 
@@ -137,6 +145,7 @@ target_link_libraries(
     glad::glad
     imgui::imgui
     implot::implot
+	${Boost_LIBRARIES}
 )
 
 
