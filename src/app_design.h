@@ -82,6 +82,7 @@ class App
             // Setup Dear ImGui context
             IMGUI_CHECKVERSION();
             ImGui::CreateContext();
+            ImPlot::CreateContext();
             ImGuiIO& io = ImGui::GetIO(); (void)io;
             //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
             //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
@@ -110,10 +111,6 @@ class App
             //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
             //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
             //IM_ASSERT(font != NULL);
-
-            // Our state
-            bool show_demo_window = true;
-            bool show_another_window = false;
 		}
 
 		virtual ~App()

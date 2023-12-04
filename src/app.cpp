@@ -47,10 +47,10 @@ void MyApp::StartUp()
         {7, 3, 4},
     };
 
-    g->AddObserver(Graph::DRAWEDGE, this);
+    //g->AddObserver(Graph::DRAWEDGE, this);
 
-    createNodes(g.get(), d.get(), tinyEWGnodes);
-    connectNodes(g.get(),d.get(),tinyEWG);
+    //createNodes(g.get(), d.get(), tinyEWGnodes);
+    //connectNodes(g.get(),d.get(),tinyEWG);
 
     const float spacing = 15;
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(spacing, spacing));
@@ -60,23 +60,32 @@ void MyApp::StartUp()
 void MyApp::Update()
 {
 
-    ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse + ImGuiWindowFlags_NoMove;
+    ImGuiWindowFlags graph_area_flags = 0;
+    //graph_area_flags |= ImGuiWindowFlags_NoDecoration;
+    graph_area_flags |= ImGuiWindowFlags_NoMove;
+    graph_area_flags |= ImGuiWindowFlags_NoSavedSettings;
+    graph_area_flags |= ImGuiWindowFlags_NoCollapse;
+    graph_area_flags |= ImGuiWindowFlags_NoResize;
 
-    ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(window_width*0.8, window_height));
-    ImGui::Begin("Minimum Spanning Tree Visualizer", NULL, flags);
-    ImPlot::CreateContext();
-    createPlot(*d, window_width, window_height);
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos((viewport->WorkPos));
+    ImGui::SetNextWindowSize(ImVec2((viewport->WorkSize.x)*0.8,(viewport->WorkSize.y)));
+    ImGui::Begin("Minimum Spanning Tree Visualizer", NULL, graph_area_flags);
+    auto win_size = ImGui::GetWindowSize();
+    createPlot(*d, (viewport->WorkSize.x) * 0.8, viewport->WorkSize.y);
     if (checkPlotClicked(*d)) {
         resetDrawState(*d, this);
     };
     ImPlot::EndPlot();
     ImGui::End();
 
-    ImGui::SetNextWindowSize(ImVec2(window_width*0.2, window_height));
-    ImGui::SetNextWindowPos(ImVec2(1000, 0), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Controls", NULL, flags);
-    ImPlot::CreateContext();
+
+    ImGui::SameLine();
+
+    ImGuiWindowFlags control_area_flags = graph_area_flags;
+    ImGui::SetNextWindowPos(ImVec2(0.8*(viewport->WorkSize.x),viewport->WorkPos.y));
+    ImGui::SetNextWindowSize(ImVec2((viewport->WorkSize.x)*0.20, (viewport->WorkSize.y)));
+    ImGui::Begin("Controls", NULL, control_area_flags);
 
     if (ImGui::Button("Generate random tree"))
     {
@@ -84,6 +93,13 @@ void MyApp::Update()
     }
     
     if (show_random_generation_dialogue) {
+
+        ImGuiWindowFlags tree_gen_flags = 0;
+        tree_gen_flags |= ImGuiWindowFlags_NoResize;
+        tree_gen_flags |= ImGuiWindowFlags_NoMove;
+        tree_gen_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
+        tree_gen_flags |= ImGuiWindowFlags_NoCollapse;
+
         ImGui::Begin("Random Tree Generation Dialogue", &show_random_generation_dialogue);
 
         const char* node_generator_items[] = { "Uniform Random", "Best Fit"};
@@ -93,7 +109,8 @@ void MyApp::Update()
         const char* edgecombo_preview_value = edge_generator_items[edgegen_current_idx_];
         const char* weightcombo_preview_value = weight_generator_items[weightgen_current_idx_];
 
-        if (ImGui::BeginCombo("Node Generator", nodecombo_preview_value, flags))
+        if (ImGui::BeginCombo("Node Generator", nodecombo_preview_value,
+                              tree_gen_flags))
         {
             for (int n = 0; n < IM_ARRAYSIZE(node_generator_items); n++)
             {
@@ -108,7 +125,8 @@ void MyApp::Update()
             ImGui::EndCombo();
         }
 
-        if (ImGui::BeginCombo("Edge Generator", edgecombo_preview_value, flags))
+        if (ImGui::BeginCombo("Edge Generator", edgecombo_preview_value,
+                              tree_gen_flags))
         {
             for (int n = 0; n < IM_ARRAYSIZE(edge_generator_items); n++)
             {
@@ -123,7 +141,8 @@ void MyApp::Update()
             ImGui::EndCombo();
         }
 
-        if (ImGui::BeginCombo("Weight Generator", weightcombo_preview_value, flags))
+        if (ImGui::BeginCombo("Weight Generator", weightcombo_preview_value,
+                              tree_gen_flags))
         {
             for (int n = 0; n < IM_ARRAYSIZE(weight_generator_items); n++)
             {
