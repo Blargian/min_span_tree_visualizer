@@ -24,6 +24,7 @@ protected:
     std::unique_ptr<Draw> d = std::make_unique<Draw>();
     std::unique_ptr<PrimsAlgorithm> prims = std::make_unique<PrimsAlgorithm>();
     std::unique_ptr<KruskalsAlgorithm> kruskals;
+    std::unique_ptr<MSTAlgorithm> algorithmPtr; 
     int algorithm_choice = 0;
     float base_playback_speed_seconds = 0.1;
     float selected_playback_speed = 1.0f, max_playback_speed = 1.0f;

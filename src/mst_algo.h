@@ -3,6 +3,7 @@
 #include <queue>
 #include <algorithm>
 #include <utility>
+#include <queue>
 #include "Edge.h"
 #include "Node.h"
 #include "snapshot.h"
@@ -20,7 +21,6 @@ private:
 public:
 	MSTAlgorithm() {};
 	~MSTAlgorithm() {};
-	std::queue<Edge> findMST(Node& startingNode);
 
 	void AddSnapshot(Snapshot s) {
 		solving_snapshots.emplace_back(s);
@@ -35,14 +35,15 @@ public:
 		solving_snapshots.clear();
 	}
 
-	virtual void clearAll() = 0;
-
 	int getSnapshotLength() {
 		return solving_snapshots.size();
 	}
 
 	void increaseIteration() { iterationCount_++; };
 	void resetIterationCount() { iterationCount_ = 0; };
+
+	virtual void clearAll() = 0;
+    virtual std::queue<Edge> findMST(Node& startingNode) = 0;
 };
 
 void  inline visitNode(Node& node, std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>>& pq) {

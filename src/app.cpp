@@ -54,6 +54,8 @@ void MyApp::StartUp()
 
     const float spacing = 15;
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(spacing, spacing));
+
+    algorithmPtr = std::make_unique<PrimsAlgorithm>();
 }
 
 //GUI components are defined here 
@@ -203,10 +205,12 @@ void MyApp::Update()
 
     if(ImGui::RadioButton("Prim's algorithm", &algorithm_choice, 0))
     {
+        algorithmPtr = std::make_unique<PrimsAlgorithm>();
         resetDrawState(*d, this);
     }
     if (ImGui::RadioButton("Kruskal's algorithm", &algorithm_choice, 1)) 
     {
+        algorithmPtr = std::make_unique<KruskalsAlgorithm>();
         resetDrawState(*d, this);
     };
 
@@ -271,7 +275,17 @@ void MyApp::Update()
 
     if (ImGui::Button("Solve")) {
 
-        if (algorithm_choice == 0) {
+        auto selectedNode = d->selectedMarker()->getNodePtr();
+        algorithmPtr->clearAll();
+        algorithmPtr->resetIterationCount();
+        g->resetVisitedState();
+        auto MST = algorithmPtr->findMST(*selectedNode);
+        algorithmPtr->AddSnapshot(Snapshot(MST));
+        setMaxSnapshots(algorithmPtr->getSnapshotLength());
+        thread draw_thread([this] { this->drawOnceThread(); });
+        draw_thread.detach();
+
+        /*if (algorithm_choice == 0) {
             auto selectedNode = d->selectedMarker()->getNodePtr();
             prims->clearAll();
             prims->resetIterationCount();
@@ -292,7 +306,7 @@ void MyApp::Update()
             thread draw_thread([this] {this->drawOnceThread(); });
             draw_thread.detach();
         }
-        
+ */       
     }
     float solving_time = 0.245;
     ImGui::Text("Solving time: %3f ms", solving_time);
@@ -306,13 +320,14 @@ void MyApp::OnNotify(Line l)
 
 void MyApp::drawOnceThread()
 {
-    if (algorithm_choice == 0) {
+    drawFromSnapshots(getCurrentSnapshot(), algorithmPtr->getSnapshots(), *d);
+    /*if (algorithm_choice == 0) {
         drawFromSnapshots(getCurrentSnapshot(), prims->getSnapshots(), *d);
     }
 
     if (algorithm_choice == 1) {
         drawFromSnapshots(getCurrentSnapshot(), kruskals->getSnapshots(), *d);
-    }
+    }*/
     
 };
 
@@ -325,13 +340,15 @@ void MyApp::drawMultipleThread() {
             break;
         }
 
-        if (algorithm_choice == 0) {
-            drawFromSnapshots(getCurrentSnapshot(), prims->getSnapshots(), *d);
-        }
+        drawFromSnapshots(getCurrentSnapshot(), algorithmPtr->getSnapshots(),*d);
 
-        if (algorithm_choice == 1) {
-            drawFromSnapshots(getCurrentSnapshot(), kruskals->getSnapshots(), *d);
-        }
+        //if (algorithm_choice == 0) {
+        //    drawFromSnapshots(getCurrentSnapshot(), algorithmPtr->getSnapshots(), *d);
+        //}
+
+        //if (algorithm_choice == 1) {
+        //    drawFromSnapshots(getCurrentSnapshot(), kruskals->getSnapshots(), *d);
+        //}
         
         setCurrentSnapshot(getCurrentSnapshot()+1);
         int time_in_ms = (int)((base_playback_speed_seconds * (1.0/(selected_playback_speed+0.1)))*1000.0);

@@ -17,7 +17,7 @@ KruskalsAlgorithm::KruskalsAlgorithm(Graph& g) {
 KruskalsAlgorithm::~KruskalsAlgorithm() {
 };
 
-std::queue<Edge> KruskalsAlgorithm::findMST() {
+std::queue<Edge> KruskalsAlgorithm::findMST(Node& startingNode) {
 	Snapshot current_iteration = Snapshot();
 	while (!minPQ_.empty() && MST_.size() < g_.getNodeCount())
 	{

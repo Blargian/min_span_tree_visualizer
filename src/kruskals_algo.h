@@ -2,7 +2,6 @@
 #include "mst_algo.h"
 #include "union_find.h"
 #include "graph.h"
-#include <queue>
 
 struct customLess {
 	bool operator()(Edge l, Edge r) const
@@ -20,6 +19,6 @@ public:
 	KruskalsAlgorithm();
 	KruskalsAlgorithm(Graph& g);
 	~KruskalsAlgorithm();
-	std::queue<Edge> findMST();
+	std::queue<Edge> findMST(Node& startingNode) override;
 	void clearAll();
 };

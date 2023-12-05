@@ -7,6 +7,6 @@ private:
 public:
 	PrimsAlgorithm();
 	~PrimsAlgorithm();
-	std::queue<Edge> findMST(Node& startingNode);
+    std::queue<Edge> findMST(Node& startingNode) override;
 	void clearAll();
 };

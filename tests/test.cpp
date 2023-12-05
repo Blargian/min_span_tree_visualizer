@@ -413,8 +413,8 @@ TEST_CASE("Kruskal's Algorithm", "[Kruskals]") {
 			Edge(tinyGraph.getNodeByName("4").get(),tinyGraph.getNodeByName("5").get(),0.35),
 		};
 
-		KruskalsAlgorithm kruskal = KruskalsAlgorithm(tinyGraph);
-		auto MST = kruskal.findMST();
+		std::unique_ptr<MSTAlgorithm> kruskal = std::make_unique<KruskalsAlgorithm>(tinyGraph);
+		auto MST = kruskal->findMST(Node());
 
 		cout << "========== Kruskals Algorithm ==========" << endl;
 		cout << "Found the following MST" << endl;
