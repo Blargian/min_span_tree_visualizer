@@ -18,7 +18,9 @@ add_subdirectory ("src")
 add_subdirectory(lib/Catch2)
 add_executable(tests ${PROJECT_SOURCE_DIR}/tests/test.cpp 
 "src/graph.h" 
-"src/graph.cpp" 
+"src/graph.cpp"
+"src/graph_1.h"
+"src/graph_1.cpp"
 "src/edge.cpp" 
 "src/edge.h" 
 "src/node.h" 
@@ -91,7 +93,9 @@ endif()
 
 add_executable (min_span_tree_visualizer src/main.cpp 
 "src/graph.h" 
-"src/graph.cpp" 
+"src/graph.cpp"
+"src/graph_1.h"
+"src/graph_1.cpp"
 "src/edge.cpp" 
 "src/edge.h"
 "src/node.h" 

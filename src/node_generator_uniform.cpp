@@ -5,7 +5,7 @@ UniformGenerator::UniformGenerator()
 {
 }
 
-std::vector<std::pair<int, int>> UniformGenerator::generatePoints(int n, int plot_width, int plot_height) {
+std::vector<std::pair<int, int>> UniformGenerator::generatePoints(int n, const double plot_width, const double plot_height) {
 
 	std::unordered_set<std::pair<int, int>,pairhash> unique_points; //using a set to gaurantee unique values
 	

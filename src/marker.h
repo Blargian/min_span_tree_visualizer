@@ -15,7 +15,7 @@ private:
 	ImPlotPoint coordinates_;
 	const char* id_;
 	MarkerColours markerColour_;
-	SharedNodePtr nodePtr_; 
+	SharedNodePtr nodePtr_ = nullptr; 
 public:
 	Marker(Node& n);
 	Marker(Marker& m);

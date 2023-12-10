@@ -36,7 +36,7 @@ public:
 	void clearAll();
 };
 
-void createPlot(Draw &d, int window_width, int window_height);
+void createPlot(Draw &d, const float window_width, const float window_height);
 bool checkPlotClicked(Draw& d);
 void drawNodes(vector<SharedMarkerPtr>, int marker_size=4);
 void drawLines(vector<SharedLinePtr>);

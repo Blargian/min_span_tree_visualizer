@@ -17,7 +17,7 @@ BestCandidateGenerator::BestCandidateGenerator(int candidateSize) {
  *        plot_width int the width of the plot
  *        plot_height int the height of the plot
  */
-std::vector<std::pair<int,int>> BestCandidateGenerator::generatePoints(int n, int plot_width,int plot_height) {
+std::vector<std::pair<int, int>> BestCandidateGenerator::generatePoints(int n, const double plot_width, const double plot_height) {
 
 	std::vector<std::pair<int, int>> points; 
 	std::pair<int, int> best_candidate; 

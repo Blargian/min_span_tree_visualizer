@@ -15,7 +15,7 @@ using namespace std;
  */
 Node::Node(string nodeName, int x, int y) {
 	this->setNodeName(nodeName);
-	this->setXY(x, y);
+	this->setXY(x,y);
 }
 
 Node::Node() {
@@ -65,8 +65,8 @@ void Node::setXY(int x, int y) {
 	int x_abs = abs(x);
 	int y_abs = abs(y);
 
-	if ((x_abs > 100) || (y_abs > 100)) {
-		throw std::invalid_argument("Coordinates should be between 0 and 100 inclusive");
+	if ((x_abs > 10000) || (y_abs > 10000)) {
+		throw std::invalid_argument("Coordinates should be between 0 and 10000 inclusive");
 	}
 	else {
 		this->coordinates.first = x;

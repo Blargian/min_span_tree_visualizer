@@ -8,60 +8,17 @@
 #include "edge_generator_delaunay.h"
 #include "utility_mstv.h"
 
+// set up code to run once before the update loop 
 void MyApp::StartUp()
 {
-
-    // mock data graph representation for a small test graph 
-
-    vector<vector<double>> tinyEWG =
-    {
-        {4, 5, 0.35},
-        {4, 7, 0.37},
-        {5, 7, 0.28},
-        {0, 7, 0.16},
-        {1, 5, 0.32},
-        {0, 4, 0.38},
-        {2, 3, 0.17},
-        {1, 7, 0.19},
-        {0, 2, 0.26},
-        {1, 2, 0.36},
-        {1, 3, 0.29},
-        {2, 7, 0.34},
-        {6, 2, 0.40},
-        {3, 6, 0.52},
-        {6, 0, 0.58},
-        {6, 4, 0.93}
-    };
-
-    //mock data for nodes of a small test graph:
-
-    vector<vector<int>> tinyEWGnodes =
-    {
-        {0, 4, 2},
-        {1, 3, 7},
-        {2, 6, 4},
-        {3, 8, 7},
-        {4, 0, 0},
-        {5, 0, 4},
-        {6, 8, 0},
-        {7, 3, 4},
-    };
-
-    //g->AddObserver(Graph::DRAWEDGE, this);
-
-    //createNodes(g.get(), d.get(), tinyEWGnodes);
-    //connectNodes(g.get(),d.get(),tinyEWG);
-
     const float spacing = 15;
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(spacing, spacing));
 }
 
-//GUI components are defined here 
+// GUI components are defined here 
 void MyApp::Update()
 {
-
     ImGuiWindowFlags graph_area_flags = 0;
-    //graph_area_flags |= ImGuiWindowFlags_NoDecoration;
     graph_area_flags |= ImGuiWindowFlags_NoMove;
     graph_area_flags |= ImGuiWindowFlags_NoSavedSettings;
     graph_area_flags |= ImGuiWindowFlags_NoCollapse;
@@ -69,13 +26,19 @@ void MyApp::Update()
 
     const ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos((viewport->WorkPos));
-    ImGui::SetNextWindowSize(ImVec2((viewport->WorkSize.x)*0.8,(viewport->WorkSize.y)));
+    const float plot_container_x = (viewport->WorkSize.x) * 0.8;
+    const float plot_container_y = viewport->WorkSize.y;
+    ImGui::SetNextWindowSize(ImVec2(plot_container_x, plot_container_y));
     ImGui::Begin("Minimum Spanning Tree Visualizer", NULL, graph_area_flags);
     auto win_size = ImGui::GetWindowSize();
-    createPlot(*d, (viewport->WorkSize.x) * 0.8, viewport->WorkSize.y);
+
+    const float plotsize_x = plot_container_x*0.98;
+    const float plotsize_y = plot_container_y*0.95;
+    createPlot(*d, plotsize_x, plotsize_y);
     if (checkPlotClicked(*d)) {
         resetDrawState(*d, this);
     };
+    const auto plot_limits = ImPlot::GetPlotLimits();
     ImPlot::EndPlot();
     ImGui::End();
 
@@ -101,21 +64,15 @@ void MyApp::Update()
         tree_gen_flags |= ImGuiWindowFlags_NoCollapse;
 
         ImGui::Begin("Random Tree Generation Dialogue", &show_random_generation_dialogue);
-
-        const char* node_generator_items[] = { "Uniform Random", "Best Fit"};
-        const char* edge_generator_items[] = { "Delaunay"};
-        const char* weight_generator_items[] = { "Euclidean Distance","Uniform Random (0.0 , 1.0]"};
-        const char* nodecombo_preview_value = node_generator_items[nodegen_current_idx_];  // Pass in the preview value visible before opening the combo (it could be anything)
-        const char* edgecombo_preview_value = edge_generator_items[edgegen_current_idx_];
-        const char* weightcombo_preview_value = weight_generator_items[weightgen_current_idx_];
-
-        if (ImGui::BeginCombo("Node Generator", nodecombo_preview_value,
-                              tree_gen_flags))
+        
+        std::vector<string> node_generator_items = {"Uniform Random","Best Fit"};
+        string nodecombo_preview_value = node_generator_items[nodegen_current_idx_];
+        if (ImGui::BeginCombo("Node Generator", nodecombo_preview_value.c_str()))
         {
-            for (int n = 0; n < IM_ARRAYSIZE(node_generator_items); n++)
+            for (int n = 0; n < node_generator_items.size(); n++)
             {
                 const bool is_selected = (nodegen_current_idx_ == n);
-                if (ImGui::Selectable(node_generator_items[n], is_selected))
+                if (ImGui::Selectable(node_generator_items[n].c_str(), is_selected))
                     nodegen_current_idx_ = n;
 
                 // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
@@ -125,13 +82,14 @@ void MyApp::Update()
             ImGui::EndCombo();
         }
 
-        if (ImGui::BeginCombo("Edge Generator", edgecombo_preview_value,
-                              tree_gen_flags))
+        std::vector<string> edge_generator_items = {"Delaunay"};
+        string edgecombo_preview_value = edge_generator_items[edgegen_current_idx_];
+        if (ImGui::BeginCombo("Edge Generator", edgecombo_preview_value.c_str()))
         {
-            for (int n = 0; n < IM_ARRAYSIZE(edge_generator_items); n++)
+            for (int n = 0; n < edge_generator_items.size(); n++)
             {
                 const bool is_selected = (edgegen_current_idx_ == n);
-                if (ImGui::Selectable(edge_generator_items[n], is_selected))
+                if (ImGui::Selectable(edge_generator_items[n].c_str(), is_selected))
                     edgegen_current_idx_ = n;
 
                 // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
@@ -141,13 +99,15 @@ void MyApp::Update()
             ImGui::EndCombo();
         }
 
-        if (ImGui::BeginCombo("Weight Generator", weightcombo_preview_value,
-                              tree_gen_flags))
+        std::vector<string> weight_generator_items = {"Euclidean Distance", "Uniform Random (0.0 , 1.0]"};
+        string weightcombo_preview_value = weight_generator_items[weightgen_current_idx_];
+        if (ImGui::BeginCombo("Weight Generator", weightcombo_preview_value.c_str()))
         {
-            for (int n = 0; n < IM_ARRAYSIZE(weight_generator_items); n++)
+            for (int n = 0; n < weight_generator_items.size(); n++)
             {
                 const bool is_selected = (weightgen_current_idx_ == n);
-                if (ImGui::Selectable(weight_generator_items[n], is_selected))
+              if (ImGui::Selectable(weight_generator_items[n].c_str(),
+                                    is_selected))
                     weightgen_current_idx_ = n;
 
                 // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
@@ -160,7 +120,8 @@ void MyApp::Update()
         ImGui::SliderInt("Nodes", &numberOfNodes_, 3, 1000, "N = %d ");
 
         if (ImGui::Button("Generate Tree")) {
-            clearGraph(g.get(), d.get());
+            //clearGraph(g.get(), d.get());
+            GraphHandler::clearNodes(bg);
 
             //Select node generator based on selection
             std::unique_ptr<NodeGenerator> node_generator;
@@ -172,8 +133,9 @@ void MyApp::Update()
                 node_generator = std::make_unique<BestCandidateGenerator>();
                 break;
             };
-            auto points = node_generator->generatePoints(numberOfNodes_, 200, 200);
-            createNodes(g.get(), d.get(), points);
+            auto points = node_generator->generatePoints(numberOfNodes_, plot_limits.X.Size(), plot_limits.Y.Size());
+            //createNodes(g.get(), d.get(), points);
+            GraphHandler::createNodes(bg, points);
 
             //Select edge generator based on selection
             std::unique_ptr<EdgeGenerator> edge_generator;

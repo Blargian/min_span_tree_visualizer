@@ -2,6 +2,7 @@
 #include "app_design.h"
 #include "line.h"
 #include "graph.h"
+#include "graph_1.h"
 #include "draw.h"
 #include "prims_algo.h"
 #include "kruskals_algo.h"
@@ -29,6 +30,7 @@ protected:
     float selected_playback_speed = 1.0f, max_playback_speed = 1.0f;
     std::atomic<bool> stop_playback = false; 
     bool show_random_generation_dialogue = false;
+    BoostGraph bg;
 
 public:
     MyApp() = default;

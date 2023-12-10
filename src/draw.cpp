@@ -120,8 +120,8 @@ void Draw::clearAll() {
     selectedMarker_ = NULL;
 }
 
-void createPlot(Draw &d,int window_width, int window_height) {
-    ImPlot::BeginPlot("Spanning Tree", ImVec2(window_width * 0.8, window_height * 0.95), ImPlotFlags_NoLegend);
+void createPlot(Draw &d,const float window_width, const float window_height) {
+    ImPlot::BeginPlot("Spanning Tree", ImVec2(window_width, window_height), ImPlotFlags_NoLegend);
     ImPlot::SetupAxesLimits(-100, 100, -100, 100);
     if (d.hasLinesToDraw()) {
         auto lines = d.getLines();

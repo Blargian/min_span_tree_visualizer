@@ -8,7 +8,7 @@ class NodeGenerator {
 private:
 public:
 	virtual ~NodeGenerator() {};
-	virtual std::vector<std::pair<int, int>> generatePoints(int n, int plot_width, int plot_height) = 0;
+	virtual std::vector<std::pair<int, int>> generatePoints(int n, const double plot_width, const double plot_height) = 0;
 
 	//generates a random number within the confines of some range
 	int randomNumber(int min, int max) {
@@ -20,6 +20,7 @@ public:
 		auto num = dis(gen);
 		return (int)(dis(gen));
 	}
+
 };
 
 //pairhash so that unorder_set can make use of std::pair<T,T>
