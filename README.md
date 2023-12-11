@@ -45,11 +45,7 @@ Chazelle's algorithm is an almost linear time algorithm for finding an MST.
 
 `git clone` the repository to your local machine. 
 
-Next, `cd lib` and add download Catch2 by running the following command:
-
-`git clone https://github.com/catchorg/Catch2.git`
-
-`cd ..` back up to the root directory. There you'll need to run:
+from the root directory of the repository run:
 
 `git clone https://github.com/Microsoft/vcpkg.git`
 
@@ -61,9 +57,13 @@ Finally, run:
 
 `./vcpkg integrate install`
 
-You can now open the folder in visual studio. Open up the CMakeLists.txt file, `ctrl + save` and the project should compile. Alternatively you can run `cmake ..  -DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` from within the build directory to build from command line.
+run `cd .. cd build` and then run `cmake ..  -DCMAKE_TOOLCHAIN_FILE=vcpkg/scripts/buildsystems/vcpkg.cmake`. If all goes well you will see the "Build files have been written to..." message. You may now open the generated 'minimum_spanning_tree_visualizer' project.  
 
-There are two executables which can be run. To run the main project select `min_span_tree_visualizer.exe` or to run the test suite select `tests.exe`
+To run the tests, right-click and "select as startup project": 
 
-![Different executables](https://user-images.githubusercontent.com/41984034/224997758-9a8e42b5-bfa5-47cb-82f5-29a08713ca00.png)
+<img width="233" alt="image" src="https://github.com/Blargian/min_span_tree_visualizer/assets/41984034/5172628c-71b1-40f8-9908-9b28607aa97a">
+
+To run the tests, right-click and "select as startup project":
+
+<img width="245" alt="image" src="https://github.com/Blargian/min_span_tree_visualizer/assets/41984034/fd38caf3-49c1-4485-92f8-2814c84fbd06">
 
