@@ -72,7 +72,7 @@ void Draw::changeLineColour(Line* l, LineColours c) {
 
 void Draw::changeLineThickness(Line* l, float thickness) {
     bool foundLine = false;
-    auto& line = findLine(*l, foundLine);
+    auto line = findLine(*l, foundLine);
     if (foundLine) {
         line->setLineThickness(thickness);
     }

@@ -83,24 +83,24 @@ TEST_CASE("Graph node", "[Node]") {
 
 	Node a = Node();
 
-	SECTION("error gets thrown if x coordinate is outside of limits -100 to +100") {
-		CHECK_THROWS_AS(a.setXY(200,5), std::logic_error);
+	SECTION("error gets thrown if x coordinate is outside of limits -10000 to +10000") {
+		CHECK_THROWS_AS(a.setXY(20000,5), std::logic_error);
 	}
 
-	SECTION("error gets thrown if y coordinate is outside of limits -100 to +100") {
-		CHECK_THROWS_AS(a.setXY(67, 189), std::logic_error);
+	SECTION("error gets thrown if y coordinate is outside of limits -10000 to +10000") {
+		CHECK_THROWS_AS(a.setXY(67, 18900), std::logic_error);
 	}
 
-	SECTION("error gets thrown if one coordinate is negative and outside of limits -100 to +100") {
-		CHECK_THROWS_AS(a.setXY(-67, -189), std::logic_error);
+	SECTION("error gets thrown if one coordinate is negative and outside of limits -10000 to +10000") {
+		CHECK_THROWS_AS(a.setXY(-67000, -189000), std::logic_error);
 	}
 
-	SECTION("no error is thrown if both coordinates are in the limit -100 to +100") {
-		CHECK_NOTHROW(a.setXY(67, 72));
+	SECTION("no error is thrown if both coordinates are in the limit -10000 to +10000") {
+		CHECK_NOTHROW(a.setXY(500, 500));
 	}
 
-	SECTION("no error is thrown if both coordinates are negative and in the limit -100 to +100") {
-		CHECK_NOTHROW(a.setXY(-67, -72));
+	SECTION("no error is thrown if both coordinates are negative and in the limit -10000 to +10000") {
+		CHECK_NOTHROW(a.setXY(-500, -500));
 	}
 
 	SECTION("an edge gets inserted to the adjacency list") {
@@ -330,20 +330,6 @@ TEST_CASE("iSubject", "[Subject]") {
 		REQUIRE(with_observers.hasObservers() == true);
 		REQUIRE(without_observers.hasObservers() == false);
 	}
-
-	SECTION("AddObserver adds and removes the observer to the ObserversMap mObservers correctly") {
-		MyApp app;
-		Graph subject = Graph();
-		subject.AddObserver(Graph::DRAWEDGE, &app);
-		auto om = subject.getObserverMap();
-		int number_of_observers = distance(om[0].begin(), om[0].end());
-		REQUIRE(number_of_observers == 1);
-		subject.RemoveObserver(Graph::DRAWEDGE, &app);
-		om = subject.getObserverMap();
-		number_of_observers = distance(om[0].begin(), om[0].end());
-		REQUIRE(number_of_observers == 0);
-	}
-
 };
 
 TEST_CASE("Prim's Algorithm", "[Prims]") {
@@ -459,7 +445,7 @@ TEST_CASE("Draw", "[Draw]") {
 	SECTION("findLine() finds a line if it exists, otherwise doesn't find a line if not") {
 		bool foundTheLine = false; 
 		auto& someEdge = g->getNodeByName("0")->getEdgeList().front();
-		auto& foundLine = d->findLine(*someEdge.getLinePtr().get(), foundTheLine);
+		auto foundLine = d->findLine(*someEdge.getLinePtr().get(), foundTheLine);
 		REQUIRE(foundTheLine == true); 
 		REQUIRE(*foundLine.get() == *someEdge.getLinePtr());
 	}

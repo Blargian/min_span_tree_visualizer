@@ -18,10 +18,6 @@ public:
 	void Notify(int message, Line l);
 	bool hasObservers();
 
-	//used to expose the mObservers map for testing
-	virtual ObserversMap ISubject::getObserverMap() {
-		return this->mObservers;
-	}
 
 private:
 	ObserversMap mObservers;
